@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+}
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(240, 20%, 40%);
+}
+::-webkit-scrollbar-track {
+  background: hsl(240, 20%, 5%);
+}
+@layer base {
+  :root {
+    --background: 216, 65%, 11%;
+    --foreground: 240, 15%, 13%;
+
+    --gray-100: 0, 0%, 95%;
+    --gray-200: 0, 0%, 92%;
+    --gray-300: 0, 0%, 82%;
+    --gray-400: 0, 0%, 72%;
+    --gray-500: 0, 0%, 62%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  body {
+  }
+}

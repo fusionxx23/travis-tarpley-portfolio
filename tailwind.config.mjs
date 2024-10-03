@@ -1,8 +1,23 @@
+import { transform } from "typescript";
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: "0.2", transform: "translate(10px,10px)" },
+          "100%": { opacity: "1", transform: "translate(0,0)" },
+        },
+      },
+      animation: {
+        "fade-in": "fadeIn 0.4s ease-in forwards",
+      },
+      colors: {
+        background: "hsl(var(--background), <alpha-value>)",
+      },
+    },
   },
   plugins: [],
 };
