@@ -7,12 +7,12 @@ export default {
     extend: {
       keyframes: {
         fadeIn: {
-          "0%": { opacity: "0.2", transform: "translate(10px,10px)" },
+          "0%": { opacity: "0.2", transform: "translate(0px,10px)" },
           "100%": { opacity: "1", transform: "translate(0,0)" },
         },
       },
       animation: {
-        "fade-in": "fadeIn 0.4s ease-in forwards",
+        "fade-in": "fadeIn 0.5s ease-in forwards",
       },
       colors: {
         background: "hsl(var(--background), <alpha-value>)",
