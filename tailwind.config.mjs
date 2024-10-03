@@ -12,7 +12,7 @@ export default {
         },
       },
       animation: {
-        "fade-in": "fadeIn 0.4s ease-in forwards",
+        "fade-in": "fadeIn 0.5s ease-in forwards",
       },
       colors: {
         background: "hsl(var(--background), <alpha-value>)",
