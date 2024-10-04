@@ -10,6 +10,10 @@ export default {
           "0%": { opacity: "0", transform: "translate(0px,5px)" },
           "100%": { opacity: "1", transform: "translate(0,0)" },
         },
+        fadeDown: {
+          "0%": { opacity: "0", transform: "translate(0px,-15px)" },
+          "100%": { opacity: "1", transform: "translate(0,0)" },
+        },
         orbit: {
           "0%": {
             transform:
@@ -23,6 +27,7 @@ export default {
       },
       animation: {
         "fade-in": "fadeIn 0.5s ease-in forwards",
+        "fade-down": "fadeDown 0.5s ease-in forwards",
         orbit: "orbit calc(var(--duration)*1s) linear infinite",
       },
       colors: {
