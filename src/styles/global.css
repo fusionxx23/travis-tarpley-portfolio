@@ -17,7 +17,7 @@ html {
 }
 @layer base {
   :root {
-    --background: 216, 65%, 11%;
+    --background: 216, 65%, 5%;
     --foreground: 240, 15%, 13%;
 
     --gray-100: 0, 0%, 95%;
