@@ -6,10 +6,6 @@ import Work from "../components/Work/Work.astro";
 ---
 
 <RootLayout>
-  <div class="min-h-screen relative">
-    <div class="fixed top-0 left-0 w-1 h-screen z-50">
-      <div class={`bg-purple-300 w-1 `}></div>
-    </div>
 
     <div
       style={{
@@ -23,15 +19,10 @@ import Work from "../components/Work/Work.astro";
     <!-- <Sidebar /> -->
     <!-- <SocialsLeft display={loaded} /> -->
     <!-- <Loader display={loaded} /> -->
-    <div class="w-full scroll-smooth">
       <!-- <Navbar display={loaded} /> -->
-      <div class="w-full min-h-fit overflow-x-hidden" id="mainPage">
         <Home />
         <Work />
         <!-- <About /> -->
         <!-- <Work /> -->
         <!-- <Contact /> -->
-      </div>
-    </div>
-  </div>
 </RootLayout>
