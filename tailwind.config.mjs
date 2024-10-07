@@ -11,7 +11,7 @@ export default {
           "100%": { opacity: "1", transform: "translate(0,0)" },
         },
         fadeDown: {
-          "0%": { opacity: "0", transform: "translate(0px,-15px)" },
+          "0%": { opacity: "0", transform: "translate(0px,-10px)" },
           "100%": { opacity: "1", transform: "translate(0,0)" },
         },
         orbit: {
@@ -33,7 +33,7 @@ export default {
       animation: {
         "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
         "fade-in": "fadeIn 0.5s ease-in forwards",
-        "fade-down": "fadeDown 0.5s ease-in forwards",
+        "fade-down": "fadeDown 0.5s ease-out forwards",
         orbit: "orbit calc(var(--duration)*1s) linear infinite",
       },
       colors: {
