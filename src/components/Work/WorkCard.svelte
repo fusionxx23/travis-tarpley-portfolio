@@ -1,6 +1,7 @@
-
-<script>
+<script lang="ts">
   import BorderBeam from "../UI/BorderBeam.svelte";
+  import { Image } from "astro:assets";
+  export let image;
 </script>
 
 <article
@@ -34,11 +35,13 @@
     </p>
   </div>
   <div class="relative mt-8 flex items-center gap-x-4">
-    <img
-      src="https://avatars.githubusercontent.com/u/93428946?v=4"
-      alt="bhide"
-      class="h-10 w-10 rounded-full bg-gray-50"
-    />
+    <!-- <Image -->
+    <!--   src={image.src} -->
+    <!--   srcset={image.srcSet.attribute} -->
+    <!--   alt="bhide" -->
+    <!--   class="h-10 w-10 rounded-full bg-gray-50" -->
+    <!-- /> -->
+    <slot name="image" />
     <div class="text-sm leading-5">
       <p class="font-semibold text-white">
         <a href="https://github.com/SikandarJODD">
