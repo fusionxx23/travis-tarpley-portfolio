@@ -4,21 +4,33 @@ import HeaderLink from "./HeaderLink.astro";
 
 <header
   id="header"
-  class={`fixed w-full animate-fade-down top-0 drop-shadow-lg shadow-black sm:pb-0 z-10 duration-300 transition-all  `}
+  class={`fixed w-full animate-fade-down top-0 drop-shadow-lg
+    shadow-black sm:pb-0 z-10 duration-300 transition-all `}
 >
-  <div class="flex justify-between items-center px-4 md:px-20">
+  <div
+    class="flex justify-between items-center px-4 md:px-20"
+  >
     <a href={"#Landing"}>
       <div class="cursor-pointer">
-        <h1 class="text-light-100 text-3xl py-2 select-none">TT</h1>
+        <h1
+          class="text-light-100 text-3xl py-2 select-none"
+        >
+          TT
+        </h1>
       </div>
     </a>
 
-    <div class="sm:flex items-center hidden text-light-200 py-4">
-      <HeaderLink title={"About"} link={"#About"} />
-      {/* <HeaderLink title={'Experience'} link={'#Experience'}></NavLink> */}
-      <HeaderLink title={"Work"} link={"#Work"} />
+    <div
+      class="sm:flex items-center hidden text-light-200 py-4"
+    >
+      <HeaderLink title={"About"} link={"/#About"} />
+      {
+        /* <HeaderLink title={'Experience'} link={'#Experience'}></NavLink> */
+      }
+      <HeaderLink title={"Work"} link={"/#Work"} />
+      <HeaderLink title={"Blog"} link={"/blog"} />
       <HeaderLink title={"Resume"} link={"resume.pdf"} />
-      <HeaderLink title={"Contact"} link={"#Contact"} />
+      <HeaderLink title={"Contact"} link={"/#Contact"} />
       {
         /* <div class="px-4 ml-3 text-light-100 border-2 py-2 hover:bg-100 cursor-pointer hover:bg-opacity-25 rounded-md border-light-100 flex items-center justify-center">
               Resume
