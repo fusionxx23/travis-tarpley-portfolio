@@ -11,12 +11,6 @@
     className,
   )}
 >
-  <span
-    class="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center text-8xl font-semibold leading-none text-transparent dark:from-white dark:to-slate-900/10"
-  >
-    Svelte
-  </span>
-
   <!--  Inner Circles  -->
   <OrbitingCircles
     class="h-[30px] w-[30px] border-none bg-transparent"
@@ -36,6 +30,9 @@
       /></svg
     >
   </OrbitingCircles>
+  <div
+    class="absolute border border-gray-400 border-opacity-20 h-[160px] w-[160px] rounded-full"
+  ></div>
   <OrbitingCircles
     class="h-[30px] w-[30px] border-none bg-transparent"
     duration={20}
@@ -83,10 +80,12 @@
       </defs>
     </svg>
   </OrbitingCircles>
-
+  <div
+    class="absolute h-[320px] z-[0] w-[320px] border rounded-full border-gray-400 border-opacity-20"
+  ></div>
   <!-- Outer Circles (reverse)  -->
   <OrbitingCircles
-    class="h-[45px] w-[45px] border-none bg-transparent"
+    class="h-[45px] z-[1] w-[45px] border-none bg-transparent"
     radius={160}
     duration={20}
     reverse
