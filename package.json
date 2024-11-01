@@ -24,9 +24,12 @@
     "svelte": "^4.2.19",
     "tailwind-merge": "^2.5.3",
     "tailwindcss": "^3.4.13",
+    "three": "^0.170.0",
+    "three-mtl-loader": "^1.0.2",
     "typescript": "^5.6.2"
   },
   "devDependencies": {
+    "@types/three": "^0.169.0",
     "prettier": "^3.3.3",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-classnames": "^0.7.3",
