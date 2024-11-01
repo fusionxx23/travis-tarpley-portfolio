@@ -2,19 +2,20 @@
 
 ---
 
-<div></div>
+<div class="b"></div>
 <style>
-  body {
+  .b {
     margin: 0;
     height: 100vh;
   }
 
   canvas {
     display: block;
+    position: absolute;
+    top: 0;
   }
 </style>
 <script>
-  import { TbEaseOut } from "solid-icons/tb";
   import * as THREE from "three";
   import { OBJLoader, MTLLoader } from "three/examples/jsm/Addons.js";
 
@@ -23,23 +24,23 @@
 
   // Create a new Perspective Camera
   var camera = new THREE.PerspectiveCamera(
-    75,
+    5,
     window.innerWidth / window.innerHeight,
-    0.1,
-    1000,
+    1.2,
+    2000,
   );
   camera.position.z = 25;
 
   // Create a Full Screen WebGL Renderer
   var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setClearColor("#DDDDDD");
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(100, 100);
 
   document.body.appendChild(renderer.domElement);
 
   // Make sure the project is responsive based on window resizing
   window.addEventListener("resize", () => {
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(100, 100);
     camera.aspect = window.innerWidth / window.innerHeight;
 
     camera.updateProjectionMatrix();
@@ -51,7 +52,8 @@
   scene.add(light);
 
   // Defining a variable for our two models
-  var ourObjLoader;
+  //@ts-ignore
+  var ourObj;
   //@ts-ignore
   var ourObj2;
 
@@ -65,17 +67,14 @@
       // Load the object
       var objLoader = new OBJLoader();
       objLoader.setMaterials(materials);
-      objLoader.load(
-        "https://s3-us-west-2.amazonaws.com/s.cdpn.io/2621168/glass.obj",
-        function (object) {
-          scene.add(object);
+      objLoader.load("/tt.obj", function (object) {
+        scene.add(object);
 
-          //@ts-ignore
-          ourObj = object;
-          object.position.z -= 370;
-          object.rotation.x = 250;
-        },
-      );
+        //@ts-ignore
+        ourObj = object;
+        object.position.z -= 370;
+        object.rotation.x = 200;
+      });
     },
   );
 
