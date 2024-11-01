@@ -2,36 +2,30 @@
 import RootLayout from "../layouts/RootLayout.astro";
 import Home from "../components/Home/Home.astro";
 import Work from "../components/Work/Work.astro";
+import { Image } from "astro:assets";
+import pattern from "../images/pattern_cross-2.png";
 // <!-- style={{ height: `${100 * scrollPosition}vh` }} -->
+// sf
 ---
 
 <RootLayout>
-  <div class="min-h-screen relative">
-    <div class="fixed top-0 left-0 w-1 h-screen z-50">
-      <div class={`bg-purple-300 w-1 `}></div>
-    </div>
-
-    <div
-      style={{
-        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg fill='%23660ef3' fill-opacity='1'%3E%3Cpolygon fill-rule='evenodd' points='8 4 12 6 8 8 6 12 4 8 0 6 4 4 6 0 8 4'/%3E%3C/g%3E%3C/svg%3E")`,
-      }}
-      class=`absolute
-      [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_10%,transparent_100%)]
-      top-0 left-0 opacity-10 w-full h-screen`
-    >
-    </div>
-    <!-- <Sidebar /> -->
-    <!-- <SocialsLeft display={loaded} /> -->
-    <!-- <Loader display={loaded} /> -->
-    <div class="w-full scroll-smooth">
-      <!-- <Navbar display={loaded} /> -->
-      <div class="w-full min-h-fit overflow-x-hidden" id="mainPage">
-        <Home />
-        <Work />
-        <!-- <About /> -->
-        <!-- <Work /> -->
-        <!-- <Contact /> -->
-      </div>
+  <div
+    style={{}}
+    class=`absolute
+      [mask-image:radial-gradient(ellipse_50%_50%_at_30%_30%,#000_20%,transparent_95%)]
+      top-0 left-0 opacity-15 w-full h-screen`
+  >
+    <div>
+      <Image alt="Svg Pattern" src={pattern} />
     </div>
   </div>
+  <!-- <Sidebar /> -->
+  <!-- <SocialsLeft display={loaded} /> -->
+  <!-- <Loader display={loaded} /> -->
+  <!-- <Navbar display={loaded} /> -->
+  <Home />
+  <Work />
+  <!-- <About /> -->
+  <!-- <Work /> -->
+  <!-- <Contact /> -->
 </RootLayout>

@@ -3,36 +3,47 @@ import star from "../../images/4-point-stars.svg";
 ---
 
 <main
-  class={`flex relative   font-poppins justify-center text-light-100 items-center h-screen md:h-[100svh]`}
+  class={`flex mt-[-60px] font-poppins justify-center text-light-100
+    items-center h-[100svh]`}
 >
   <div class="flex justify-center">
-    <div class={`w-full animate-fade-in delay-1000`}>
+    <div class={"w-full animate-fade-in delay-1000"}>
       <p class="text-gray-400">Hello, I am</p>
       <h1
-        class={`text-4xl drop-shadow-md shadow-purple-400 bg-clip-text text-transparent bg-gradient-to-b from-white to-purple-400 text-center md:text-8xl delay-700 mb-3 font-bold `}
+        class={`text-4xl drop-shadow-md shadow-purple-400 bg-clip-text
+          text-transparent bg-gradient-to-b from-white to-purple-400
+          text-center md:text-8xl delay-700 mb-3 font-bold `}
       >
         Travis Tarpley
       </h1>
       <h3
-        class={`text-3xl pt-4  text-center md:text-3xl delay-1000 `}
-        style={{ color: "hsl(225, 20%, 85%)" }}
+        class={"text-3xl pt-4 text-center md:text-3xl delay-1000 "}
+        style={{
+          color: "hsl(225, 20%, 85%)",
+        }}
       >
         A Fullstack Developer
       </h3>
       <div class="text-center flex justify-center">
         <p class="pt-4 text-center w-80 text-gray-400">
-          I specialize in creating exceptional user experiences that are
-          high-performing, accessible, and easy to test.
+          I specialize in creating engaging user experiences
+          that are high-performing and accessible.
         </p>
       </div>
-      <div class={`flex justify-center gap-x-2 pt-20 delay-1000 font-chivo `}>
-        <a href={"#Work"}>
-          <button
-            role="navigation"
-            class="px-6 py-3 border-purple-400 text-purple-400 hover:shadow-[4px_4px_12px_2px_rgba(0,0,0,0.3)] transition-all hover:shadow-purple-400 border border-light-100 rounded-sm cursor-pointer ease-out hover:bg-light-100 hover:bg-opacity-30"
-          >
-            <h1 class="text-md text-purple-100">Check out my work!</h1>
-          </button>
+      <div
+        class={"flex justify-center gap-x-2 pt-20 delay-1000 font-chivo "}
+      >
+        <a
+          class="px-6 py-3 border-purple-400 text-purple-400
+            hover:shadow-[4px_4px_12px_2px_rgba(0,0,0,0.3)]
+            transition-all hover:shadow-purple-400 border
+            border-light-100 rounded-sm cursor-pointer ease-out
+            hover:bg-light-100 hover:bg-opacity-30"
+          href={"#Work"}
+        >
+          <h1 class="text-md text-purple-100">
+            Check out my work!
+          </h1>
         </a>
       </div>
     </div>
