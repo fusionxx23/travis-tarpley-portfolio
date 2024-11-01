@@ -23,7 +23,7 @@
   const w = window.innerWidth;
   const h = window.innerHeight;
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(100, 100);
   document.body.appendChild(renderer.domElement);
   renderer.domElement.style.setProperty("position", "absolute");
