@@ -1,0 +1,80 @@
+---
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+const url = Astro.url.href;
+
+if (import.meta.env.MODE !== "development") {
+  throw new Error(
+    "This component can not be used in production",
+  );
+}
+---
+
+<div>
+  <form
+    action="/actions/upload"
+    method="post"
+    enctype="multipart/form-data"
+  >
+    <input
+      type="hidden"
+      value="{url}"
+      name="url"
+      required
+    />
+    <input type="hidden" value="{id}" name="id" required />
+    <div>
+      <label for="{`file-input-${id}`}">Image file</label>
+      <input
+        class="text-black"
+        type="file"
+        name="file"
+        required
+        id="{`file-input-${id}`}"
+        accept="image/png, image/jpeg, image/gif"
+      />
+    </div>
+    <div>
+      <label for="{`filename-input-${id}`}">Filename</label>
+      <input
+        class="text-black"
+        type="text"
+        name="filename"
+        id="{`filename-input-${id}`}"
+        required
+      />
+    </div>
+    <div>
+      <label for="{`alt-input-${id}`}">Alt text</label>
+      <input
+        class="text-black"
+        type="text"
+        name="alt"
+        id="{`alt-input-${id}`}"
+      />
+    </div>
+    <button>
+      <input type="submit" value="Upload image" />
+    </button>
+  </form>
+</div>
+
+<script>
+  const form = document.querySelector("form")!;
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const formData = new FormData(form);
+    const response = await fetch(form.action, {
+      method: form.method,
+      body: formData,
+    });
+
+    if (!response.ok) {
+      console.error("Failed to upload image");
+    }
+  });
+</script>
