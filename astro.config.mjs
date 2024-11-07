@@ -7,9 +7,9 @@ import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 
 import svelte from "@astrojs/svelte";
-
 // https://astro.build/config
 export default defineConfig({
-  site: "https://example.com",
+  site: "https://.com",
   integrations: [mdx(), sitemap(), tailwind(), svelte()],
+  output: "hybrid",
 });
