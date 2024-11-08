@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
-import { uploadFile } from "../../libs/s3";
+import { uploadImageFile } from "../../libs/s3";
+import { DB_API_URL } from "../../data/constants";
 
 export const prerender = false;
 
@@ -24,20 +25,54 @@ export const POST: APIRoute = async ({
 
   const data = {
     file: formData.get("file") as File,
-    url: formData.get("url") as string,
-    id: formData.get("id") as string,
-    alt: formData.get("alt") as string,
-    filename: formData.get("filename") as string,
+    blog: formData.get("id") as string,
+    title: formData.get("title") as string,
+    description: formData.get("description") as string,
   };
-
   if (!data.file) throw new Error("No file provided");
-  if (!data.url) throw new Error("No URL provided");
-  if (!data.id) throw new Error("No ID provided");
-  if (!data.filename)
-    throw new Error("No filename provided");
-
+  if (!data.blog) throw new Error("No Blog provided");
   const file = Buffer.from(await data.file.arrayBuffer());
-  await uploadFile({ body: file });
+  let imageKey = "";
+  if (data.file.type) {
+    if (data.file.type === "image/png") {
+      const res = await uploadImageFile({
+        body: file,
+        fileExtension: "png",
+      });
+      if (res?.key) {
+        imageKey = res.key;
+      }
+    } else if (data.file.type === "image/jpg") {
+      const res = await uploadImageFile({
+        body: file,
+        fileExtension: "jpg",
+      });
+      if (res?.key) {
+        imageKey = res.key;
+      }
+    } else {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: "Image must be png or jpg.",
+        }),
+        {
+          headers: { "Content-Type": "application/json" },
+        },
+      );
+    }
+  }
+
+  fetch(DB_API_URL, {
+    method: "POST",
+    body: JSON.stringify({
+      title: data.title,
+      description: data.description,
+      blogContent: data.blog,
+      imageKey,
+    }),
+  });
+
   return new Response(JSON.stringify({ success: true }), {
     headers: { "Content-Type": "application/json" },
   });
