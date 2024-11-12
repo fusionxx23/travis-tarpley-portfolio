@@ -47,7 +47,7 @@ export default {
       animation: {
         "border-beam":
           "border-beam calc(var(--duration)*1s) infinite linear",
-        "fade-in": "fadeIn 1s ease-out forwards",
+        "fade-in": "fadeIn 0.8s ease-out forwards",
         "fade-down": "fadeDown 0.7s ease-out forwards",
         orbit:
           "orbit calc(var(--duration)*1s) linear infinite",
