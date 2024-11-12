@@ -17,6 +17,7 @@
     "@astrojs/sitemap": "^3.1.6",
     "@astrojs/svelte": "^5.7.1",
     "@astrojs/tailwind": "^5.1.1",
+    "@astrojs/vercel": "^7.8.2",
     "@aws-sdk/client-rds": "^3.682.0",
     "@aws-sdk/client-s3": "^3.685.0",
     "astro": "^4.15.10",
