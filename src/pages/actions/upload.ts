@@ -25,7 +25,7 @@ export const POST: APIRoute = async ({
 
   const data = {
     file: formData.get("file") as File,
-    blog: formData.get("id") as string,
+    blog: formData.get("blog") as string,
     title: formData.get("title") as string,
     description: formData.get("description") as string,
   };
@@ -63,8 +63,13 @@ export const POST: APIRoute = async ({
     }
   }
 
-  fetch(DB_API_URL, {
+  const response = await fetch(DB_API_URL + "/blog", {
     method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.BEARER}`,
+    },
     body: JSON.stringify({
       title: data.title,
       description: data.description,
@@ -72,6 +77,15 @@ export const POST: APIRoute = async ({
       imageKey,
     }),
   });
+  console.log(response);
+  if (response.status !== 200) {
+    return new Response(
+      JSON.stringify({ success: false }),
+      {
+        headers: { "Content-Type": "application/json" },
+      },
+    );
+  }
 
   return new Response(JSON.stringify({ success: true }), {
     headers: { "Content-Type": "application/json" },
