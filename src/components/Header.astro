@@ -1,22 +1,24 @@
 ---
 import HeaderLink from "./HeaderLink.astro";
-import LogoAnimated3D from "./LogoAnimated3D.astro";
 ---
 
 <header
   id="header"
-  class={`fixed w-full animate-fade-down top-0 drop-shadow-lg
-    shadow-black sm:pb-0 z-10 duration-300 transition-all `}
+  class={`fixed w-full top-0 drop-shadow-lg shadow-black sm:pb-0 z-10
+    duration-300 transition-all `}
 >
   <div
     class="flex justify-between relative items-center px-4 md:px-20"
   >
     <a href={"/#Landing"}>
-      <div
-        class="h-[50px] w-[50px] bg-transparent"
-        id="animated-logo"
-      >
-        <LogoAnimated3D />
+      <div class="bg-transparent" id="animated-logo">
+        <h2
+          class={`text-4xl bg-clip-text text-transparent bg-gradient-to-b
+            from-white to-purple-400 font-semibold text-purple-300`}
+        >
+          TT
+        </h2>
+        <!-- <LogoAnimated3D /> -->
       </div>
       <!-- <div class="cursor-pointer"> -->
       <!--   <h1 class="text-light-100 text-3xl py-2 select-none">TT</h1> -->
@@ -25,10 +27,13 @@ import LogoAnimated3D from "./LogoAnimated3D.astro";
     <div
       class="sm:flex items-center hidden text-light-200 py-4"
     >
-
-    <div class="pr-4">
-        <a class="border p-2 rounded-sm border-purple-400 duration-75  hover:border-white transition-colors" href='/resume.pdf'>Resume</a>
-    </div>
+      <div class="pr-4">
+        <a
+          class="border p-2 rounded-sm border-purple-400 duration-75
+            hover:border-white transition-colors"
+          href="/resume.pdf">Resume</a
+        >
+      </div>
       <HeaderLink title={"About"} link={"/#About"} />
       <HeaderLink title={"Work"} link={"/#Work"} />
       <HeaderLink title={"Blog"} link={"/blog"} />
