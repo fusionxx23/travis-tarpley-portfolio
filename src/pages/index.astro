@@ -4,8 +4,9 @@ import Home from "../components/Home/Home.astro";
 import Work from "../components/Work/Work.astro";
 import { Image } from "astro:assets";
 import pattern from "../images/pattern_cross-2.png";
-import { getAllFiles } from "../libs/s3/index";
-getAllFiles();
+import Projects from "../components/Projects/Projects.astro";
+// <!-- style={{ height: `${100 * scrollPosition}vh` }} -->
+// sf
 ---
 
 <RootLayout>
@@ -24,7 +25,9 @@ getAllFiles();
   <!-- <Loader display={loaded} /> -->
   <!-- <Navbar display={loaded} /> -->
   <Home />
+
   <Work />
+  <Projects/>
   <!-- <About /> -->
   <!-- <Work /> -->
   <!-- <Contact /> -->
