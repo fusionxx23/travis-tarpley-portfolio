@@ -1,4 +1,5 @@
 ---
+import SectionHeader from "../UI/SectionHeader.astro";
 import OrbitingTech from "./OrbitingTech.svelte";
 import WorkCard from './WorkCard.svelte'
 import { Image } from "astro:assets";
@@ -8,7 +9,8 @@ width:200, height:200,
 });
 ---
 
-<div class="border-black/30 bg-background w-full border-t-2 pt-8">
+<div id='Work' class="border-black/30 bg-background w-full border-t-2 pt-8">
+<SectionHeader title='Work'/>
   <div class="xl:w-[1200px] grid-cols-2 grid mx-auto">
     <OrbitingTech  />
     <div id='work' class="transition-all px-4 translate-y-5 duration-300 data-[visible=true]:translate-y-0 data-[visible=true]:opacity-100 opacity-0">
