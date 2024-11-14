@@ -13,11 +13,11 @@ import { ViewTransitions } from "astro:transitions";
       title={SITE_TITLE}
       description={SITE_DESCRIPTION}
     />
-    <ViewTransitions />
+    <!-- <ViewTransitions /> -->
   </head>
   <body class="text-white bg-background">
     <div class="pt-[60px]"></div>
-    <Header client:load />
+    <Header />
     <slot />
     <Footer />
   </body>
