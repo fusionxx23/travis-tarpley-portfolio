@@ -1,26 +1,53 @@
 ---
-import {
-  type CollectionEntry,
-  getCollection,
-} from "astro:content";
-import BlogPost from "../../layouts/BlogPost.astro";
 import RootLayout from "../../layouts/RootLayout.astro";
-
+import { Image } from "astro:assets";
+import { DB_API_URL, BEARER } from "../../data/constants";
+import { BlogsSchema, type TBlog } from "./index.astro";
 export async function getStaticPaths() {
-  const posts = await getCollection("blog");
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: post,
-  }));
+  const response = await fetch(DB_API_URL + "/blog", {
+    headers: {
+      Authorization: `Bearer ${BEARER}`,
+    },
+  }).then((r) => r.json());
+  const blogs = BlogsSchema.safeParse(response);
+  if (blogs.success) {
+    return blogs.data.map((blog) => ({
+      params: { slug: blog.slug },
+      props: blog,
+    }));
+  } else {
+    console.error("FAILED TO PARSE BLOGS");
+    return [];
+  }
 }
-type Props = CollectionEntry<"blog">;
+type Props = TBlog;
 
-const post = Astro.props;
-const { Content } = await post.render();
+const blog = Astro.props;
+
+const Content = blog.blogcontent;
+const blogDate = new Date(blog.created_at);
 ---
 
 <RootLayout>
-  <BlogPost {...post.data}>
-    <Content />
-  </BlogPost>
+  <div class="w-full pt-10">
+    <div class="mx-auto w-[800px]">
+      <div class="flex justify-center py-2">
+        <Image
+          width={400}
+          height={400}
+          src={"https://d21g8sblvruk6e.cloudfront.net/" +
+            blog.imagekey}
+          alt={blog.title}
+        />
+      </div>
+      <h1 class="text-center text-2xl">{blog.title}</h1>
+      <h2>
+        {blogDate.getMonth() + 1} - {blogDate.getDay()}
+        - {blogDate.getFullYear()}
+      </h2>
+      {Content}
+    </div>
+  </div>
+  <!-- <BlogPost {...blog}> -->
+  <!-- </BlogPost> -->
 </RootLayout>

@@ -7,18 +7,18 @@ import FormattedDate from "../../components/FormattedDate.astro";
 import { Image } from "astro:assets";
 import { DB_API_URL } from "../../data/constants";
 import { z } from "zod";
-
-const BlogSchema = z.array(
-  z.object({
-    id: z.number(),
-    title: z.string(),
-    description: z.string(),
-    blogcontent: z.string(),
-    imagekey: z.string(),
-    created_at: z.string().datetime(),
-    updated_at: z.string().datetime(),
-  }),
-);
+export const BlogSchema = z.object({
+  id: z.number(),
+  title: z.string(),
+  description: z.string(),
+  blogcontent: z.string(),
+  imagekey: z.string(),
+  created_at: z.string().datetime(),
+  updated_at: z.string().datetime(),
+  slug: z.string(),
+});
+export type TBlog = z.infer<typeof BlogSchema>;
+export const BlogsSchema = z.array(BlogSchema);
 const posts = (await getCollection("blog")).sort(
   (a, b) =>
     b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
@@ -31,6 +31,7 @@ const resp = await fetch(DB_API_URL + "/blog", {
   .then((r) => r.json())
   .catch((e) => console.log("Error"));
 const safeBlogs = BlogSchema.safeParse(resp);
+console.log(safeBlogs, "safe blogs");
 ---
 
 <RootLayout>
@@ -46,7 +47,7 @@ const safeBlogs = BlogSchema.safeParse(resp);
         {
           safeBlogs?.data?.map((post) => (
             <li>
-              <a href={`/blog/${post.title}/`}>
+              <a href={`/blog/${post.slug}/`}>
                 <Image
                   width={300}
                   height={400}
