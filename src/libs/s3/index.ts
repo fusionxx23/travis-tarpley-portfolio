@@ -23,7 +23,7 @@ export async function uploadImageFile({
   fileExtension,
 }: {
   body: Buffer;
-  fileExtension: "png" | "jpg";
+  fileExtension: "png" | "jpg" | "jpeg";
 }) {
   try {
     const id = randomUUID();
@@ -32,6 +32,7 @@ export async function uploadImageFile({
       Bucket: "tarp-portfolio-blog",
       Key: key,
       Body: body,
+      ContentType: `image/${fileExtension}`,
     });
     const resp = await client.send(command);
     console.log(resp);
