@@ -1,15 +1,32 @@
 ---
 import RootLayout from "../../layouts/RootLayout.astro";
-import BaseHead from "../../components/BaseHead.astro";
+// import BaseHead from "../../components/BaseHead.astro";
 import Header from "../../components/Header.astro";
-// import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
 import { getCollection } from "astro:content";
 import FormattedDate from "../../components/FormattedDate.astro";
-
+import { DB_API_URL } from "../../data/constants";
+import {
+  GetObjectCommand,
+  S3Client,
+} from "@aws-sdk/client-s3";
 const posts = (await getCollection("blog")).sort(
   (a, b) =>
     b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+const resp = await fetch(DB_API_URL + "/blog", {
+  headers: {
+    Authorization: `Bearer ${process.env.BEARER}`,
+  },
+})
+  .then((r) => r.json())
+  .catch((e) => console.log("Error"));
+
+const client = new S3Client({ region: "us-east-1" });
+const command = new GetObjectCommand({
+  Bucket: "tarp-portfolio-blog",
+  Key: "123",
+});
+console.log(resp);
 ---
 
 <RootLayout>
