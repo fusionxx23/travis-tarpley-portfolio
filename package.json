@@ -34,7 +34,8 @@
     "tailwindcss": "^3.4.13",
     "three": "^0.170.0",
     "three-mtl-loader": "^1.0.2",
-    "typescript": "^5.6.2"
+    "typescript": "^5.6.2",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/pg": "^8.11.10",
