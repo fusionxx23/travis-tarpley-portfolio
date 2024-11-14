@@ -50,6 +50,14 @@ export const POST: APIRoute = async ({
       if (res?.key) {
         imageKey = res.key;
       }
+    } else if (data.file.type === "image/jpeg") {
+      const res = await uploadImageFile({
+        body: file,
+        fileExtension: "jpeg",
+      });
+      if (res?.key) {
+        imageKey = res.key;
+      }
     } else {
       return new Response(
         JSON.stringify({
