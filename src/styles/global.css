@@ -31,6 +31,10 @@ html {
   }
 }
 
+pre {
+  color: white;
+  background: black;
+}
 @layer base {
   body {
   }
