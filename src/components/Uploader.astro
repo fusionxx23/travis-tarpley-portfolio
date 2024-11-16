@@ -58,13 +58,13 @@ if (import.meta.env.MODE !== "development") {
           required></textarea>
       </div>
       <div>
-        <label for="{`file-input-${id}`}">Thumbnail</label>
+        <label for="file">Thumbnail</label>
         <input
           class="text-black"
           type="file"
           name="file"
           required
-          id="{`file-input-${id}`}"
+          id="file"
           accept="image/png, image/jpeg"
         />
       </div>
@@ -92,5 +92,6 @@ if (import.meta.env.MODE !== "development") {
     if (!response.ok) {
       console.error("Failed to upload image");
     }
+    console.log(response);
   });
 </script>
