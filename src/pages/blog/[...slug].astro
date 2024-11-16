@@ -2,7 +2,11 @@
 import RootLayout from "../../layouts/RootLayout.astro";
 import { Image } from "astro:assets";
 import { DB_API_URL, BEARER } from "../../data/constants";
+import { remark } from "remark";
+import remarkHtml from "remark-html";
+import remarkGfm from "remark-gfm";
 import { BlogsSchema, type TBlog } from "./index.astro";
+import DOMPurify from "isomorphic-dompurify";
 export async function getStaticPaths() {
   const response = await fetch(DB_API_URL + "/blog", {
     headers: {
@@ -24,17 +28,25 @@ type Props = TBlog;
 
 const blog = Astro.props;
 
-const Content = blog.blogcontent;
+const blogHtml = await remark()
+  .use(remarkGfm)
+  .use(remarkHtml)
+  .process(blog.blogcontent);
+const blogContent = DOMPurify.sanitize(blogHtml.toString());
+
 const blogDate = new Date(blog.created_at);
 ---
 
 <RootLayout>
   <div class="w-full pt-10">
     <div class="mx-auto w-[800px]">
-      <div class="flex justify-center py-2">
+      <div
+        class="flex w-full h-[400px] justify-center py-2"
+      >
         <Image
           width={400}
           height={400}
+          class="object-cover w-full"
           src={"https://d21g8sblvruk6e.cloudfront.net/" +
             blog.imagekey}
           alt={blog.title}
@@ -45,7 +57,9 @@ const blogDate = new Date(blog.created_at);
         {blogDate.getMonth() + 1} - {blogDate.getDay()}
         - {blogDate.getFullYear()}
       </h2>
-      {Content}
+      <div class="px-2 py-2">
+        <div set:html={blogContent} />
+      </div>
     </div>
   </div>
   <!-- <BlogPost {...blog}> -->
