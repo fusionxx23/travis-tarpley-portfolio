@@ -24,7 +24,7 @@ const resp = await fetch(DB_API_URL + "/blog", {
   },
 })
   .then((r) => r.json())
-  .catch((e) => console.log("Error"));
+  .catch((e) => console.log("Error", e));
 console.log(resp, "RESPONSE");
 const safeBlogs = BlogsSchema.safeParse(resp);
 console.log(safeBlogs.error, "safe blogs");
