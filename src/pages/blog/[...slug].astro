@@ -40,12 +40,13 @@ const blogDate = new Date(blog.created_at);
 <RootLayout>
   <div class="w-full pt-10">
     <div class="mx-auto w-[800px]">
+      <a href="/blog" class="text-blue-400">{"<--"}Back</a>
       <div
-        class="flex w-full h-[400px] justify-center py-2"
+        class="flex w-full h-[300px] justify-center py-2"
       >
         <Image
           width={400}
-          height={400}
+          height={300}
           class="object-cover w-full"
           src={"https://d21g8sblvruk6e.cloudfront.net/" +
             blog.imagekey}
