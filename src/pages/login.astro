@@ -1,0 +1,19 @@
+---
+import RootLayout from "../layouts/RootLayout.astro";
+---
+
+<RootLayout>
+  <button id="login">Login in</button>
+  <button onclick="login()" id="login">Login in</button>
+</RootLayout>
+
+<script>
+  const { signIn, signOut } = await import(
+    "auth-astro/client"
+  );
+  document
+    .querySelector("#login")
+    ?.addEventListener("click", () => {
+      signIn();
+    });
+</script>

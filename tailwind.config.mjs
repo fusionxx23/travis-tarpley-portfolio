@@ -2,17 +2,31 @@ import { transform } from "typescript";
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
+  content: [
+    "./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}",
+  ],
   theme: {
     extend: {
       keyframes: {
         fadeIn: {
-          "0%": { opacity: "0", transform: "translate(0px,5px)" },
-          "100%": { opacity: "1", transform: "translate(0,0)" },
+          "0%": {
+            opacity: "0",
+            transform: "translate(0px,12px)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translate(0,0)",
+          },
         },
         fadeDown: {
-          "0%": { opacity: "0", transform: "translate(0px,-10px)" },
-          "100%": { opacity: "1", transform: "translate(0,0)" },
+          "0%": {
+            opacity: "0",
+            transform: "translate(0px,-10px)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translate(0,0)",
+          },
         },
         orbit: {
           "0%": {
@@ -31,10 +45,12 @@ export default {
         },
       },
       animation: {
-        "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
-        "fade-in": "fadeIn 0.5s ease-in forwards",
-        "fade-down": "fadeDown 0.5s ease-out forwards",
-        orbit: "orbit calc(var(--duration)*1s) linear infinite",
+        "border-beam":
+          "border-beam calc(var(--duration)*1s) infinite linear",
+        "fade-in": "fadeIn 0.8s ease-in-out forwards",
+        "fade-down": "fadeDown 0.7s ease-out forwards",
+        orbit:
+          "orbit calc(var(--duration)*1s) linear infinite",
       },
       colors: {
         background: "hsl(var(--background), <alpha-value>)",

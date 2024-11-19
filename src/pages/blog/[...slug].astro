@@ -1,26 +1,71 @@
 ---
-import {
-  type CollectionEntry,
-  getCollection,
-} from "astro:content";
-import BlogPost from "../../layouts/BlogPost.astro";
 import RootLayout from "../../layouts/RootLayout.astro";
-
+import { Image } from "astro:assets";
+import { DB_API_URL, BEARER } from "../../data/constants";
+import { remark } from "remark";
+import remarkHtml from "remark-html";
+import remarkGfm from "remark-gfm";
+import { BlogsSchema, type TBlog } from "./index.astro";
+import DOMPurify from "isomorphic-dompurify";
+import BackArrow from "../../components/UI/icons/backArrow.astro";
 export async function getStaticPaths() {
-  const posts = await getCollection("blog");
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: post,
-  }));
+  const response = await fetch(DB_API_URL + "/blog", {
+    headers: {
+      Authorization: `Bearer ${BEARER}`,
+    },
+  }).then((r) => r.json());
+  const blogs = BlogsSchema.safeParse(response);
+  if (blogs.success) {
+    return blogs.data.map((blog) => ({
+      params: { slug: blog.slug },
+      props: blog,
+    }));
+  } else {
+    console.error("FAILED TO PARSE BLOGS");
+    return [];
+  }
 }
-type Props = CollectionEntry<"blog">;
+type Props = TBlog;
 
-const post = Astro.props;
-const { Content } = await post.render();
+const blog = Astro.props;
+
+const blogHtml = await remark()
+  .use(remarkGfm)
+  .use(remarkHtml)
+  .process(blog.blogcontent);
+const blogContent = DOMPurify.sanitize(blogHtml.toString());
+
+const blogDate = new Date(blog.created_at);
 ---
 
 <RootLayout>
-  <BlogPost {...post.data}>
-    <Content />
-  </BlogPost>
+  <div class="w-full pt-10">
+    <div class="mx-auto w-[800px]">
+      <a href="/blog" class="text-blue-400 w-12"
+        ><BackArrow />
+      </a>
+      <div
+        class="flex w-full h-[300px] justify-center py-2"
+      >
+        <Image
+          width={400}
+          height={300}
+          class="object-cover w-full"
+          src={"https://d21g8sblvruk6e.cloudfront.net/" +
+            blog.imagekey}
+          alt={blog.title}
+        />
+      </div>
+      <h1 class="text-center text-2xl">{blog.title}</h1>
+      <h2>
+        {blogDate.getMonth() + 1} - {blogDate.getDay()}
+        - {blogDate.getFullYear()}
+      </h2>
+      <div class="px-2 py-2">
+        <div set:html={blogContent} />
+      </div>
+    </div>
+  </div>
+  <!-- <BlogPost {...blog}> -->
+  <!-- </BlogPost> -->
 </RootLayout>

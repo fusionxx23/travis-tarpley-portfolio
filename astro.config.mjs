@@ -7,9 +7,12 @@ import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 
 import svelte from "@astrojs/svelte";
-
+import vercel from "@astrojs/vercel/serverless";
+import auth from "auth-astro";
 // https://astro.build/config
 export default defineConfig({
-  site: "https://example.com",
-  integrations: [mdx(), sitemap(), tailwind(), svelte()],
+  site: "https://.com",
+  integrations: [mdx(), sitemap(), tailwind(), svelte(), auth()],
+  output: "hybrid",
+  adapter: vercel(),
 });
