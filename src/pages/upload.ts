@@ -1,4 +1,3 @@
-import fs from "fs";
 import type { APIRoute } from "astro";
 
 export const prerender = false;
@@ -9,11 +8,7 @@ const FILE_TYPE_MAP: Record<string, string> = {
   "image/gif": "gif",
 };
 
-export const POST: APIRoute = async ({
-  request,
-  url,
-  redirect,
-}) => {
+export const POST: APIRoute = async ({ request }) => {
   if (import.meta.env.MODE !== "development") {
     return new Response("Uploader not available", {
       status: 404,
