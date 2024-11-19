@@ -7,6 +7,7 @@ import remarkHtml from "remark-html";
 import remarkGfm from "remark-gfm";
 import { BlogsSchema, type TBlog } from "./index.astro";
 import DOMPurify from "isomorphic-dompurify";
+import BackArrow from "../../components/UI/icons/backArrow.astro";
 export async function getStaticPaths() {
   const response = await fetch(DB_API_URL + "/blog", {
     headers: {
@@ -40,7 +41,9 @@ const blogDate = new Date(blog.created_at);
 <RootLayout>
   <div class="w-full pt-10">
     <div class="mx-auto w-[800px]">
-      <a href="/blog" class="text-blue-400">{"<--"}Back</a>
+      <a href="/blog" class="text-blue-400 w-12"
+        ><BackArrow />
+      </a>
       <div
         class="flex w-full h-[300px] justify-center py-2"
       >
