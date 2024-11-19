@@ -1,6 +1,9 @@
 import GitHub from "@auth/core/providers/github";
 import { defineConfig } from "auth-astro";
-console.log(import.meta.env.GITHUB_CLIENT_ID);
+console.log(
+  import.meta.env.GITHUB_CLIENT_ID,
+  import.meta.env.GITHUB_CLIENT_SECRET,
+);
 export default defineConfig({
   providers: [
     GitHub({
