@@ -2,15 +2,6 @@
 interface Props {
   id: string;
 }
-
-const { id } = Astro.props;
-const url = Astro.url.href;
-
-if (import.meta.env.MODE !== "development") {
-  throw new Error(
-    "This component can not be used in production",
-  );
-}
 ---
 
 <div class="flex justify-center">
@@ -69,7 +60,11 @@ if (import.meta.env.MODE !== "development") {
         />
       </div>
 
-      <button type="submit" class="border p-2">
+      <button
+        type="submit"
+        class="border p-2 hover:bg-purple-500 hover:border-black
+          hover:text-black"
+      >
         Upload Blog Post
         <!-- <input type="submit" value="Upload image" /> -->
       </button>
