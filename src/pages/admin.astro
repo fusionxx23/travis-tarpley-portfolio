@@ -2,6 +2,7 @@
 import { getBlogs } from "../libs/blogs/";
 const safeBlogs = await getBlogs();
 import FormattedDate from "../components/FormattedDate.astro";
+import Deleter from "../components/Blog/Deleter.svelte";
 import { Image } from "astro:assets";
 import RootLayout from "../layouts/RootLayout.astro";
 import { getSession } from "auth-astro/server";
@@ -29,12 +30,7 @@ export const prerender = false;
               <a class="" href={`/blog/${post.slug}/`}>
                 <div class="flex gap-x-4">
                   <div>
-                    <button
-                      class="border border-red-400 hover:bg-red-400 p-2 hover:text-black
-                        text-red-400"
-                    >
-                      Delete
-                    </button>
+                    <Deleter client:load id={post.id.toString()} />
                   </div>
                   <div class="w-[150px]">
                     <Image
@@ -43,7 +39,7 @@ export const prerender = false;
                       class="object-cover w-[150px] h-[100px]"
                       src={
                         "https://d21g8sblvruk6e.cloudfront.net/" +
-                        post.imagekey
+                        post.imageKey
                       }
                       alt=""
                     />
@@ -59,14 +55,9 @@ export const prerender = false;
                         consectetur adipisicing elit. Facere
                       </p>
                     </div>
-                    <p class="text-gray-300 text-right text-sm">
-                      <FormattedDate
-                        date={new Date(post.created_at)}
-                      />
-                    </p>
+                    <p class="text-gray-300 text-right text-sm" />
                   </div>
                 </div>
-              </a>
             </li>
           ))
         }
