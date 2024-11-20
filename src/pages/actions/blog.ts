@@ -3,19 +3,22 @@ import { uploadImageFile } from "../../libs/s3";
 import { getSession } from "auth-astro/server";
 import { createBlog, deleteBlog } from "../../libs/blogs";
 import { createSlug } from "../../libs/utils";
+import z from "zod";
 export const prerender = false;
-export const DELETE: APIRoute = async ({
-  params,
-  request,
-}) => {
-  const { id } = params;
+export const DELETE: APIRoute = async ({ request }) => {
   const session = await getSession(request);
+
+  const formData = await request.formData();
+  console.log(formData);
+  const id = z.string().parse(formData.get("id") as string);
+  console.log("DELETING BLOG", id);
   if (!session?.user) {
     return new Response("", { status: 403 });
   }
   if (id) {
     try {
-      deleteBlog(parseInt(id));
+      const resp = await deleteBlog(parseInt(id));
+      console.log(resp.rows);
     } catch (e) {
       console.error(e);
       return new Response("", { status: 500 });
