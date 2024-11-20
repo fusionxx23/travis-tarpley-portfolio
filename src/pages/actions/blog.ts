@@ -1,22 +1,33 @@
 import type { APIRoute } from "astro";
 import { uploadImageFile } from "../../libs/s3";
-import { DB_API_URL } from "../../data/constants";
 import { getSession } from "auth-astro/server";
-import { createBlog } from "../../libs/blogs";
+import { createBlog, deleteBlog } from "../../libs/blogs";
 import { createSlug } from "../../libs/utils";
 export const prerender = false;
+export const DELETE: APIRoute = async ({
+  params,
+  request,
+}) => {
+  const { id } = params;
+  const session = await getSession(request);
+  if (!session?.user) {
+    return new Response("", { status: 403 });
+  }
+  if (id) {
+    try {
+      deleteBlog(parseInt(id));
+    } catch (e) {
+      console.error(e);
+      return new Response("", { status: 500 });
+    }
+  } else {
+    return new Response("", { status: 404 });
+  }
 
-const FILE_TYPE_MAP: Record<string, string> = {
-  "image/jpeg": "jpg",
-  "image/png": "png",
-  "image/gif": "gif",
+  return new Response("Success", { status: 200 });
 };
 
-export const POST: APIRoute = async ({
-  request,
-  url,
-  redirect,
-}) => {
+export const POST: APIRoute = async ({ request }) => {
   if (import.meta.env.MODE !== "development") {
     return new Response("Uploader not available", {
       status: 404,
