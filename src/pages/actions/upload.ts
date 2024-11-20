@@ -1,7 +1,9 @@
 import type { APIRoute } from "astro";
 import { uploadImageFile } from "../../libs/s3";
 import { DB_API_URL } from "../../data/constants";
-
+import { getSession } from "auth-astro/server";
+import { createBlog } from "../../libs/blogs";
+import { createSlug } from "../../libs/utils";
 export const prerender = false;
 
 const FILE_TYPE_MAP: Record<string, string> = {
@@ -20,7 +22,10 @@ export const POST: APIRoute = async ({
       status: 404,
     });
   }
-
+  const session = await getSession(request);
+  if (!session?.user) {
+    return new Response("", { status: 403 });
+  }
   const formData = await request.formData();
 
   const data = {
@@ -71,22 +76,16 @@ export const POST: APIRoute = async ({
     }
   }
 
-  const response = await fetch(DB_API_URL + "/blog", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.BEARER}`,
-    },
-    body: JSON.stringify({
-      title: data.title,
-      description: data.description,
-      blogContent: data.blog,
-      imageKey,
-    }),
+  const response = await createBlog({
+    title: data.title,
+    description: data.description,
+    imageKey,
+    blogContent: data.blog,
+    createdAt: Date.now().toString(),
+    updatedAt: Date.now().toString(),
+    slug: createSlug(data.title),
   });
-  console.log(response);
-  if (response.status !== 200) {
+  if (response.rows) {
     return new Response(
       JSON.stringify({ success: false }),
       {
