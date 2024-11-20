@@ -5,18 +5,15 @@ import { DB_API_URL, BEARER } from "../../data/constants";
 import { remark } from "remark";
 import remarkHtml from "remark-html";
 import remarkGfm from "remark-gfm";
-import { BlogsSchema, type TBlog } from "./index.astro";
 import DOMPurify from "isomorphic-dompurify";
 import BackArrow from "../../components/UI/icons/backArrow.astro";
+import { getBlogs } from "../../libs/blogs/index";
+import { SelectBlog } from "../../libs/models/index.ts";
 export async function getStaticPaths() {
-  const response = await fetch(DB_API_URL + "/blog", {
-    headers: {
-      Authorization: `Bearer ${BEARER}`,
-    },
-  }).then((r) => r.json());
-  const blogs = BlogsSchema.safeParse(response);
-  if (blogs.success) {
-    return blogs.data.map((blog) => ({
+  getBlogs;
+  const blogs = await getBlogs();
+  if (blogs) {
+    return blogs.map((blog) => ({
       params: { slug: blog.slug },
       props: blog,
     }));
@@ -25,17 +22,18 @@ export async function getStaticPaths() {
     return [];
   }
 }
-type Props = TBlog;
+type Props = SelectBlog;
 
 const blog = Astro.props;
 
 const blogHtml = await remark()
   .use(remarkGfm)
   .use(remarkHtml)
-  .process(blog.blogcontent);
+  .process(blog.blogContent);
 const blogContent = DOMPurify.sanitize(blogHtml.toString());
 
-const blogDate = new Date(blog.created_at);
+const blogDate = new Date(parseInt(blog.createdAt));
+export const prerender = true;
 ---
 
 <RootLayout>
@@ -52,7 +50,7 @@ const blogDate = new Date(blog.created_at);
           height={300}
           class="object-cover w-full"
           src={"https://d21g8sblvruk6e.cloudfront.net/" +
-            blog.imagekey}
+            blog.imageKey}
           alt={blog.title}
         />
       </div>
