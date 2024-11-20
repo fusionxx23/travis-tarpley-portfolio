@@ -1,5 +1,5 @@
 ---
-import Uploader from "../components/Uploader.astro";
+import Uploader from "../components/Uploader.svelte";
 import RootLayout from "../layouts/RootLayout.astro";
 import { getSession } from "auth-astro/server";
 
@@ -12,5 +12,5 @@ export const prerender = false;
 ---
 
 <RootLayout>
-  <Uploader id="1" />
+  <Uploader client:load />
 </RootLayout>
