@@ -3,39 +3,11 @@ import RootLayout from "../../layouts/RootLayout.astro";
 import Header from "../../components/Header.astro";
 import FormattedDate from "../../components/FormattedDate.astro";
 import { Image } from "astro:assets";
-import { DB_API_URL } from "../../data/constants";
-import { z } from "zod";
-export const BlogSchema = z.object({
-  id: z.number(),
-  title: z.string(),
-  description: z.string(),
-  blogcontent: z.string(),
-  imagekey: z.string(),
-  created_at: z.string().datetime(),
-  updated_at: z.string().datetime(),
-  slug: z.string(),
-});
-
-export type TBlog = z.infer<typeof BlogSchema>;
-export const BlogsSchema = z.array(BlogSchema);
-const resp = await fetch(DB_API_URL + "/blog", {
-  headers: {
-    Authorization: `Bearer ${process.env.BEARER}`,
-  },
-})
-  .then((r) => r.json())
-  .catch((e) => console.log("Error", e));
-console.log(resp, "RESPONSE");
-const safeBlogs = BlogsSchema.safeParse(resp);
-console.log(safeBlogs.error, "safe blogs");
+import { getBlogs } from "../../libs/blogs/index.ts";
+const safeBlogs = await getBlogs();
 ---
 
 <RootLayout>
-  <!-- <BaseHead -->
-  <!--   title={SITE_TITLE} -->
-  <!--   description={SITE_DESCRIPTION} -->
-  <!-- /> -->
-
   <div class="pt-[60px]"></div>
   <main class="flex justify-center">
     <section class="">
@@ -44,7 +16,7 @@ console.log(safeBlogs.error, "safe blogs");
       </h1>
       <ul class="space-y-8">
         {
-          safeBlogs?.data?.map((post) => (
+          safeBlogs?.map((post) => (
             <li
               class="bg-black/30 w-[600px] border-2 border-purple-300/30
                 rounded-lg p-4"
@@ -58,7 +30,7 @@ console.log(safeBlogs.error, "safe blogs");
                       class="object-cover w-[150px] h-[100px]"
                       src={
                         "https://d21g8sblvruk6e.cloudfront.net/" +
-                        post.imagekey
+                        post.imageKey
                       }
                       alt=""
                     />
@@ -75,9 +47,17 @@ console.log(safeBlogs.error, "safe blogs");
                       </p>
                     </div>
                     <p class="text-gray-300 text-right text-sm">
-                      <FormattedDate
-                        date={new Date(post.created_at)}
-                      />
+                      <h4>
+                        {Intl.DateTimeFormat("en-US", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        }).format(
+                          new Date(
+                            parseInt(post.createdAt),
+                          ),
+                        )}
+                      </h4>
                     </p>
                   </div>
                 </div>
