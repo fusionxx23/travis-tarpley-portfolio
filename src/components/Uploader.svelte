@@ -4,7 +4,6 @@
   let status = "";
   // Handle form submission
   async function handleSubmit(event) {
-    event.preventDefault();
     const form = event.target;
     const formData = new FormData(form);
 
@@ -28,7 +27,7 @@
 <div class="flex justify-center">
   <div>
     <form
-      action="/actions/upload"
+      action="/actions/blog"
       method="post"
       enctype="multipart/form-data"
       class="space-y-2"
