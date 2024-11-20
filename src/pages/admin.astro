@@ -22,12 +22,12 @@ export const prerender = false;
       </h1>
       <ul class="space-y-8">
         {
-          safeBlogs?.data?.map((post) => (
+          safeBlogs?.map((post) => (
             <li
               class="bg-black/30 w-[600px] border-2 border-purple-300/30
                 rounded-lg p-4"
             >
-              <a class="" href={`/blog/${post.slug}/`}>
+              <!-- <a class="" href={`/blog/${post.slug}/`}> -->
                 <div class="flex gap-x-4">
                   <div>
                     <Deleter client:load id={post.id.toString()} />
@@ -58,6 +58,7 @@ export const prerender = false;
                     <p class="text-gray-300 text-right text-sm" />
                   </div>
                 </div>
+              <!-- </a> -->
             </li>
           ))
         }
