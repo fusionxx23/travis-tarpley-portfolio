@@ -30,7 +30,12 @@ export async function createBlog(blog: InsertBlog) {
   const resp = await db.insert(blogTable).values(blog);
   return resp;
 }
-export async function deleteBlog(id: SelectBlog["id"]) {}
+export async function deleteBlog(id: SelectBlog["id"]) {
+  const resp = await db
+    .delete(blogTable)
+    .where(eq(blogTable.id, id));
+  return resp;
+}
 export async function updateBlog(
   id: SelectBlog["id"],
   data: Partial<Omit<SelectBlog, "id">>,
