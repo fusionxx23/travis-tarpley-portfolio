@@ -1,16 +1,15 @@
 ---
 import RootLayout from "../../layouts/RootLayout.astro";
 import { Image } from "astro:assets";
-import { DB_API_URL, BEARER } from "../../data/constants";
 import { remark } from "remark";
 import remarkHtml from "remark-html";
+import { CLOUDFRONT_URL } from "@data/constants";
 import remarkGfm from "remark-gfm";
 import DOMPurify from "isomorphic-dompurify";
 import BackArrow from "../../components/UI/icons/backArrow.astro";
 import { getBlogs } from "../../libs/blogs/index";
 import { type SelectBlog } from "../../libs/models/index.ts";
 export async function getStaticPaths() {
-  getBlogs;
   const blogs = await getBlogs();
   if (blogs) {
     return blogs.map((blog) => ({
@@ -49,8 +48,7 @@ export const prerender = true;
           width={400}
           height={300}
           class="object-cover w-full"
-          src={"https://d21g8sblvruk6e.cloudfront.net/" +
-            blog.imageKey}
+          src={`${CLOUDFRONT_URL}/${blog.imageKey}`}
           alt={blog.title}
         />
       </div>
