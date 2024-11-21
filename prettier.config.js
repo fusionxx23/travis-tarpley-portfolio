@@ -3,7 +3,7 @@ export default {
   plugins: [
     "prettier-plugin-astro",
     "prettier-plugin-svelte",
-    "prettier-plugin-classnames",
+    // "prettier-plugin-classnames",
   ],
   tabWidth: 2,
   endPosition: "relative",

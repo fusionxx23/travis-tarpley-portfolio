@@ -19,25 +19,44 @@ export async function getAllFiles() {
 }
 
 export async function uploadImageFile({
-  body,
-  fileExtension,
+  file,
 }: {
-  body: Buffer;
-  fileExtension: "png" | "jpg" | "jpeg";
+  file: File;
 }) {
+  const body = Buffer.from(await file.arrayBuffer());
   try {
+    if (!checkIsImage(file.type)) {
+      console.log("not image");
+      return undefined;
+    }
     const id = randomUUID();
-    let key = `${id}.${fileExtension}`;
+    let key = `${id}.${file.type.split("/")[1]}`;
     const command = new PutObjectCommand({
       Bucket: "tarp-portfolio-blog",
       Key: key,
       Body: body,
-      ContentType: `image/${fileExtension}`,
+      ContentType: `${file.type}`,
     });
-    const resp = await client.send(command);
-    console.log(resp);
+    await client.send(command);
+    console.log(key, "KEY");
     return { key };
   } catch (e) {
     console.log(e);
+  }
+}
+
+function checkIsImage(type: string) {
+  console.log(type.split("/"));
+  switch (type.split("/")[1].toLowerCase()) {
+    case "jpeg":
+      return true;
+    case "jpg":
+      return true;
+    case "png":
+      return true;
+    case "webp":
+      return true;
+    default:
+      return false;
   }
 }

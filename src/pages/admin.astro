@@ -1,14 +1,21 @@
 ---
-import RootLayout from "../../layouts/RootLayout.astro";
-import Header from "../../components/Header.astro";
-import FormattedDate from "../../components/FormattedDate.astro";
-import { Image } from "astro:assets";
-import { getBlogs } from "../../libs/blogs/index.ts";
+import { getBlogs } from "../libs/blogs/";
 const safeBlogs = await getBlogs();
+import {CLOUDFRONT_URL} from '@data/constants'
+import FormattedDate from "../components/FormattedDate.astro";
+import Deleter from "../components/Blog/Deleter.svelte";
+import { Image } from "astro:assets";
+import RootLayout from "../layouts/RootLayout.astro";
+import { getSession } from "auth-astro/server";
+const session = await getSession(Astro.request);
+if (session?.user?.email !== import.meta.env.EMAIL) {
+  return Astro.redirect("/");
+}
+
+export const prerender = false;
 ---
 
 <RootLayout>
-  <div class="pt-[60px]"></div>
   <main class="flex justify-center">
     <section class="">
       <h1 class="text-3xl py-4 text-gray-100 font-semibold">
@@ -20,16 +27,19 @@ const safeBlogs = await getBlogs();
             <li
               class="bg-black/30 w-[600px] border-2 border-purple-300/30
                 rounded-lg p-4"
-            >
-              <a class="" href={`/blog/${post.slug}/`}>
+        >
                 <div class="flex gap-x-4">
+                  <div class='flex flex-col gap-y-2'>
+                    <Deleter client:load id={post.id.toString()} />
+                    <a class='border p-2 rounded-md' href={`/blog/update/${post.slug}`}>Edit</a>
+                  </div>
                   <div class="w-[150px]">
                     <Image
                       width={150}
                       height={100}
                       class="object-cover w-[150px] h-[100px]"
                       src={
-                        "https://d21g8sblvruk6e.cloudfront.net/" +
+                        CLOUDFRONT_URL + "/" +
                         post.imageKey
                       }
                       alt=""
@@ -46,22 +56,10 @@ const safeBlogs = await getBlogs();
                         consectetur adipisicing elit. Facere
                       </p>
                     </div>
-                    <p class="text-gray-300 text-right text-sm">
-                      <h4>
-                        {Intl.DateTimeFormat("en-US", {
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        }).format(
-                          new Date(
-                            parseInt(post.createdAt),
-                          ),
-                        )}
-                      </h4>
-                    </p>
+                    <p class="text-gray-300 text-right text-sm" />
                   </div>
                 </div>
-              </a>
+              <!-- </a> -->
             </li>
           ))
         }
@@ -69,5 +67,3 @@ const safeBlogs = await getBlogs();
     </section>
   </main>
 </RootLayout>
-
-<Header />
