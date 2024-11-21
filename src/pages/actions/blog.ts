@@ -9,6 +9,34 @@ import {
 import { createSlug } from "../../libs/utils";
 import z from "zod";
 export const prerender = false;
+async function deployVercel() {
+  const resp = await fetch(
+    import.meta.env.VERCEL_DEPLOY_HOOK,
+    {
+      method: "POST",
+    },
+  ).then((r) => r.json());
+  return resp;
+}
+function jsonErrorResponse({
+  message,
+}: {
+  message: string;
+}) {
+  return new Response(
+    JSON.stringify({
+      success: false,
+      error: message,
+    }),
+    { status: 200 },
+  );
+}
+const successJson = new Response(
+  JSON.stringify({
+    success: true,
+  }),
+  { status: 200 },
+);
 export const DELETE: APIRoute = async ({ request }) => {
   const session = await getSession(request);
 
@@ -31,6 +59,7 @@ export const DELETE: APIRoute = async ({ request }) => {
 
   return new Response("Success", { status: 200 });
 };
+
 export const PUT: APIRoute = async ({ request }) => {
   const session = await getSession(request);
   if (!session?.user) {
@@ -52,7 +81,6 @@ export const PUT: APIRoute = async ({ request }) => {
 
   // Use same image if no file was uploaded
   const { blog, title, description } = data;
-  console.log(data.file, "DATA FILE");
   if (data.file.size === 0) {
     try {
       updateBlog(parseInt(data.id), {
@@ -63,7 +91,13 @@ export const PUT: APIRoute = async ({ request }) => {
       });
     } catch (e) {
       console.log(e);
+      return jsonErrorResponse({
+        message: `Failed to update blog.`,
+      });
     }
+
+    await deployVercel();
+    return successJson;
   } else {
     const res = await uploadImageFile({ file: data.file });
     if (res?.key) {
@@ -77,7 +111,12 @@ export const PUT: APIRoute = async ({ request }) => {
         });
       } catch (e) {
         console.log(e);
+        return jsonErrorResponse({
+          message: "Failed to update blog.",
+        });
       }
+      await deployVercel();
+      return successJson;
     } else {
       return new Response(
         JSON.stringify({
@@ -88,9 +127,6 @@ export const PUT: APIRoute = async ({ request }) => {
       );
     }
   }
-  return new Response(JSON.stringify({ success: true }), {
-    status: 200,
-  });
 };
 
 export const POST: APIRoute = async ({ request }) => {
@@ -151,12 +187,10 @@ export const POST: APIRoute = async ({ request }) => {
       slug: createSlug(data.title),
     });
     if (response.rows) {
-      return new Response(
-        JSON.stringify({ success: true }),
-        {
-          headers: { "Content-Type": "application/json" },
-        },
-      );
+      await fetch(import.meta.env.VERCEL_DEPLOY_HOOK, {
+        method: "POST",
+      }).then((r) => r.json());
+      return successJson;
     }
   } catch (e) {
     console.log(e);
