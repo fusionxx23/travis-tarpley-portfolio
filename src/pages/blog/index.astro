@@ -1,7 +1,6 @@
 ---
 import RootLayout from "../../layouts/RootLayout.astro";
 import Header from "../../components/Header.astro";
-import FormattedDate from "../../components/FormattedDate.astro";
 import { CLOUDFRONT_URL } from "@data/constants";
 import { Image } from "astro:assets";
 import { getBlogs } from "../../libs/blogs/index.ts";
@@ -23,7 +22,7 @@ const safeBlogs = await getBlogs();
             const ext = arr[1];
             return (
               <li
-                class="bg-black/30 w-[600px] border-2 border-purple-300/30
+                class="bg-black/30 w-[600px] border-2 border-gray-800
                 rounded-lg p-4"
               >
                 <a class="" href={`/blog/${post.slug}/`}>
