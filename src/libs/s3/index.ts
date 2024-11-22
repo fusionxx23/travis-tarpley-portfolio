@@ -32,7 +32,7 @@ export async function uploadImageFile({
     const id = randomUUID();
     let key = `${id}.${file.type.split("/")[1]}`;
     const command = new PutObjectCommand({
-      Bucket: "tarp-portfolio-blog",
+      Bucket: import.meta.env.S3_BUCKET_NAME,
       Key: key,
       Body: body,
       ContentType: `${file.type}`,
