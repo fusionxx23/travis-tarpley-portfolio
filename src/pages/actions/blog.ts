@@ -147,7 +147,6 @@ export const POST: APIRoute = async ({ request }) => {
     title: formData.get("title") as string,
     description: formData.get("description") as string,
   };
-  console.log(data, "DATA");
   if (!data.file) throw new Error("No file provided");
   if (!data.blog) throw new Error("No Blog provided");
   if (!data.title) throw new Error("No Title provided");
