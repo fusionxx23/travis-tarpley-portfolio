@@ -38,6 +38,18 @@ export async function getBlogFromSlug({
   return resp;
 }
 
+export async function getBlogFromId({
+  id,
+}: {
+  id: SelectBlog["id"];
+}) {
+  const resp = await db
+    .select()
+    .from(blogTable)
+    .where(eq(blogTable.id, id))
+    .limit(1);
+  return resp[0] || null;
+}
 export async function createBlog(blog: InsertBlog) {
   const resp = await db.insert(blogTable).values(blog);
   return resp;
