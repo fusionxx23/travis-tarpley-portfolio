@@ -1,14 +1,14 @@
 ---
-import RootLayout from "../../layouts/RootLayout.astro";
+import RootLayout from "../../../layouts/RootLayout.astro";
 import { Image } from "astro:assets";
 import { remark } from "remark";
 import remarkHtml from "remark-html";
 import { CLOUDFRONT_URL } from "@data/constants";
 import remarkGfm from "remark-gfm";
 import DOMPurify from "isomorphic-dompurify";
-import BackArrow from "../../components/UI/icons/backArrow.astro";
-import { getBlogs } from "../../libs/blogs/index";
-import { type SelectBlog } from "../../libs/models/index.ts";
+import BackArrow from "@components/UI/icons/backArrow.astro";
+import { getBlogs } from "@libs/blogs/index";
+import { type SelectBlog } from "@libs/models/index.ts";
 export async function getStaticPaths() {
   const blogs = await getBlogs();
   if (blogs) {

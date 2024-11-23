@@ -1,0 +1,72 @@
+---
+import ChevronLeft from "@components/UI/icons/chevronLeft.astro";
+interface Props {
+  currentPage: number;
+  totalPage: number;
+}
+const { currentPage, totalPage } = Astro.props;
+---
+
+<div class="py-4 flex justify-end">
+  <div class="gap-x-2 flex">
+    <a
+      href={currentPage > 1 ? '/blog/1' : undefined}
+      aria-disabled={currentPage === 1}
+      type="button"
+      aria-label={`Next Page`}
+      class="rounded-sm aria-disabled:text-gray-500 bg-gray-800/50 h-8 w-8 flex justify-center items-center"
+    >
+      <ChevronLeft />
+    </a>
+
+    <button
+      type="button"
+      aria-label={`Current Page`}
+      disabled={true}
+      class="rounded-sm text-purple-400 bg-gray-800/50 h-8 w-8 flex justify-center items-center"
+    >
+      {currentPage }
+    </button>
+    {
+      [1, 2].map((a) => {
+      let pageNum = currentPage + a;
+      if(pageNum > totalPage){
+        return undefined
+      }
+        return (
+          <a
+            href={`/blog/${pageNum}`}
+            type="button"
+            aria-label={`Page ${pageNum}`}
+            class="rounded-sm disabled:text-gray-400 data-[state=selected]:text-purple-400 cursor-pointer bg-gray-800/50 h-8 w-8 flex justify-center items-center"
+          >
+            {currentPage + a}
+          </a>
+        );
+      })
+    }
+    {
+      totalPage > 3 && (
+        <div class="h-8 w-8 flex justify-center items-end">
+          <span>...</span>
+        </div>
+        <button
+          type="button"
+          aria-label={`Page ${totalPage}`}
+          class="rounded-sm cursor-pointer bg-gray-800/50 h-8 w-8 flex justify-center items-center"
+        >
+          {totalPage}
+        </button>
+      )
+    }
+
+    <a
+      href={currentPage < totalPage ? `/blog/${currentPage +1}`: undefined}
+      aria-label={`Next Page`}
+      aria-disabled={currentPage >= totalPage}
+      class="rounded-sm rotate-180 aria-disabled:text-gray-500 bg-gray-800/50 h-8 w-8 flex justify-center items-center"
+    >
+      <ChevronLeft />
+    </a>
+  </div>
+</div>

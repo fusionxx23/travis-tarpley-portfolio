@@ -1,7 +1,7 @@
 ---
 import RootLayout from "../../layouts/RootLayout.astro";
-
 import Header from "../../components/Header.astro";
+import Pagination from "@components/UI/Pagination.astro";
 import { CLOUDFRONT_URL } from "@data/constants";
 import { Image } from "astro:assets";
 import {
@@ -9,15 +9,45 @@ import {
   getTotalAmountOfBlogs,
 } from "../../libs/blogs/index";
 import { type SelectBlog } from "../../libs/models";
-import Pagination from "@components/UI/Pagination.astro";
-const blogs = await getBlogs();
-const total = await getTotalAmountOfBlogs();
-
-let count = total.data?.["COUNT(*)"] ?? 0;
-let pages = 1;
-if (count > 10) {
-  pages = Math.floor(count / 10);
+interface Props {
+  blogs: SelectBlog[];
+  pages: number;
 }
+export async function getStaticPaths() {
+  let blogPage: SelectBlog[][] = [];
+  const total = await getTotalAmountOfBlogs();
+  console.log(total.data);
+  let offset = 0;
+  while (true) {
+    const blogs = await getBlogs(offset);
+    blogPage.push(blogs);
+    offset += 10;
+    if (blogs.length < 10) {
+      break;
+    }
+  }
+  if (!total.success) {
+    console.error(
+      "Failed to parse total blog posts amount. ",
+    );
+  }
+  // Default to 0 if there was an error
+  let count = total.data?.["COUNT(*)"] ?? 0;
+  let pages = 1;
+  if (count > 10) {
+    pages = Math.floor(count / 10);
+  }
+  return blogPage.map((blogs, ind) => {
+    return {
+      params: {
+        page: (ind + 1).toString(),
+      },
+      props: { blogs, pages },
+    };
+  });
+}
+const { blogs, pages } = Astro.props;
+const { page } = Astro.params;
 ---
 
 <RootLayout>
@@ -59,9 +89,6 @@ if (count > 10) {
                         </h4>
                         <p class="text-gray-400 text-[14px]">
                           {post.description}
-                          Lorem ipsum dolor sit, amet
-                          consectetur adipisicing elit.
-                          Facere
                         </p>
                       </div>
                       <div class="text-gray-300 w-full font-medium text-right text-sm">
@@ -85,7 +112,9 @@ if (count > 10) {
           })
         }
       </ul>
-      <Pagination currentPage={1} totalPage={pages} />
+      <Pagination currentPage={1} totalPage={1} />
     </section>
   </main>
 </RootLayout>
+
+<Header />

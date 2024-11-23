@@ -4,14 +4,26 @@ import {
   type InsertBlog,
   type SelectBlog,
 } from "../models";
-import { desc, eq } from "drizzle-orm";
-
-export async function getBlogs() {
+import { desc, eq, sql } from "drizzle-orm";
+import z from "zod";
+const count = z.object({
+  "COUNT(*)": z.number(),
+});
+export async function getTotalAmountOfBlogs() {
+  const result = await db.get(
+    sql`SELECT COUNT(*) FROM blogs;`,
+  );
+  const safe = count.safeParse(result);
+  console.log(safe, "SAFE");
+  return safe;
+}
+export async function getBlogs(offset = 0, limit = 10) {
   const blogs = await db
     .select()
     .from(blogTable)
+    .limit(limit)
+    .offset(offset)
     .orderBy(desc(blogTable.id));
-  console.log(blogs, "BLOGS");
   return blogs;
 }
 export async function getBlogFromSlug({
