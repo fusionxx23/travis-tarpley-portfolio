@@ -112,7 +112,10 @@ const { page } = Astro.params;
           })
         }
       </ul>
-      <Pagination currentPage={1} totalPage={1} />
+      <Pagination
+        currentPage={parseInt(page)}
+        totalPage={pages}
+      />
     </section>
   </main>
 </RootLayout>
