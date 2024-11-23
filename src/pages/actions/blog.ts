@@ -1,9 +1,13 @@
 import type { APIRoute } from "astro";
-import { uploadImageFile } from "../../libs/s3";
+import {
+  deleteBlogFiles,
+  uploadImageFile,
+} from "../../libs/s3";
 import { getSession } from "auth-astro/server";
 import {
   createBlog,
   deleteBlog,
+  getBlogFromId,
   updateBlog,
 } from "../../libs/blogs";
 import { createSlug } from "../../libs/utils";
@@ -47,8 +51,18 @@ export const DELETE: APIRoute = async ({ request }) => {
   }
   if (id) {
     try {
-      const resp = await deleteBlog(parseInt(id));
-      console.log(resp.rows);
+      const blog = await getBlogFromId({
+        id: parseInt(id),
+      });
+      if (!blog.imageKey) {
+        return new Response("", { status: 404 });
+      }
+      const imageKey = blog.imageKey;
+      await deleteBlog(parseInt(id));
+      console.log(imageKey, "KEY");
+      await deleteBlogFiles({
+        key: imageKey,
+      });
     } catch (e) {
       console.error(e);
       return new Response("", { status: 500 });
@@ -100,6 +114,11 @@ export const PUT: APIRoute = async ({ request }) => {
     return successJson;
   } else {
     const res = await uploadImageFile({ file: data.file });
+
+    const blogResp = await getBlogFromId({
+      id: parseInt(data.id),
+    });
+    await deleteBlogFiles({ key: blogResp.imageKey });
     if (res?.key) {
       try {
         updateBlog(parseInt(data.id), {
