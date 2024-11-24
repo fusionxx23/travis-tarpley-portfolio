@@ -1,0 +1,58 @@
+<div
+  class={` flex justify-center transition-all duration-150 border-2 border-gray-800 rounded-md`}
+>
+  <section
+    class="w-full flex flex-col justify-start h-full p-4 sm:p-6"
+  >
+    <div>
+      <div class="flex justify-between">
+        <div class="text-light-200 flex">
+          {
+             (
+              <a
+                rel="noopener noreferrer"
+                target="_blank"
+                href={'/git'}
+              >
+                <!-- <FiGithub -->
+                <!--   class="cursor-pointer ml-1 hover:text-light-100" -->
+                <!--   size={20} -->
+                <!-- /> -->
+              </a>
+            )
+          }
+        </div>
+      </div>
+      <h1
+        class="text-light-200 mt-4 text-2xl font-chivo hover:text-light-100"
+      >
+        Title
+      </h1>
+    </div>
+
+    <div class="flex justify-center">
+      <div class="mt-4 relative cursor-pointer">
+        {/* Purple BG */}
+        <div
+          class="absolute transition-all z-10 ease-in h-full w-full hover:bg-transparent bg-purple-400 bg-opacity-40 rounded-md"
+        >
+        </div>
+        <!-- <Image -->
+        <!--   class="rounded-md z-0 transition-all ease-in" -->
+        <!--   src={img} -->
+        <!--   alt={title} -->
+        <!--   style={{ -->
+        <!--     filter: `${imageHover ? "" : "grayscale(100%)"}`, -->
+        <!--   }} -->
+        <!-- /> -->
+      </div>
+    </div>
+
+    <div class="flex flex-col">
+      <div class="font-chivo text-light-300 text-sm mt-1">
+        <p>Description</p>
+      </div>
+      <div class="flex"></div>
+    </div>
+  </section>
+</div>
