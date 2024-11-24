@@ -53,7 +53,14 @@ export default {
           "orbit calc(var(--duration)*1s) linear infinite",
       },
       colors: {
-        background: "hsl(var(--background), <alpha-value>)",
+        background: {
+          100: "hsl(var(--background-100), <alpha-value>)",
+          200: "hsl(var(--background-200), <alpha-value>)",
+          600: "hsl(var(--background-600), <alpha-value>)",
+        },
+        primary: {
+          100: "hsl(var(--primary-100), <alpha-value>)",
+        },
       },
     },
   },

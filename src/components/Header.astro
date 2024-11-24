@@ -4,7 +4,7 @@ import HeaderLink from "./HeaderLink.astro";
 
 <header
   id="header"
-  class={`fixed  bg-background w-full top-0 drop-shadow-lg shadow-black
+  class={`fixed  bg-background-100 w-full top-0 drop-shadow-lg shadow-black
     sm:pb-0 z-10 duration-300 transition-all `}
 >
   <div
@@ -47,12 +47,12 @@ import HeaderLink from "./HeaderLink.astro";
     console.log(window.scrollY);
     if (window.scrollY > 0) {
       if (!addedBg) {
-        header?.classList.add("bg-background");
+        header?.classList.add("bg-background-100");
         addedBg = true;
       }
     } else if (window.scrollY === 0) {
       if (addedBg) {
-        header?.classList.remove("bg-background");
+        header?.classList.remove("bg-background-100");
         addedBg = false;
       }
     }
