@@ -1,5 +1,10 @@
+---
+import projectImage from '../../images/isekai-money.webp'
+import {Image} from 'astro:assets'
+---
+
 <div
-  class={` flex justify-center transition-all duration-150 border-2 border-gray-800 rounded-md`}
+  class={` border-purple-300/30 border-2  flex justify-center transition-all duration-150  rounded-sm`}
 >
   <section
     class="w-full flex flex-col justify-start h-full p-4 sm:p-6"
@@ -24,35 +29,44 @@
         </div>
       </div>
       <h1
-        class="text-light-200 mt-4 text-2xl font-chivo hover:text-light-100"
+        class="text-light-200 mt-4 text-2xl font-medium hover:text-light-100"
       >
         Title
       </h1>
     </div>
 
     <div class="flex justify-center">
-      <div class="mt-4 relative cursor-pointer">
+      <div class="mt-4 relative cursor-pointer group">
         {/* Purple BG */}
         <div
-          class="absolute transition-all z-10 ease-in h-full w-full hover:bg-transparent bg-purple-400 bg-opacity-40 rounded-md"
+          class="absolute transition-all z-10 ease-in h-full w-full group  hover:bg-transparent bg-purple-400 bg-opacity-20 rounded-md"
         >
         </div>
-        <!-- <Image -->
-        <!--   class="rounded-md z-0 transition-all ease-in" -->
-        <!--   src={img} -->
-        <!--   alt={title} -->
-        <!--   style={{ -->
-        <!--     filter: `${imageHover ? "" : "grayscale(100%)"}`, -->
-        <!--   }} -->
-        <!-- /> -->
+        <Image
+          class="rounded-md z-0 transition-all grayscale group-hover:grayscale-0 ease-in"
+          src={projectImage}
+          alt={'Project Image'}
+        />
       </div>
     </div>
 
-    <div class="flex flex-col">
-      <div class="font-chivo text-light-300 text-sm mt-1">
-        <p>Description</p>
+    <div class="flex flex-col pt-2">
+      <div class=" text-gray-300 h-[100px] text-sm mt-1">
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ea deserunt laudantium at molestias libero non magni magnam. </p>
       </div>
       <div class="flex"></div>
     </div>
+
+    <div class="pt-4">
+      <div class="flex gap-x-2">
+        <a class="border hover:bg-purple-400/20 hover:text-white border-purple-400 text-purple-400  rounded-sm p-2" href='/'>Live Demo</a>
+        <a class="border hover:bg-purple-400/20 hover:text-white border-purple-400 text-purple-400  rounded-sm p-2" href='/'>Video Demo</a>
+        <a class="border hover:bg-purple-400/20 hover:text-white border-purple-400 text-purple-400  rounded-sm p-2" href='/'>Blog Post</a>
+      </div>
+    </div>
   </section>
 </div>
+
+          <!-- style={{ -->
+          <!--   filter: `${imageHover ? "" : "grayscale(100%)"}`, -->
+          <!-- }} -->
