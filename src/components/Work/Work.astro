@@ -1,15 +1,5 @@
 ---
 import SectionHeader from "../UI/SectionHeader.astro";
-import OrbitingTech from "./OrbitingTech.svelte";
-import WorkCard from "./WorkCard.svelte";
-import { Image } from "astro:assets";
-import { getImage } from "astro:assets";
-const optimizedBackground = await getImage({
-  src: "https://avatars.githubusercontent.com/u/93428946?v=4",
-  format: "webp",
-  width: 200,
-  height: 200,
-});
 ---
 
 <div
@@ -17,26 +7,31 @@ const optimizedBackground = await getImage({
   class="border-black/30 bg-background w-full border-t-2 pt-8"
 >
   <SectionHeader title="Work" />
-
-  <div class="xl:w-[1200px] grid-cols-2 grid mx-auto">
-    <OrbitingTech />
-    <div
-      id="work"
-      class="transition-all px-4 translate-y-5 duration-300
-        data-[visible=true]:translate-y-0
-        data-[visible=true]:opacity-100 opacity-0"
-    >
+  <div class="flex justify-center pt-8">
+    <div class="bg-purple-300/30 p-2 rounded-sm">
+      <span>Experience.</span>
+    </div>
+  </div>
+  <div class="gap-x-4">
+    <div class="justify-start flex">
       <div>
-        <WorkCard>
-          <div slot="image">
-            <Image
-              height={40}
-              width={40}
-              src={optimizedBackground.src}
-              alt="Test"
-            />
-          </div>
-        </WorkCard>
+        <h3 class="font-medium text-xl">
+          Frontend Developer
+        </h3>
+        <p class="text-gray-400 pt-2">
+          SIR Trading - 2024/08 - Present
+        </p>
+      </div>
+    </div>
+
+    <div class="flex justify-end">
+      <div>
+        <h3 class="font-medium text-xl">
+          Frontend Developer
+        </h3>
+        <p class="text-gray-400 pt-2">
+          SIR Trading - 2024/08 - Present
+        </p>
       </div>
     </div>
   </div>
