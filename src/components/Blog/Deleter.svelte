@@ -1,6 +1,5 @@
 <script>
   export let id;
-
   let status = "";
   // Handle form submission
   async function handleSubmit(event) {
