@@ -38,7 +38,11 @@ const imageId = arr[0];
 const ext = arr[1];
 ---
 
-<RootLayout>
+<RootLayout
+  imageUrl={`${CLOUDFRONT_URL}/${imageId}_800x.${ext}`}
+  title={blog.title}
+  description={blog.description}
+>
   <div class="w-full pt-10">
     <div class="mx-auto w-[800px]">
       <div class="flex">
