@@ -2,11 +2,10 @@
 
 ---
 
-<div class="b"></div>
+<div id="animated-logo"></div>
 <style>
   canvas {
     display: block;
-    position: absolute;
     top: 0;
   }
 </style>
@@ -23,7 +22,7 @@
     antialias: true,
     alpha: true,
   });
-  renderer.setSize(50, 50);
+  renderer.setSize(96, 96);
   document
     .querySelector("#animated-logo")
     ?.appendChild(renderer.domElement);

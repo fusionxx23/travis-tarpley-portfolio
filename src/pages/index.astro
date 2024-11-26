@@ -1,12 +1,11 @@
 ---
 import RootLayout from "../layouts/RootLayout.astro";
 import Home from "../components/Home/Home.astro";
-import Work from "../components/Work/Work.astro";
+import About from "../components/About/About.astro";
 import { Image } from "astro:assets";
 import pattern from "../images/pattern_cross-2.png";
 import Projects from "../components/Projects/Projects.astro";
-// <!-- style={{ height: `${100 * scrollPosition}vh` }} -->
-// sf
+import Work from "@components/Work/Work.astro";
 ---
 
 <RootLayout>
@@ -24,10 +23,16 @@ import Projects from "../components/Projects/Projects.astro";
   <!-- <SocialsLeft display={loaded} /> -->
   <!-- <Loader display={loaded} /> -->
   <!-- <Navbar display={loaded} /> -->
-  <Home />
 
-  <Work />
-  <Projects />
+  <div class="mx-auto w-full lg:w-[1000px] px-4">
+    <Home />
+    <Work />
+    <div class="py-24"></div>
+    <Projects />
+    <div class="py-24"></div>
+    <About />
+  </div>
+
   <!-- <About /> -->
   <!-- <Work /> -->
   <!-- <Contact /> -->
