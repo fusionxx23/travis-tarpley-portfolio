@@ -23,6 +23,9 @@
       console.error("An error occurred:", error);
     }
   }
+  const arr = blog.imageKey.split(".");
+  const imageId = arr[0];
+  const ext = arr[1];
 </script>
 
 <div class="flex justify-center">
@@ -30,7 +33,9 @@
     <h1>Editing Blog {blog.title}</h1>
     <div class="w-[400px] h-[300px]">
       <img
-        src={CLOUDFRONT_URL + "/" + blog.imageKey}
+        src={CLOUDFRONT_URL +
+          "/" +
+          `${imageId}_800x.${ext}`}
         alt="Thumbnail"
       />
     </div>
@@ -41,7 +46,12 @@
         class="space-y-2"
         on:submit|preventDefault={handleSubmit}
       >
-        <input type="text" name="id" value={blog.id} />
+        <input
+          type="text"
+          hidden
+          name="id"
+          value={blog.id}
+        />
         <div>
           <div>
             <label for="title">Title</label>
