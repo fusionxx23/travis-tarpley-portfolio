@@ -46,7 +46,12 @@
         class="space-y-2"
         on:submit|preventDefault={handleSubmit}
       >
-        <input type="text" name="id" value={blog.id} />
+        <input
+          type="text"
+          hidden
+          name="id"
+          value={blog.id}
+        />
         <div>
           <div>
             <label for="title">Title</label>
