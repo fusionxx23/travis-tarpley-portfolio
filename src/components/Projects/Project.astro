@@ -1,6 +1,11 @@
 ---
 import projectImage from '../../images/isekai-money.webp'
+import YoutubeModal from '@components/UI/youtubeModal.astro'
 import {Image} from 'astro:assets'
+interface Props {
+  id:string
+}
+const {id} = Astro.props
 ---
 
 <div
@@ -60,7 +65,7 @@ import {Image} from 'astro:assets'
     <div class="pt-4">
       <div class="flex gap-x-2">
         <a class="border hover:bg-purple-300/20 hover:text-white border-purple-300 text-purple-300  rounded-sm p-2" href='/'>Live Demo</a>
-        <a class="border hover:bg-purple-300/20 hover:text-white border-purple-300 text-purple-300  rounded-sm p-2" href='/'>Video Demo</a>
+        <YoutubeModal id={id}/>
         <a class="border hover:bg-purple-300/20 hover:text-white border-purple-300 text-purple-300  rounded-sm p-2" href='/'>Blog Post</a>
       </div>
     </div>
