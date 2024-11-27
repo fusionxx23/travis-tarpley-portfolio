@@ -33,6 +33,10 @@ const blogHtml = await remark()
   .process(blog.blogContent);
 export const prerender = true;
 console.log(blog, "BLOG");
+
+if (!blog) {
+  return Astro.redirect("/");
+}
 ---
 
 <RootLayout>
