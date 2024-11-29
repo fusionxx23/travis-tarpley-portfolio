@@ -5,10 +5,15 @@ export const onRequest: MiddlewareHandler = async (
   context,
   next,
 ) => {
-  const rootPath = context.url.pathname.split("/")[1];
-  if (rootPath.toLowerCase() === "admin") {
+  const paths = context.url.pathname.split("/");
+  const rootPath = paths[1];
+  const isAdminAction =
+    rootPath.toLowerCase() === "action" &&
+    paths[2].toLowerCase() === "admin";
+
+  if (rootPath.toLowerCase() === "admin" || isAdminAction) {
     const session = await getSession(context.request);
-    if (session?.user?.email !== import.meta.env.EMAIL) {
+    if (session?.user?.email === import.meta.env.EMAIL) {
       return next();
     } else {
       return new Response(null, {
