@@ -1,16 +1,12 @@
-import type { APIRoute } from "astro";
-import {
-  deleteBlogFiles,
-  uploadImageFile,
-} from "../../libs/s3";
-import { getSession } from "auth-astro/server";
 import {
   createBlog,
   deleteBlog,
   getBlogFromId,
   updateBlog,
-} from "../../libs/blogs";
-import { createSlug } from "../../libs/utils";
+} from "@libs/blogs";
+import { deleteBlogFiles, uploadImageFile } from "@libs/s3";
+import { createSlug } from "@libs/utils";
+import type { APIRoute } from "astro";
 import z from "zod";
 export const prerender = false;
 async function deployVercel() {
@@ -42,13 +38,8 @@ const successJson = new Response(
   { status: 200 },
 );
 export const DELETE: APIRoute = async ({ request }) => {
-  const session = await getSession(request);
-
   const formData = await request.formData();
   const id = z.string().parse(formData.get("id") as string);
-  if (!session?.user) {
-    return new Response("", { status: 403 });
-  }
   if (id) {
     try {
       const blog = await getBlogFromId({
@@ -59,7 +50,6 @@ export const DELETE: APIRoute = async ({ request }) => {
       }
       const imageKey = blog.imageKey;
       await deleteBlog(parseInt(id));
-      console.log(imageKey, "KEY");
       await deleteBlogFiles({
         key: imageKey,
       });
@@ -75,10 +65,6 @@ export const DELETE: APIRoute = async ({ request }) => {
 };
 
 export const PUT: APIRoute = async ({ request }) => {
-  const session = await getSession(request);
-  if (!session?.user) {
-    return new Response("", { status: 403 });
-  }
   const formData = await request.formData();
   // ZOD THIS
   const data = {
@@ -153,10 +139,6 @@ export const POST: APIRoute = async ({ request }) => {
     return new Response("Uploader not available", {
       status: 404,
     });
-  }
-  const session = await getSession(request);
-  if (!session?.user) {
-    return new Response("", { status: 403 });
   }
   const formData = await request.formData();
 
