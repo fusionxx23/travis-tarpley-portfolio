@@ -41,7 +41,7 @@
     </div>
     <div>
       <form
-        action="/actions/blog"
+        action="/actions/admin/blog"
         enctype="multipart/form-data"
         class="space-y-2"
         on:submit|preventDefault={handleSubmit}

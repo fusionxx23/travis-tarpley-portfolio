@@ -24,7 +24,7 @@
 </script>
 
 <form
-  action="/actions/blog"
+  action="/actions/admin/blog"
   method="POST"
   enctype="multipart/form-data"
   on:submit|preventDefault={handleSubmit}

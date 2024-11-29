@@ -1,6 +1,7 @@
 ---
 import { getBlogs } from "../libs/blogs/";
 const safeBlogs = await getBlogs();
+import { decode } from "@auth/core/jwt";
 import {CLOUDFRONT_URL} from '@data/constants'
 import Deleter from "../components/Blog/Deleter.svelte";
 import { Image } from "astro:assets";

@@ -27,7 +27,7 @@
 <div class="flex justify-center">
   <div>
     <form
-      action="/actions/blog"
+      action="/actions/admin/blog"
       method="post"
       enctype="multipart/form-data"
       class="space-y-2"
