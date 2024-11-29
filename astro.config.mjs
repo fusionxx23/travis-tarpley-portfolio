@@ -20,6 +20,7 @@ export default defineConfig({
     auth(),
   ],
   output: "hybrid",
-  adapter: vercel(),
+  adapter: vercel({
+    edgeMiddleware: true,
+  }),
 });
-
