@@ -12,6 +12,7 @@ export const onRequest: MiddlewareHandler = async (
     paths[2].toLowerCase() === "admin";
 
   if (rootPath.toLowerCase() === "admin" || isAdminAction) {
+    console.log("inside here.");
     const session = await getSession(context.request);
     if (session?.user?.email === import.meta.env.EMAIL) {
       return next();
