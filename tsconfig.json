@@ -8,7 +8,6 @@
       "@components/*": ["src/components/*"],
       "@libs/*": ["src/libs/*"],
       "@data/*": ["src/data/*"],
-      "@src/*": ["src/*"]
     }
   }
 }
