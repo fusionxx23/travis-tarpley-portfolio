@@ -8,7 +8,6 @@
     event.preventDefault();
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
-    console.log("PUT");
     try {
       const response = await fetch(form.action, {
         method: "PUT",
@@ -23,6 +22,7 @@
       console.error("An error occurred:", error);
     }
   }
+
   const arr = blog.imageKey.split(".");
   const imageId = arr[0];
   const ext = arr[1];
