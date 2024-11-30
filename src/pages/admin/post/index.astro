@@ -1,0 +1,10 @@
+---
+import RootLayout from "@layouts/RootLayout.astro";
+import Uploader from "@components/Blog/Uploader.svelte";
+
+export const prerender = false;
+---
+
+<RootLayout>
+  <Uploader client:load />
+</RootLayout>

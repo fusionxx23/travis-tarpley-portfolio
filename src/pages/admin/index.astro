@@ -1,18 +1,18 @@
 ---
-import { getBlogs } from "../libs/blogs/";
+import { getBlogs } from "@libs/blogs/index";
 const safeBlogs = await getBlogs();
-import {CLOUDFRONT_URL} from '@data/constants'
-import Deleter from "../components/Blog/Deleter.svelte";
+import { CLOUDFRONT_URL } from "@data/constants";
+import Deleter from "@components/Blog/Deleter.svelte";
 import { Image } from "astro:assets";
-import RootLayout from "../layouts/RootLayout.astro";
+import RootLayout from "@libs/../layouts/RootLayout.astro";
 import { getSession } from "auth-astro/server";
 try {
   const session = await getSession(Astro.request);
   if (session?.user?.email !== import.meta.env.EMAIL) {
     return Astro.redirect("/");
   }
-}catch(e) {
-  console.log(e, "ERROR")
+} catch (e) {
+  console.log(e, "ERROR");
   return Astro.redirect("/");
 }
 
@@ -27,15 +27,27 @@ export const prerender = false;
       </h1>
       <ul class="space-y-8">
         {
-          safeBlogs?.map((post) => (
-            <li
-              class="bg-black/30 w-[600px] border-2 border-purple-300/30
+          safeBlogs?.map((post) => {
+            const arr = post.imageKey.split(".");
+            const imageId = arr[0];
+            const ext = arr[1];
+            return (
+              <li
+                class="bg-black/30 w-[600px] border-2 border-purple-300/30
                 rounded-lg p-4"
-        >
+              >
                 <div class="flex gap-x-4">
-                  <div class='flex flex-col gap-y-2'>
-                    <Deleter client:load id={post.id.toString()} />
-                    <a class='border p-2 rounded-md' href={`/blog/update/${post.slug}`}>Edit</a>
+                  <div class="flex flex-col gap-y-2">
+                    <Deleter
+                      client:load
+                      id={post.id.toString()}
+                    />
+                    <a
+                      class="border p-2 rounded-md"
+                      href={`/admin/update/${post.slug}`}
+                    >
+                      Edit
+                    </a>
                   </div>
                   <div class="w-[150px]">
                     <Image
@@ -43,8 +55,11 @@ export const prerender = false;
                       height={100}
                       class="object-cover w-[150px] h-[100px]"
                       src={
-                        CLOUDFRONT_URL + "/" +
-                        post.imageKey
+                        CLOUDFRONT_URL +
+                        "/" +
+                        imageId +
+                        "_150x." +
+                        ext
                       }
                       alt=""
                     />
@@ -56,16 +71,14 @@ export const prerender = false;
                       </h4>
                       <p class="text-gray-400 text-[14px]">
                         {post.description}
-                        Lorem ipsum dolor sit, amet
-                        consectetur adipisicing elit. Facere
                       </p>
                     </div>
                     <p class="text-gray-300 text-right text-sm" />
                   </div>
                 </div>
-              <!-- </a> -->
-            </li>
-          ))
+              </li>
+            );
+          })
         }
       </ul>
     </section>
