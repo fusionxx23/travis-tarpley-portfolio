@@ -50,9 +50,11 @@ import ResumeBtn from "@/components/Header/ResumeBtn.astro";
 <script>
   const button = document.querySelector("#nav-toggle");
   console.log(button);
-  const menu = document.querySelector("#nav-menu");
-  button.addEventListener("click", () => {
-    if (menu?.dataset.state === "open") {
+  const menu = document.querySelector(
+    "#nav-menu",
+  ) as HTMLElement;
+  button?.addEventListener("click", () => {
+    if (menu?.dataset?.state === "open") {
       close();
     } else {
       open();
