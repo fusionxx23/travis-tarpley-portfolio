@@ -5,7 +5,6 @@
   async function handleSubmit(event) {
     const form = event.target;
     const formData = new FormData(form);
-    console.log(form.method, "METHOD");
     try {
       const response = await fetch(form.action, {
         method: "DELETE",
@@ -23,12 +22,7 @@
   }
 </script>
 
-<form
-  action="/actions/admin/blog"
-  method="POST"
-  enctype="multipart/form-data"
-  on:submit|preventDefault={handleSubmit}
->
+<form action="/actions/admin/delete" method="POST">
   <input
     value={id.toString()}
     name="id"
@@ -44,3 +38,5 @@
     Delete
   </button>
 </form>
+
+<!-- on:submit|preventDefault={handleSubmit} -->
