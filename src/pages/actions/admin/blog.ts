@@ -3,9 +3,12 @@ import {
   deleteBlog,
   getBlogFromId,
   updateBlog,
-} from "@libs/blogs";
-import { deleteBlogFiles, uploadImageFile } from "@libs/s3";
-import { createSlug } from "@libs/utils";
+} from "@/libs/blogs";
+import {
+  deleteBlogFiles,
+  uploadImageFile,
+} from "@/libs/s3";
+import { createSlug } from "@/libs/utils";
 import type { APIRoute } from "astro";
 import z from "zod";
 export const prerender = false;

@@ -9,12 +9,12 @@
     "dist"
   ],
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": ".", 
     "paths": {
-      "@components/*": ["src/components/*"],
-      "@libs/*": ["src/libs/*"],
-      "@layouts/*": ["src/layouts/*"],
-      "@data/*": ["src/data/*"],
+      "@/*": [
+        "./src/*"
+      ]
     }
+
   }
 }

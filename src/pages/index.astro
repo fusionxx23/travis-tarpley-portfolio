@@ -5,7 +5,7 @@ import About from "../components/About/About.astro";
 import { Image } from "astro:assets";
 import pattern from "../images/pattern_cross-2.png";
 import Projects from "../components/Projects/Projects.astro";
-import Work from "@components/Work/Work.astro";
+import Work from "@/components/Work/Work.astro";
 ---
 
 <RootLayout>
@@ -33,9 +33,9 @@ import Work from "@components/Work/Work.astro";
       class="mx-auto w-full z-20 lg:w-[1000px] px-4 bg-background-100"
     >
       <Work />
-      <div class="py-24"></div>
+      <div class="py-4 md:py-24"></div>
       <Projects />
-      <div class="py-24"></div>
+      <div class="py-4 md:py-24"></div>
       <About />
     </div>
   </div>

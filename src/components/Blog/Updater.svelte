@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { type SelectBlog } from "@libs/models/index";
-  import { CLOUDFRONT_URL } from "@data/constants";
+  import { type SelectBlog } from "@/libs/models/index";
+  import { CLOUDFRONT_URL } from "@/data/constants";
   export let blog: SelectBlog;
   let status: string = "";
 
