@@ -52,19 +52,19 @@ import ResumeBtn from "@/components/Header/ResumeBtn.astro";
   console.log(button);
   const menu = document.querySelector("#nav-menu");
   button.addEventListener("click", () => {
-    if (menu.dataset.state === "open") {
+    if (menu?.dataset.state === "open") {
       close();
     } else {
       open();
     }
   });
   const close = () => {
-    menu.setAttribute("data-state", "closed");
-    button.setAttribute("data-state", "closed");
+    menu?.setAttribute("data-state", "closed");
+    button?.setAttribute("data-state", "closed");
   };
   const open = () => {
-    menu.setAttribute("data-state", "open");
-    button.setAttribute("data-state", "open");
+    menu?.setAttribute("data-state", "open");
+    button?.setAttribute("data-state", "open");
   };
 
   const links = document.querySelectorAll(".mobile-link");
