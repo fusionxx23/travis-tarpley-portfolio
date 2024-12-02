@@ -1,10 +1,11 @@
 ---
 import HeaderLink from "./HeaderLink.astro";
+import NavHeader from "@/components/Header/NavHeader.astro";
 ---
 
 <header
   id="header"
-  class={`fixed  bg-background-100 w-full top-0 drop-shadow-lg shadow-black
+  class={`fixed py-4 bg-background-100 w-full top-0 drop-shadow-lg shadow-black
     sm:pb-0 z-20 duration-300 transition-all `}
 >
   <div
@@ -24,9 +25,10 @@ import HeaderLink from "./HeaderLink.astro";
       <!--   <h1 class="text-light-100 text-3xl py-2 select-none">TT</h1> -->
       <!-- </div> -->
     </a>
-    <div
-      class="sm:flex items-center hidden text-light-200 py-4"
-    >
+    <div class="sm:hidden">
+      <NavHeader />
+    </div>
+    <div class="sm:flex items-center hidden text-light-200">
       <div class="pr-4">
         <a
           class="border p-2 rounded-sm border-purple-400 duration-75
@@ -44,7 +46,6 @@ import HeaderLink from "./HeaderLink.astro";
   const header = window.document.querySelector("#header");
   let addedBg = true;
   window.addEventListener("scroll", (e) => {
-    console.log(window.scrollY);
     if (window.scrollY > 0) {
       if (!addedBg) {
         header?.classList.add("bg-background-100");
