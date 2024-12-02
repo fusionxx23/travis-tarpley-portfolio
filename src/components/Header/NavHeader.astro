@@ -1,0 +1,81 @@
+---
+import ResumeBtn from "@/components/Header/ResumeBtn.astro";
+---
+
+<div class="fixed z-20 right-4 top-6 flex">
+  <ResumeBtn />
+  <button
+    id="nav-toggle"
+    class="group"
+    data-state="closed"
+    aria-label="Toggle Mobile Navigation"
+    type="button"
+  >
+    <div class="space-y-[6px]">
+      <div
+        class="h-[2px] transition-all group-data-[state=open]:translate-y-2 group-data-[state=open]:rotate-45 w-6 bg-white"
+      >
+      </div>
+      <div
+        class="h-[2px] group-data-[state=open]:opacity-0 transition-opacity w-6 bg-white"
+      >
+      </div>
+      <div
+        class="h-[2px] transition-all group-data-[state=open]:-translate-y-2 group-data-[state=open]:-rotate-45 w-6 bg-white"
+      >
+      </div>
+    </div>
+  </button>
+</div>
+<div
+  id="nav-menu"
+  data-state="closed"
+  class="right-0 top-0 z-10 duration-300 transition-all fixed data-[state=closed]:-right-[250px] w-[250px] data-[state=open]:right-0 h-screen bg-background-200"
+>
+  <ul
+    class="flex flex-col gap-y-4 w-full items-center pt-32 text-lg"
+  >
+    <li>
+      <a class="mobile-link" href="#About"> About. </a>
+    </li>
+    <li>
+      <a class="mobile-link" href="#About"> Experience. </a>
+    </li>
+    <li>
+      <a class="mobile-link" href="/blog"> Blog. </a>
+    </li>
+  </ul>
+</div>
+
+<script>
+  const button = document.querySelector("#nav-toggle");
+  console.log(button);
+  const menu = document.querySelector(
+    "#nav-menu",
+  ) as HTMLElement;
+  button?.addEventListener("click", () => {
+    if (menu?.dataset?.state === "open") {
+      close();
+    } else {
+      open();
+    }
+  });
+  const close = () => {
+    menu?.setAttribute("data-state", "closed");
+    button?.setAttribute("data-state", "closed");
+  };
+  const open = () => {
+    menu?.setAttribute("data-state", "open");
+    button?.setAttribute("data-state", "open");
+  };
+
+  const links = document.querySelectorAll(".mobile-link");
+  console.log(links);
+  links.forEach((element) => {
+    console.log("RAN");
+    element.addEventListener("click", () => {
+      console.log("clicked");
+      close();
+    });
+  });
+</script>

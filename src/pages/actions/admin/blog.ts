@@ -34,6 +34,7 @@ function jsonErrorResponse({
     { status: 200 },
   );
 }
+
 const successJson = new Response(
   JSON.stringify({
     success: true,
