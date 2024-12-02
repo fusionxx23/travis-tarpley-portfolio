@@ -4,6 +4,7 @@ import {
   S3Client,
   type DeleteObjectsCommandInput,
 } from "@aws-sdk/client-s3";
+import sharp from "sharp";
 import { randomUUID } from "crypto";
 import dotenv from "dotenv";
 dotenv.config(); // load in .env into process.env
@@ -40,6 +41,19 @@ export async function uploadImageFile({
 }) {
   const body = Buffer.from(await file.arrayBuffer());
   try {
+    const sharpImage = sharp(body);
+    const metaData = await sharpImage.metadata();
+    const width = metaData.width;
+    const height = metaData.height;
+    if (!width || !height) {
+      throw Error("Wrong aspect ratio.");
+    }
+    if (width / height !== 1.5) {
+      throw Error("Wrong aspect ratio.");
+    }
+    if (width < 800) {
+      throw Error("Image too small.");
+    }
     if (!checkIsImage(file.type)) {
       console.log("not image");
       return undefined;
@@ -53,7 +67,6 @@ export async function uploadImageFile({
       ContentType: `${file.type}`,
     });
     await client.send(command);
-    console.log(key, "KEY");
     return { key };
   } catch (e) {
     console.log(e);
