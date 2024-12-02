@@ -41,32 +41,6 @@ const successJson = new Response(
   }),
   { status: 200 },
 );
-export const DELETE: APIRoute = async ({ request }) => {
-  const formData = await request.formData();
-  const id = z.string().parse(formData.get("id") as string);
-  if (id) {
-    try {
-      const blog = await getBlogFromId({
-        id: parseInt(id),
-      });
-      if (!blog.imageKey) {
-        return new Response("", { status: 404 });
-      }
-      const imageKey = blog.imageKey;
-      await deleteBlog(parseInt(id));
-      await deleteBlogFiles({
-        key: imageKey,
-      });
-    } catch (e) {
-      console.error(e);
-      return new Response("", { status: 500 });
-    }
-  } else {
-    return new Response("", { status: 404 });
-  }
-
-  return new Response("Success", { status: 200 });
-};
 
 export const PUT: APIRoute = async ({ request }) => {
   const formData = await request.formData();
