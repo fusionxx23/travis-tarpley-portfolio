@@ -59,13 +59,15 @@ const ext = arr[1];
       <h1 class="text-center font-bold text-4xl py-6 e">
         {blog.title}
       </h1>
-      <div class="py-2">
-        <div class="flex lg:h-[400px] justify-center">
+      <div class="py-2 flex justify-center">
+        <div
+          class="flex w-[300px] lg:w-full justify-center"
+        >
           <Image
             loading={"eager"}
-            width={400}
-            height={300}
-            class="object-cover w-full"
+            width={800}
+            height={400}
+            class="object-contain"
             src={`${CLOUDFRONT_URL}/${imageId}_800x.${ext}`}
             alt={blog.title}
           />
