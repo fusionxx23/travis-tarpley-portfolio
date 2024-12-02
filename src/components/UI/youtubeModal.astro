@@ -15,7 +15,9 @@ const { id } = Astro.props;
   id={"modal" + id}
   class="backdrop:bg-black/50 rounded-sm"
 >
-  <div class="bg-background-100 p-12 relative">
+  <div
+    class="bg-background-100 px-2 py-10 md:p-12 relative"
+  >
     <button
       id={"close-modal" + id}
       class="absolute right-3 top-3 cursor-pointer text-white"
@@ -24,7 +26,7 @@ const { id } = Astro.props;
     >
     <iframe
       id="youtube-video"
-      class="w-[500px] h-[315px]"
+      class="w-[300px] lg:w-[500px] lg:h-[315px]"
       src="https://www.youtube.com/embed/dQw4w9WgXcQ"
       title="YouTube video player"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
