@@ -2,11 +2,12 @@
   export let id;
 
   let status = "";
+  let isLoading = false;
   // Handle form submission
   async function handleSubmit(event) {
     const form = event.target;
     const formData = new FormData(form);
-
+    isLoading = true;
     try {
       const response = await fetch(form.action, {
         method: form.method,
@@ -15,15 +16,20 @@
       console.log(response, "RESPONSE");
       if (response.success) {
         status = "Success!";
+        form.reset();
       } else {
         status = "Failed!";
       }
     } catch (error) {
       console.error("An error occurred:", error);
     }
+    isLoading = false;
   }
 </script>
 
+<div class="w-[500px] mx-auto py-6">
+  <a class="border p-2" href="/admin">Back</a>
+</div>
 <div class="flex justify-center">
   <div>
     <form
@@ -85,10 +91,16 @@
 
       <button
         type="submit"
-        class="border p-2 hover:bg-purple-500 hover:border-black
+        class="border group p-2 hover:bg-purple-500 hover:border-black
           hover:text-black"
+        disabled={isLoading}
       >
-        Upload Blog Post
+        <div class="group-disabled:hidden">
+          Upload Blog Post
+        </div>
+        <div class="group-disabled:block hidden">
+          Loading...
+        </div>
       </button>
       <p>{status}</p>
     </form>
