@@ -1,5 +1,6 @@
 <script lang="ts">
   import { type SelectBlog } from "@/libs/models/index";
+  import Editor from "./Editor.svelte";
   import { CLOUDFRONT_URL } from "@/data/constants";
   export let blog: SelectBlog;
   let status: string = "";
@@ -30,9 +31,9 @@
   const ext = arr[1];
 </script>
 
-<div class="flex justify-center">
+<div class=" flex justify-center">
   <div>
-    <h1>Editing Blog {blog.title}</h1>
+    <h1 class="text-xl">Editing: Blog {blog.title}</h1>
     <div class="w-[400px] h-[300px]">
       <img
         src={CLOUDFRONT_URL +
@@ -41,6 +42,11 @@
         alt="Thumbnail"
       />
     </div>
+  </div>
+</div>
+
+<div class="">
+  <div class="">
     <div>
       <form
         action="/actions/admin/blog"
@@ -48,74 +54,73 @@
         class="space-y-2"
         on:submit|preventDefault={handleSubmit}
       >
-        <input
-          type="text"
-          hidden
-          name="id"
-          value={blog.id}
-        />
-        <div>
-          <div>
-            <label for="title">Title</label>
+        <div class="flex justify-center">
+          <div class="space-y-4">
+            <input
+              type="text"
+              hidden
+              name="id"
+              value={blog.id}
+            />
+            <div>
+              <div>
+                <label for="title">Title</label>
+              </div>
+              <input
+                type="text"
+                class="text-black p-2"
+                name="title"
+                id="title"
+                required
+                value={blog.title}
+              />
+            </div>
+            <div>
+              <div>
+                <label for="description">Description</label>
+              </div>
+              <input
+                type="text"
+                class="text-black p-2"
+                name="description"
+                id="description"
+                required
+                value={blog.description}
+              />
+            </div>
+
+            <div class="text-white">
+              <label for="file">Thumbnail</label>
+              <input
+                class="text-white"
+                type="file"
+                name="file"
+                id="file"
+                accept="image/png, image/jpeg"
+              />
+            </div>
           </div>
-          <input
-            type="text"
-            class="text-black p-2"
-            name="title"
-            id="title"
-            required
-            value={blog.title}
-          />
-        </div>
-        <div>
-          <div>
-            <label for="description">Description</label>
-          </div>
-          <input
-            type="text"
-            class="text-black p-2"
-            name="description"
-            id="description"
-            required
-            value={blog.description}
-          />
-        </div>
-        <div>
-          <div>
-            <label for="blog">Blog Post</label>
-          </div>
-          <textarea
-            class="text-black p-2 h-[200px] w-[400px]"
-            name="blog"
-            id="blog"
-            required>{blog.blogContent}</textarea
-          >
-        </div>
-        <div class="text-white">
-          <label for="file">Thumbnail</label>
-          <input
-            class="text-white"
-            type="file"
-            name="file"
-            id="file"
-            accept="image/png, image/jpeg"
-          />
         </div>
 
-        <button
-          type="submit"
-          class="border group p-2 hover:bg-purple-500 hover:border-black
+        <Editor content={blog.blogContent} />
+        <div class="flex justify-center pt-6">
+          <div>
+            <button
+              type="submit"
+              class="border group p-2 hover:bg-purple-500 hover:border-black
           hover:text-black"
-          disabled={isLoading}
-        >
-          <div class="group-disabled:hidden">
-            Update Blog Post
+              disabled={isLoading}
+            >
+              <div class="group-disabled:hidden">
+                Update Blog Post
+              </div>
+              <div class="group-disabled:block hidden">
+                Loading...
+              </div>
+            </button>
+            <p>{status}</p>
           </div>
-          <div class="group-disabled:block hidden">
-            Loading...
-          </div>
-        </button>
-        <p>{status}</p>
+        </div>
       </form>
     </div>
   </div>
