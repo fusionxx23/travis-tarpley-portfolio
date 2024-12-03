@@ -48,6 +48,7 @@ export async function getStaticPaths() {
 }
 const { blogs, pages } = Astro.props;
 const { page } = Astro.params;
+export const prerender = true;
 ---
 
 <RootLayout title="Travis Tarpley | Blog">
@@ -73,11 +74,11 @@ const { page } = Astro.params;
                   href={`/blog/post/${post.slug}/`}
                 >
                   <div class="flex gap-x-4">
-                    <div class="w-[150px]">
+                    <div class="w-[150px] h-[100px] flex-shrink-0">
                       <Image
                         width={150}
                         height={100}
-                        class="object-cover w-[150px] h-[100px]"
+                        class="object-cover w-full h-full"
                         src={`${CLOUDFRONT_URL}/${imageId}_150x.${ext}`}
                         alt=""
                       />

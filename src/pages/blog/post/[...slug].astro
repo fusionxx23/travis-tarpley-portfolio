@@ -1,5 +1,6 @@
 ---
 import "@/components/../styles/markdown-styles.css";
+import "highlight.js/styles/agate.css";
 import RootLayout from "../../../layouts/RootLayout.astro";
 import { Image } from "astro:assets";
 import { remark } from "remark";
@@ -88,3 +89,7 @@ const ext = arr[1];
   <!-- <BlogPost {...blog}> -->
   <!-- </BlogPost> -->
 </RootLayout>
+<script>
+  import high from "highlight.js";
+  high.highlightAll();
+</script>

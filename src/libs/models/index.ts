@@ -14,6 +14,7 @@ export const blogTable = sqliteTable(
     blogContent: text("blogContent").notNull(),
     slug: text("slug").unique().notNull(),
     imageKey: text("imageKey").notNull(),
+    published: integer({ mode: "boolean" }).default(false),
     createdAt: text("created_at").notNull(),
     updatedAt: text("updated_at").notNull(),
   },
