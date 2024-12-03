@@ -62,6 +62,9 @@ importers:
       drizzle-orm:
         specifier: ^0.36.0
         version: 0.36.0(@libsql/client@0.14.0)(@prisma/client@5.22.0)(@types/pg@8.11.10)(pg@8.13.1)
+      highlight.js:
+        specifier: ^11.10.0
+        version: 11.10.0
       isomorphic-dompurify:
         specifier: ^2.16.0
         version: 2.16.0
@@ -2823,6 +2826,10 @@ packages:
 
   hastscript@8.0.0:
     resolution: {integrity: sha512-dMOtzCEd3ABUeSIISmrETiKuyydk1w0pa+gE/uormcTpSYuaNJPbX1NU3JLyscSLjwAQM8bWMhhIlnCqnRvDTw==}
+
+  highlight.js@11.10.0:
+    resolution: {integrity: sha512-SYVnVFswQER+zu1laSya563s+F8VDGt7o35d4utbamowvUNLLMovFqwCLSocpZTz3MgaSRA1IbqRWZv97dtErQ==}
+    engines: {node: '>=12.0.0'}
 
   html-encoding-sniffer@4.0.0:
     resolution: {integrity: sha512-Y22oTqIU4uuPgEemfz7NDJz6OeKf12Lsu+QC+s3BVpda64lTiMYCyGwg5ki4vFxkMwQdeZDl2adZoqUgdFuTgQ==}
@@ -8194,6 +8201,8 @@ snapshots:
       hast-util-parse-selector: 4.0.0
       property-information: 6.5.0
       space-separated-tokens: 2.0.2
+
+  highlight.js@11.10.0: {}
 
   html-encoding-sniffer@4.0.0:
     dependencies:
