@@ -3,11 +3,12 @@
   import { CLOUDFRONT_URL } from "@/data/constants";
   export let blog: SelectBlog;
   let status: string = "";
-
+  let isLoading = false;
   async function handleSubmit(event: Event) {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
+    isLoading = true;
     try {
       const response = await fetch(form.action, {
         method: "PUT",
@@ -21,6 +22,7 @@
     } catch (error) {
       console.error("An error occurred:", error);
     }
+    isLoading = false;
   }
 
   const arr = blog.imageKey.split(".");
@@ -99,12 +101,19 @@
             accept="image/png, image/jpeg"
           />
         </div>
+
         <button
           type="submit"
-          class="border p-2 hover:bg-purple-500 hover:border-black
+          class="border group p-2 hover:bg-purple-500 hover:border-black
           hover:text-black"
+          disabled={isLoading}
         >
-          Upload Blog Post
+          <div class="group-disabled:hidden">
+            Update Blog Post
+          </div>
+          <div class="group-disabled:block hidden">
+            Loading...
+          </div>
         </button>
         <p>{status}</p>
       </form>
