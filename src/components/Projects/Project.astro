@@ -1,5 +1,5 @@
 ---
-import projectImage from "../../images/isekai-money.webp";
+import defaultImg from "../../images/isekai-money.webp";
 import YoutubeModal from "@/components/UI/youtubeModal.astro";
 import { Image } from "astro:assets";
 interface Props {
@@ -61,7 +61,7 @@ const {
         </div>
         <Image
           class="rounded-md z-0 transition-all grayscale group-hover:grayscale-0 ease-in"
-          src={projectImage}
+          src={projectImage ?? defaultImg}
           alt={"Project Image"}
         />
       </div>
