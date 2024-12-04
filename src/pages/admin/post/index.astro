@@ -1,10 +1,20 @@
 ---
 import RootLayout from "@/layouts/RootLayout.astro";
 import Uploader from "@/components/Blog/Uploader.svelte";
-
+import { postBlog } from "@/libs/blog/post";
 export const prerender = false;
+let status: string | undefined = "";
+if (Astro.request.method === "POST") {
+  const formData = await Astro.request.formData();
+  const { success, error } = await postBlog({ formData });
+  if (!success) {
+    status = error;
+  } else {
+    status = "Successfully posted blog!";
+  }
+}
 ---
 
 <RootLayout>
-  <Uploader client:load />
+  <Uploader status={status} client:load />
 </RootLayout>
