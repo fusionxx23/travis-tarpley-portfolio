@@ -17,6 +17,7 @@ import { type SelectBlog } from "@/libs/models/index.ts";
 //   }
 // }
 
+import { getBlogFromSlug } from "@/libs/db/blog/queries";
 const { slug } = Astro.params;
 if (!slug) {
   return Astro.redirect("/");
