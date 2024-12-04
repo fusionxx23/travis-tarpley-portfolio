@@ -3,7 +3,7 @@ import {
   blogTable,
   type InsertBlog,
   type SelectBlog,
-} from "./tables";
+} from "./table";
 import { desc, eq, sql } from "drizzle-orm";
 import z from "zod";
 const count = z.object({
