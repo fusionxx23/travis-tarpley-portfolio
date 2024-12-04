@@ -2,21 +2,7 @@
 import "@/styles/markdown-styles.css";
 import RootLayout from "@/layouts/RootLayout.astro";
 import Updater from "@/components/Blog/Updater.svelte";
-import { getBlogFromSlug } from "@/libs/blogs/index";
-import { type SelectBlog } from "@/libs/models/index.ts";
-// export async function getStaticPaths() {
-//   const blogs = await getBlogs();
-//   if (blogs) {
-//     return blogs.map((blog) => ({
-//       params: { slug: blog.slug },
-//       props: blog,
-//     }));
-//   } else {
-//     console.error("FAILED TO PARSE BLOGS");
-//     return [];
-//   }
-// }
-
+import { getBlogFromSlug } from "@/libs/db/blog/queries";
 const { slug } = Astro.params;
 if (!slug) {
   return Astro.redirect("/");

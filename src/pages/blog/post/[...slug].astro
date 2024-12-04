@@ -9,8 +9,8 @@ import { CLOUDFRONT_URL } from "@/data/constants";
 import remarkGfm from "remark-gfm";
 import DOMPurify from "isomorphic-dompurify";
 import BackArrow from "@/components/UI/icons/backArrow.astro";
-import { getBlogs } from "@/libs/blogs/index";
-import { type SelectBlog } from "@/libs/models/index.ts";
+import { getBlogs } from "@/libs/db/blog/queries";
+import { type SelectBlog } from "@/libs/db/blog/table";
 export async function getStaticPaths() {
   const blogs = await getBlogs();
   if (blogs) {
