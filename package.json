@@ -31,6 +31,8 @@
     "isomorphic-dompurify": "^2.16.0",
     "lucide-svelte": "^0.447.0",
     "pg": "^8.13.1",
+    "rehype": "^13.0.2",
+    "rehype-highlight": "^7.0.1",
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.0",
     "remark-html": "^16.0.1",
