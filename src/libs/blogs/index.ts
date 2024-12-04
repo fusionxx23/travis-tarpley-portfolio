@@ -37,7 +37,17 @@ export async function getBlogFromSlug({
     .where(eq(blogTable.slug, slug));
   return resp;
 }
-
+export async function publishBlogFromId({
+  id,
+}: {
+  id: SelectBlog["id"];
+}) {
+  const resp = await db
+    .update(blogTable)
+    .set({ published: true })
+    .where(eq(blogTable.id, id));
+  return resp;
+}
 export async function getBlogFromId({
   id,
 }: {
