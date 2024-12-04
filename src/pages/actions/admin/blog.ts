@@ -2,7 +2,7 @@ import {
   createBlog,
   getBlogFromId,
   updateBlog,
-} from "@/libs/blogs";
+} from "@/libs/db/blog/queries";
 import {
   deleteBlogFiles,
   uploadImageFile,
