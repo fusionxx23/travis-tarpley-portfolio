@@ -116,7 +116,6 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
   const formData = await request.formData();
-
   const data = {
     file: formData.get("file") as File,
     blog: formData.get("blog") as string,
