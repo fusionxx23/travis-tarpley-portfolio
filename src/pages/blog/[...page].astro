@@ -3,10 +3,8 @@ import RootLayout from "../../layouts/RootLayout.astro";
 import Header from "../../components/Header.astro";
 import Pagination from "@/components/UI/Pagination.astro";
 import BlogList from "@/components/Blog/BlogList.astro";
-import { CLOUDFRONT_URL } from "@/data/constants";
-import { Image } from "astro:assets";
 import {
-  getBlogs,
+  getPublishedBlogs,
   getTotalAmountOfBlogs,
 } from "../../libs/blogs/index";
 import { type SelectBlog } from "../../libs/models";
@@ -20,7 +18,7 @@ export async function getStaticPaths() {
   console.log(total.data);
   let offset = 0;
   while (true) {
-    const blogs = await getBlogs(offset);
+    const blogs = await getPublishedBlogs(offset);
     blogPage.push(blogs);
     offset += 10;
     if (blogs.length < 10) {

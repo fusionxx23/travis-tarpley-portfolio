@@ -1,16 +1,12 @@
 ---
 import RootLayout from "../../layouts/RootLayout.astro";
 import BlogList from "@/components/Blog/BlogList.astro";
-import Header from "../../components/Header.astro";
-import { CLOUDFRONT_URL } from "@/data/constants";
-import { Image } from "astro:assets";
 import {
-  getBlogs,
+  getPublishedBlogs,
   getTotalAmountOfBlogs,
 } from "../../libs/blogs/index";
-import { type SelectBlog } from "../../libs/models";
 import Pagination from "@/components/UI/Pagination.astro";
-const blogs = await getBlogs();
+const blogs = await getPublishedBlogs();
 const total = await getTotalAmountOfBlogs();
 
 let count = total.data?.["COUNT(*)"] ?? 0;
