@@ -1,6 +1,7 @@
 ---
 import "@/components/../styles/markdown-styles.css";
 import "highlight.js/styles/agate.css";
+import highlight from "@/libs/highlight";
 import RootLayout from "../../../layouts/RootLayout.astro";
 import { Image } from "astro:assets";
 import { rehype } from "rehype";
@@ -29,16 +30,16 @@ type Props = SelectBlog;
 
 const blog = Astro.props;
 
-let blogHtml = await remark()
-  .use(remarkGfm)
-  .use(remarkHtml)
-  .process(blog.blogContent);
-let blogContent = DOMPurify.sanitize(blogHtml.toString());
-console.log(blogContent);
-blogContent = await rehype()
-  .data("settings", { fragment: false })
-  .use(rehypeHighlight)
-  .process(blogContent);
+// let blogHtml = await remark()
+//   .use(remarkGfm)
+//   .use(remarkHtml)
+//   .process(blog.blogContent);
+// let blogContent = DOMPurify.sanitize(blogHtml.toString());
+// blogContent = await rehype()
+//   .data("settings", { fragment: false })
+//   .use(rehypeHighlight)
+//   .process(blogContent);
+const blogContent = await highlight(blog.blogContent);
 const blogDate = new Date(parseInt(blog.createdAt));
 export const prerender = true;
 const arr = blog.imageKey.split(".");
