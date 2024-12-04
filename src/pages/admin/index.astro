@@ -10,17 +10,8 @@ import Deleter from "@/components/Blog/Deleter.astro";
 import Publisher from "@/components/Blog/Publisher.astro";
 import { Image } from "astro:assets";
 import RootLayout from "@/libs/../layouts/RootLayout.astro";
-import { getSession } from "auth-astro/server";
 import { deleteBlogFiles } from "@/libs/s3";
-try {
-  const session = await getSession(Astro.request);
-  if (session?.user?.email !== import.meta.env.EMAIL) {
-    return Astro.redirect("/");
-  }
-} catch (e) {
-  console.log(e, "ERROR");
-  return Astro.redirect("/");
-}
+
 let actionStatus: undefined | string = undefined;
 // Handle publish and delete
 if (Astro.request.method === "POST") {
