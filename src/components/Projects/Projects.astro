@@ -1,14 +1,22 @@
 ---
 import SectionHeader from "../UI/SectionHeader.astro";
 import Project from "./Project.astro";
+
+import defaultImg from "../../images/isekai-money.webp";
+import { type TProjectProps } from "@/libs/types";
+const projects: TProjectProps[] = [
+  {
+    id: "1",
+    title: "Project One",
+    description: "lorem ipsum description",
+    projectImage: defaultImg,
+  },
+];
 ---
 
 <div id="projects">
   <SectionHeader title="Projects" />
   <div class="grid md:grid-cols-2 gap-6 pt-12">
-    <Project id="1" />
-    <Project id="2" />
-    <Project id="3" />
-    <Project id="4" />
+    {projects.map((project) => <Project {...project} />)}
   </div>
 </div>
