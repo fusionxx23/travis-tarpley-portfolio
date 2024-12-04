@@ -1,11 +1,18 @@
 ---
-import { getBlogs } from "@/libs/blogs/index";
+import {
+  deleteBlog,
+  getBlogFromId,
+  getBlogs,
+  publishBlogFromId,
+} from "@/libs/blogs/index";
 const safeBlogs = await getBlogs();
 import { CLOUDFRONT_URL } from "@/data/constants";
-import Deleter from "@/components/Blog/Deleter.svelte";
+import Deleter from "@/components/Blog/Deleter.astro";
+import Publisher from "@/components/Blog/Publisher.astro";
 import { Image } from "astro:assets";
 import RootLayout from "@/libs/../layouts/RootLayout.astro";
 import { getSession } from "auth-astro/server";
+import { deleteBlogFiles } from "@/libs/s3";
 try {
   const session = await getSession(Astro.request);
   if (session?.user?.email !== import.meta.env.EMAIL) {
@@ -15,7 +22,45 @@ try {
   console.log(e, "ERROR");
   return Astro.redirect("/");
 }
-
+let actionStatus: undefined | string = undefined;
+if (Astro.request.method === "POST") {
+  const data = await Astro.request.formData();
+  const action = data.get("action");
+  const id = data.get("id");
+  if (action === "publish" && id) {
+    try {
+      await publishBlogFromId({
+        id: Number.parseInt(id.toString()),
+      });
+      actionStatus = "Successfully published post!";
+    } catch (e) {
+      console.error(e);
+      actionStatus = "Failed to publish post.";
+    }
+  }
+  if (action === "delete" && id) {
+    try {
+      const blog = await getBlogFromId({
+        id: parseInt(id?.toString()),
+      });
+      if (!blog.imageKey) {
+        return new Response("", { status: 404 });
+      }
+      const imageKey = blog.imageKey;
+      await deleteBlog(parseInt(id?.toString()));
+      await deleteBlogFiles({
+        key: imageKey,
+      });
+      actionStatus = "Succesfully deleted post.";
+    } catch (e) {
+      console.error(e);
+      actionStatus = "Failed to delete post.";
+    }
+  }
+}
+if (Astro.request.method === "GET") {
+  actionStatus = undefined;
+}
 export const prerender = false;
 ---
 
@@ -26,6 +71,7 @@ export const prerender = false;
       <h1 class="text-3xl py-4 text-gray-100 font-semibold">
         My Posts
       </h1>
+      {actionStatus && <h2>{actionStatus}</h2>}
       <ul class="space-y-8">
         {
           safeBlogs?.map((post) => {
@@ -39,16 +85,16 @@ export const prerender = false;
               >
                 <div class="flex gap-x-4">
                   <div class="flex flex-col gap-y-2">
-                    <Deleter
-                      client:load
-                      id={post.id.toString()}
-                    />
+                    <Deleter id={post.id.toString()} />
                     <a
                       class="border p-2 rounded-md"
                       href={`/admin/update/${post.slug}`}
                     >
                       Edit
                     </a>
+                    {!post.published && (
+                      <Publisher id={post.id.toString()} />
+                    )}
                   </div>
                   <div class="w-[150px]">
                     <Image
