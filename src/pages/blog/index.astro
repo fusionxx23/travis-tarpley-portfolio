@@ -1,11 +1,11 @@
 ---
 import RootLayout from "../../layouts/RootLayout.astro";
 import BlogList from "@/components/Blog/BlogList.astro";
+import Pagination from "@/components/UI/Pagination.astro";
 import {
   getPublishedBlogs,
   getTotalAmountOfBlogs,
-} from "../../libs/blogs/index";
-import Pagination from "@/components/UI/Pagination.astro";
+} from "@/libs/db/blog/queries";
 const blogs = await getPublishedBlogs();
 const total = await getTotalAmountOfBlogs();
 

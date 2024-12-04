@@ -6,8 +6,8 @@ import BlogList from "@/components/Blog/BlogList.astro";
 import {
   getPublishedBlogs,
   getTotalAmountOfBlogs,
-} from "../../libs/blogs/index";
-import { type SelectBlog } from "../../libs/models";
+} from "../../libs/db/blog/queries";
+import { type SelectBlog } from "../../libs/db/blog/tables";
 interface Props {
   blogs: SelectBlog[];
   pages: number;
