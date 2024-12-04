@@ -9,20 +9,52 @@ import z from "zod";
 const count = z.object({
   "COUNT(*)": z.number(),
 });
-export async function getTotalAmountOfBlogs() {
-  const result = await db.get(
-    sql`SELECT COUNT(*) FROM blogs;`,
-  );
-  const safe = count.safeParse(result);
-  console.log(safe, "SAFE");
-  return safe;
+/**
+ * Retrieves the total number of blogs in the database.
+ *
+ * @param boolean [published=true] - Determines whether to count only published blogs.
+ *   - If `true`, counts only blogs marked as published.
+ *   - If `false`, counts all blogs regardless of their published status.
+ * @returns A Safe Parsed result - A safe-parsed result containing the count of blogs.
+ */
+export async function getTotalAmountOfBlogs(
+  published = true,
+) {
+  if (published) {
+    const result = await db.get(
+      sql`SELECT COUNT(*) FROM blogs WHERE published = true;`,
+    );
+    const safe = count.safeParse(result);
+    return safe;
+  } else {
+    const result = await db.get(
+      sql`SELECT COUNT(*) FROM blogs;`,
+    );
+    const safe = count.safeParse(result);
+    return safe;
+  }
 }
+
 export async function getBlogs(offset = 0, limit = 10) {
   const blogs = await db
     .select()
     .from(blogTable)
     .limit(limit)
     .offset(offset)
+    .orderBy(desc(blogTable.id));
+  return blogs;
+}
+
+export async function getPublishedBlogs(
+  offset = 0,
+  limit = 10,
+) {
+  const blogs = await db
+    .select()
+    .from(blogTable)
+    .limit(limit)
+    .offset(offset)
+    .where(eq(blogTable.published, true))
     .orderBy(desc(blogTable.id));
   return blogs;
 }
