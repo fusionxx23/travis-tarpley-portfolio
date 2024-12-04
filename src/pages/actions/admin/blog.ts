@@ -1,6 +1,5 @@
 import {
   createBlog,
-  deleteBlog,
   getBlogFromId,
   updateBlog,
 } from "@/libs/blogs";
@@ -10,7 +9,6 @@ import {
 } from "@/libs/s3";
 import { createSlug } from "@/libs/utils";
 import type { APIRoute } from "astro";
-import z from "zod";
 export const prerender = false;
 async function deployVercel() {
   const resp = await fetch(
@@ -78,7 +76,6 @@ export const PUT: APIRoute = async ({ request }) => {
     return successJson;
   } else {
     const res = await uploadImageFile({ file: data.file });
-
     const blogResp = await getBlogFromId({
       id: parseInt(data.id),
     });
