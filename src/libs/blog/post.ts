@@ -16,11 +16,6 @@ export async function postBlog({
 }: {
   formData: FormData;
 }) {
-  if (import.meta.env.MODE !== "development") {
-    return new Response("Uploader not available", {
-      status: 404,
-    });
-  }
   const data = {
     file: formData.get("file"),
     blog: formData.get("blog"),
