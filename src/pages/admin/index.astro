@@ -23,6 +23,7 @@ try {
   return Astro.redirect("/");
 }
 let actionStatus: undefined | string = undefined;
+// Handle publish and delete
 if (Astro.request.method === "POST") {
   const data = await Astro.request.formData();
   const action = data.get("action");
