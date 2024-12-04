@@ -1,15 +1,18 @@
-<script>
-  export let id;
-</script>
+---
+interface Props {
+  id: string;
+}
+const { id } = Astro.props;
+---
 
-<form action="/actions/admin/publish" method="POST">
+<form method="POST">
   <input
     value={id.toString()}
     name="id"
     id="id"
-    type="text"
-    class="hidden"
+    type="hidden"
   />
+  <input type="hidden" name="action" value="delete" />
   <button
     type="submit"
     class="border border-red-400 hover:bg-red-400 p-2 hover:text-black
