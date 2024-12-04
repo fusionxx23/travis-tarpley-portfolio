@@ -4,13 +4,7 @@ import "highlight.js/styles/agate.css";
 import highlight from "@/libs/highlight";
 import RootLayout from "../../../layouts/RootLayout.astro";
 import { Image } from "astro:assets";
-import { rehype } from "rehype";
-import rehypeHighlight from "rehype-highlight";
-import { remark } from "remark";
-import remarkHtml from "remark-html";
 import { CLOUDFRONT_URL } from "@/data/constants";
-import remarkGfm from "remark-gfm";
-import DOMPurify from "isomorphic-dompurify";
 import BackArrow from "@/components/UI/icons/backArrow.astro";
 import { getBlogs } from "@/libs/blogs/index";
 import { type SelectBlog } from "@/libs/models/index.ts";
@@ -30,15 +24,6 @@ type Props = SelectBlog;
 
 const blog = Astro.props;
 
-// let blogHtml = await remark()
-//   .use(remarkGfm)
-//   .use(remarkHtml)
-//   .process(blog.blogContent);
-// let blogContent = DOMPurify.sanitize(blogHtml.toString());
-// blogContent = await rehype()
-//   .data("settings", { fragment: false })
-//   .use(rehypeHighlight)
-//   .process(blogContent);
 const blogContent = await highlight(blog.blogContent);
 const blogDate = new Date(parseInt(blog.createdAt));
 export const prerender = true;
