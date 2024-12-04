@@ -1,29 +1,10 @@
 <script>
-  export let id;
+  export let status;
 
-  let status = "";
   let isLoading = false;
   // Handle form submission
-  async function handleSubmit(event) {
-    const form = event.target;
-    const formData = new FormData(form);
+  async function handleSubmit() {
     isLoading = true;
-    try {
-      const response = await fetch(form.action, {
-        method: form.method,
-        body: formData,
-      }).then((r) => r.json());
-      console.log(response, "RESPONSE");
-      if (response.success) {
-        status = "Success!";
-        form.reset();
-      } else {
-        status = "Failed!";
-      }
-    } catch (error) {
-      console.error("An error occurred:", error);
-    }
-    isLoading = false;
   }
 </script>
 
@@ -33,15 +14,14 @@
 <div class="flex justify-center">
   <div>
     <form
-      action="/actions/admin/blog"
       method="post"
       enctype="multipart/form-data"
       class="space-y-2"
-      on:submit|preventDefault={handleSubmit}
+      on:submit={handleSubmit}
     >
       <div>
         <div>
-          <label for={`filename-input-${id}`}>Title</label>
+          <label for={`title`}>Title</label>
         </div>
         <input
           type="text"
