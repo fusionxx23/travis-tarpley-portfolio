@@ -3,6 +3,8 @@ import "@/components/../styles/markdown-styles.css";
 import "highlight.js/styles/agate.css";
 import RootLayout from "../../../layouts/RootLayout.astro";
 import { Image } from "astro:assets";
+import { rehype } from "rehype";
+import rehypeHighlight from "rehype-highlight";
 import { remark } from "remark";
 import remarkHtml from "remark-html";
 import { CLOUDFRONT_URL } from "@/data/constants";
@@ -27,12 +29,16 @@ type Props = SelectBlog;
 
 const blog = Astro.props;
 
-const blogHtml = await remark()
+let blogHtml = await remark()
   .use(remarkGfm)
   .use(remarkHtml)
   .process(blog.blogContent);
-const blogContent = DOMPurify.sanitize(blogHtml.toString());
-
+let blogContent = DOMPurify.sanitize(blogHtml.toString());
+console.log(blogContent);
+blogContent = await rehype()
+  .data("settings", { fragment: false })
+  .use(rehypeHighlight)
+  .process(blogContent);
 const blogDate = new Date(parseInt(blog.createdAt));
 export const prerender = true;
 const arr = blog.imageKey.split(".");
@@ -89,7 +95,3 @@ const ext = arr[1];
   <!-- <BlogPost {...blog}> -->
   <!-- </BlogPost> -->
 </RootLayout>
-<script>
-  import high from "highlight.js";
-  high.highlightAll();
-</script>
