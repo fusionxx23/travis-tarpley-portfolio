@@ -2,24 +2,27 @@
 import RootLayout from "../layouts/RootLayout.astro";
 import Home from "../components/Home/Home.astro";
 import About from "../components/About/About.astro";
-import { Image } from "astro:assets";
 import pattern from "../images/endless-constellation-2.svg";
 import Projects from "../components/Projects/Projects.astro";
 import Work from "@/components/Work/Work.astro";
 ---
 
 <RootLayout>
-  <div
-    style={{
-      backgroundImage: `url(${pattern.src})`,
-      backgroundRepeat: "repeat",
-    }}
-    class=`fixed
+  <div id="box" class="w-screen h-screen fixed">
+    <div
+      style={{
+        backgroundImage: `url(${pattern.src})`,
+        backgroundRepeat: "repeat",
+        transform: "rotateX(-40deg)",
+      }}
+      id="constellation"
+      class=`fixed h-full w-full
       [mask-image:radial-gradient(ellipse_50%_50%_at_30%_30%,#000_20%,transparent_95%)]
-      top-0 left-0 opacity-40 w-full h-screen`
-  >
-    <div>
-      <!-- <Image alt="Svg Pattern" class="" src={pattern} /> -->
+      top-0 left-0 opacity-40 `
+    >
+      <div>
+        <!-- <Image alt="Svg Pattern" class="" src={pattern} /> -->
+      </div>
     </div>
   </div>
   <!-- <Sidebar /> -->
@@ -47,3 +50,39 @@ import Work from "@/components/Work/Work.astro";
   <!-- <Work /> -->
   <!-- <Contact /> -->
 </RootLayout>
+<script>
+  const constellation =
+    document.getElementById("constellation");
+  const box = document.getElementById("box");
+  document.addEventListener("mousemove", (event) => {
+    const xPosition = event.clientX;
+    const yPosition = event.clientY;
+    if (!box) return;
+    let rect = box.getBoundingClientRect();
+    if (box) {
+      let { x, y } = transforms(xPosition, yPosition, box);
+
+      console.log({ x, y }, "YPOSITION");
+      if (constellation)
+        constellation.style.transform = `rotateX(${x}deg) rotateY(${y + 30}deg)`;
+    }
+
+    // Apply the rotation to the element
+  });
+  let constrain = 20;
+
+  function transforms(
+    x: number,
+    y: number,
+    el: HTMLElement,
+  ) {
+    let box = el.getBoundingClientRect();
+
+    const h = box.height / 2;
+    const w = box.width / 2;
+    let calcX = -(y - h) / constrain;
+    let calcY = (x - w) / constrain;
+
+    return { x: calcX, y: calcY };
+  }
+</script>
