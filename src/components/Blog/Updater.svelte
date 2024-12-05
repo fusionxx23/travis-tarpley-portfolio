@@ -96,7 +96,7 @@
                 type="file"
                 name="file"
                 id="file"
-                accept="image/png, image/jpeg"
+                accept="image/png, image/jpeg, image/webp"
               />
             </div>
           </div>
