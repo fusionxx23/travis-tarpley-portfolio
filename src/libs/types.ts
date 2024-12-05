@@ -8,3 +8,11 @@ export interface TProjectProps {
   githubUrl?: string;
   title: string;
 }
+export interface TWorkProps {
+  position?: "start" | "end";
+  title: string;
+  startDate: string;
+  endDate: string;
+  description: string;
+  jobPosition: string;
+}

@@ -1,6 +1,26 @@
 ---
 import SectionHeader from "../UI/SectionHeader.astro";
 import Job from "./Job.astro";
+import { TWorkProps } from "@/libs/types";
+
+const jobs: TWorkProps[] = [
+  {
+    title: "Sir Trade",
+    jobPosition: "Frontend Developer",
+    description: "A Description",
+    startDate: "09/2024",
+    endDate: "09/2024",
+  },
+
+  {
+    title: "Sir Trade",
+    position: "end",
+    jobPosition: "Frontend Developer",
+    description: "A Description",
+    startDate: "09/2024",
+    endDate: "09/2024",
+  },
+];
 ---
 
 <div
@@ -19,8 +39,7 @@ import Job from "./Job.astro";
     >
     </div>
     <div class="pt-4"></div>
-    <Job />
-    <Job position="end" />
+    {jobs.map((job) => <Job {...job} />)}
   </div>
 </div>
 
