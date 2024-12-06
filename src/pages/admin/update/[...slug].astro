@@ -2,15 +2,30 @@
 import "@/styles/markdown-styles.css";
 import RootLayout from "@/layouts/RootLayout.astro";
 import Updater from "@/components/Blog/Updater.svelte";
+import { putBlog } from "@/libs/blog/put";
 import { getBlogFromSlug } from "@/libs/db/blog/queries";
 const { slug } = Astro.params;
 if (!slug) {
   return Astro.redirect("/");
 }
-const blog = await getBlogFromSlug({ slug });
 export const prerender = false;
+let status = "";
+if (Astro.request.method === "POST") {
+  const formData = await Astro.request.formData();
+  const { success, error } = await putBlog({ formData });
+  if (success) {
+    status = "Successfully updated blog.";
+  } else {
+    status = "Error" + error;
+  }
+}
+if (Astro.request.method === "GET") {
+  status = "";
+}
+
+const blog = await getBlogFromSlug({ slug });
 ---
 
 <RootLayout>
-  <Updater blog={blog[0]} client:load />
+  <Updater status={status} blog={blog[0]} client:load />
 </RootLayout>
