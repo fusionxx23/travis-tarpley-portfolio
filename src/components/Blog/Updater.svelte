@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { type SelectBlog } from "@/libs/models/index";
+  import { type SelectBlog } from "@/libs/db/blog/table";
   import Editor from "./Editor.svelte";
   import { CLOUDFRONT_URL } from "@/data/constants";
   export let blog: SelectBlog;
