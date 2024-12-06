@@ -1,5 +1,6 @@
 ---
 import Close from "@/components/UI/icons/close.astro";
+import Play from "@/components/UI/icons/play.astro";
 interface Props {
   id: string;
   youtubeSrc: string;
@@ -8,8 +9,8 @@ const { id, youtubeSrc } = Astro.props;
 ---
 
 <button
-  class="border hover:bg-purple-300/20 hover:text-white border-purple-300 text-purple-300 rounded-sm p-2"
-  id={"open-modal" + id}>Video Demo</button
+  class="border flex gap-x-1 items-center hover:bg-purple-300/20 hover:text-white border-purple-300 text-purple-300 rounded-sm p-2"
+  id={"open-modal" + id}>Video Demo <Play /></button
 >
 
 <dialog
