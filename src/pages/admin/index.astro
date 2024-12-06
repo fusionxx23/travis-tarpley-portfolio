@@ -70,7 +70,6 @@ export const prerender = false;
           safeBlogs?.map((post) => {
             const arr = post.imageKey.split(".");
             const imageId = arr[0];
-            const ext = arr[1];
             return (
               <li
                 class="bg-black/30 w-[600px] border-2 border-purple-300/30
@@ -98,8 +97,7 @@ export const prerender = false;
                         CLOUDFRONT_URL +
                         "/" +
                         imageId +
-                        "_150x." +
-                        ext
+                        "_150x.webp"
                       }
                       alt=""
                     />

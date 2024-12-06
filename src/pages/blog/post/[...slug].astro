@@ -37,11 +37,10 @@ const blogDate = new Date(parseInt(blog.createdAt));
 export const prerender = true;
 const arr = blog.imageKey.split(".");
 const imageId = arr[0];
-const ext = arr[1];
 ---
 
 <RootLayout
-  imageUrl={`${CLOUDFRONT_URL}/${imageId}_800x.${ext}`}
+  imageUrl={`${CLOUDFRONT_URL}/${imageId}_800x.webp`}
   title={blog.title}
   description={blog.description}
 >
@@ -69,7 +68,7 @@ const ext = arr[1];
             width={800}
             height={400}
             class="object-contain"
-            src={`${CLOUDFRONT_URL}/${imageId}_800x.${ext}`}
+            src={`${CLOUDFRONT_URL}/${imageId}_800x.webp`}
             alt={blog.title}
           />
         </div>
