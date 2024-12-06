@@ -1,6 +1,11 @@
 ---
 import defaultImg from "../../images/isekai-money.webp";
 import YoutubeModal from "@/components/UI/youtubeModal.astro";
+import ProjectLink from "./ProjectLink.astro";
+
+import Substack from "@/components/UI/icons/substack.astro";
+import LinkIcon from "@/components/UI/icons/link.astro";
+import GithubIcon from "@/components/UI/icons/github.astro";
 import { Image } from "astro:assets";
 interface Props {
   id: string;
@@ -77,15 +82,12 @@ const {
     </div>
 
     <div class="pt-4">
-      <div class="flex gap-x-2">
+      <div class="flex flex-wrap gap-x-2">
         {
           liveDemoUrl && (
-            <a
-              class="border hover:bg-purple-300/20 hover:text-white border-purple-300 text-purple-300 rounded-sm p-2"
-              href={liveDemoUrl}
-            >
-              Live Demo
-            </a>
+            <ProjectLink href={liveDemoUrl}>
+              Live Demo <LinkIcon />
+            </ProjectLink>
           )
         }
         {
@@ -95,12 +97,20 @@ const {
         }
         {
           blogPostSlug && (
-            <a
-              class="border hover:bg-purple-300/20 hover:text-white border-purple-300 text-purple-300 rounded-sm p-2"
+            <ProjectLink
               href={`/blog/post/${blogPostSlug}`}
             >
               Blog Post
-            </a>
+              <Substack />
+            </ProjectLink>
+          )
+        }
+        {
+          githubUrl && (
+            <ProjectLink href={githubUrl}>
+              Git
+              <GithubIcon />
+            </ProjectLink>
           )
         }
       </div>
