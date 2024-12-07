@@ -3,27 +3,10 @@
   import Editor from "./Editor.svelte";
   import { CLOUDFRONT_URL } from "@/data/constants";
   export let blog: SelectBlog;
-  let status: string = "";
+  export let status = "";
   let isLoading = false;
   async function handleSubmit(event: Event) {
-    event.preventDefault();
-    const form = event.target as HTMLFormElement;
-    const formData = new FormData(form);
     isLoading = true;
-    try {
-      const response = await fetch(form.action, {
-        method: "PUT",
-        body: formData,
-      }).then((r) => r.json());
-      if (response.success) {
-        status = "Success!";
-      } else {
-        status = "Failed!";
-      }
-    } catch (error) {
-      console.error("An error occurred:", error);
-    }
-    isLoading = false;
   }
 
   const arr = blog.imageKey.split(".");
@@ -49,10 +32,10 @@
   <div class="">
     <div>
       <form
-        action="/actions/admin/blog"
         enctype="multipart/form-data"
         class="space-y-2"
-        on:submit|preventDefault={handleSubmit}
+        method="POST"
+        on:submit={handleSubmit}
       >
         <div class="flex justify-center">
           <div class="space-y-4">
@@ -107,7 +90,7 @@
           <div>
             <button
               type="submit"
-              class="border group p-2 hover:bg-purple-500 hover:border-black
+              class="border group p-2 hover:bg-purple-500 disabled:hover:bg-none hover:border-black
           hover:text-black"
               disabled={isLoading}
             >
