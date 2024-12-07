@@ -6,19 +6,11 @@ export const prerender = false;
 <RootLayout>
   <div class="mx-auto lg:w-[800px]">
     <button id="login">Login</button>
-    <button id="logout">Logout</button>
   </div>
   <script>
-    const { signIn, signOut } = await import(
-      "auth-astro/client"
-    );
+    const { signIn } = await import("auth-astro/client");
     (
       document.querySelector("#login") as HTMLButtonElement
     ).onclick = () => signIn("github");
-    (
-      (document.querySelector(
-        "#logout",
-      ) as HTMLButtonElement) || undefined
-    ).onclick = () => signOut();
   </script>
 </RootLayout>
