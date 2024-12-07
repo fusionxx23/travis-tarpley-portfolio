@@ -6,6 +6,7 @@ import {
   publishBlogFromId,
 } from "@/libs/db/blog/queries";
 import { CLOUDFRONT_URL } from "@/data/constants";
+import { deployVercel } from "@/libs/utils";
 import Deleter from "@/components/Blog/Deleter.astro";
 import Publisher from "@/components/Blog/Publisher.astro";
 import { Image } from "astro:assets";
@@ -24,6 +25,7 @@ if (Astro.request.method === "POST") {
         id: Number.parseInt(id.toString()),
       });
       actionStatus = "Successfully published post!";
+      await deployVercel();
     } catch (e) {
       console.error(e);
       actionStatus = "Failed to publish post.";
@@ -43,6 +45,7 @@ if (Astro.request.method === "POST") {
         key: imageKey,
       });
       actionStatus = "Successfully deleted post.";
+      await deployVercel();
     } catch (e) {
       console.error(e);
       actionStatus = "Failed to delete post.";
