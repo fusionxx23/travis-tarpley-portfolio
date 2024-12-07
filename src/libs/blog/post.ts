@@ -32,11 +32,18 @@ export async function postBlog({
   const safeData = parsed.data;
   let imageKey = "";
   if (safeData.file) {
-    const resp = await uploadImageFile({
-      file: safeData.file,
-    });
-    if (resp?.key) {
-      imageKey = resp.key;
+    let key: string | undefined;
+    try {
+      const resp = await uploadImageFile({
+        file: safeData.file,
+      });
+      key = resp?.key;
+    } catch (e) {
+      console.error(e);
+      return { success: false, error: "" };
+    }
+    if (key) {
+      imageKey = key;
     } else {
       return {
         succes: false,
