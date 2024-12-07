@@ -37,6 +37,7 @@
         on:submit={handleSubmit}
       >
         <div class="">
+          <input type="hidden" name="id" value={blog.id} />
           <div class="space-y-6 max-w-[500px] mx-auto">
             <!-- Title Input -->
             <div>
