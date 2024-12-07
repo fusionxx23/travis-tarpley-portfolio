@@ -1,7 +1,7 @@
 import z from "zod";
 import { uploadImageFile } from "../s3";
 import { createBlog } from "../db/blog/queries";
-import { createSlug } from "../utils";
+import { createSlug, deployVercel } from "../utils";
 const FormDataSchema = z.object({
   file: z.instanceof(File, {
     message: "Expected a File instance",
@@ -32,11 +32,18 @@ export async function postBlog({
   const safeData = parsed.data;
   let imageKey = "";
   if (safeData.file) {
-    const resp = await uploadImageFile({
-      file: safeData.file,
-    });
-    if (resp?.key) {
-      imageKey = resp.key;
+    let key: string | undefined;
+    try {
+      const resp = await uploadImageFile({
+        file: safeData.file,
+      });
+      key = resp?.key;
+    } catch (e) {
+      console.error(e, "Upload Image");
+      return { success: false, error: "" };
+    }
+    if (key) {
+      imageKey = key;
     } else {
       return {
         succes: false,
@@ -57,16 +64,19 @@ export async function postBlog({
       slug: createSlug(safeData.title),
     });
     if (response.rows) {
-      await fetch(import.meta.env.VERCEL_DEPLOY_HOOK, {
-        method: "POST",
-      }).then((r) => r.json());
+      await deployVercel();
     }
   } catch (e) {
-    console.log(e);
+    console.error(e);
     return {
       success: false,
       error: "Failed to create blog.",
     };
+  }
+  try {
+    await deployVercel();
+  } catch (e) {
+    console.error(e, "Failed webhook.");
   }
   return { success: true };
 }
