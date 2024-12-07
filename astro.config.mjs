@@ -10,7 +10,7 @@ import vercel from "@astrojs/vercel/serverless";
 import auth from "auth-astro";
 // https://astro.build/config
 export default defineConfig({
-  site: "https://travistarpley.com",
+  site: "https://travis-tarpley-portfolio-4aov.vercel.app",
   integrations: [sitemap(), tailwind(), svelte(), auth()],
   output: "server",
   adapter: vercel(),
