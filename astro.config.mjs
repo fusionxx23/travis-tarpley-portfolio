@@ -13,5 +13,5 @@ export default defineConfig({
   site: "https://travistarpley.com",
   integrations: [sitemap(), tailwind(), svelte(), auth()],
   output: "server",
-  adapter: vercel({}),
+  adapter: vercel(),
 });
