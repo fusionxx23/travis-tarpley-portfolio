@@ -11,7 +11,8 @@
 
   const arr = blog.imageKey.split(".");
   const imageId = arr[0];
-  const ext = arr[1];
+  let title = blog.title;
+  let description = blog.description;
 </script>
 
 <div class=" flex justify-center">
@@ -53,7 +54,7 @@
                 name="title"
                 id="title"
                 required
-                value={blog.title}
+                bind:value={title}
               />
             </div>
             <div>
@@ -66,7 +67,7 @@
                 name="description"
                 id="description"
                 required
-                value={blog.description}
+                bind:value={description}
               />
             </div>
 
