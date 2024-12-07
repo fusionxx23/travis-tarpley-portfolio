@@ -33,7 +33,6 @@ const blogHtml = await remark()
   .process(blog.blogContent);
 const blogContent = DOMPurify.sanitize(blogHtml.toString());
 
-const blogDate = new Date(parseInt(blog.createdAt));
 export const prerender = true;
 const arr = blog.imageKey.split(".");
 const imageId = arr[0];
@@ -60,7 +59,7 @@ const imageId = arr[0];
         {blog.title}
       </h1>
 
-      <p class="text-center pb-2 text-xl text-gray-300">
+      <p class="text-center pb-2 text-lg text-gray-300">
         {blog.description}
       </p>
       <div class="py-2 flex justify-center">
