@@ -88,7 +88,6 @@
                 id="file"
                 accept="image/png, image/jpeg"
                 class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border file:border-gray-300 file:text-sm file:font-medium file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100"
-                required
               />
             </div>
           </div>
