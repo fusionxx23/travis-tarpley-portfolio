@@ -39,7 +39,7 @@ export async function postBlog({
       });
       key = resp?.key;
     } catch (e) {
-      console.error(e);
+      console.error(e, "Upload Image");
       return { success: false, error: "" };
     }
     if (key) {
@@ -64,12 +64,10 @@ export async function postBlog({
       slug: createSlug(safeData.title),
     });
     if (response.rows) {
-      await fetch(import.meta.env.VERCEL_DEPLOY_HOOK, {
-        method: "POST",
-      }).then((r) => r.json());
+      await deployVercel();
     }
   } catch (e) {
-    console.log(e);
+    console.error(e);
     return {
       success: false,
       error: "Failed to create blog.",
@@ -78,7 +76,7 @@ export async function postBlog({
   try {
     await deployVercel();
   } catch (e) {
-    console.error(e);
+    console.error(e, "Failed webhook.");
   }
   return { success: true };
 }
