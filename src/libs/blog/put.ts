@@ -40,7 +40,7 @@ export async function putBlog({
   // Use same image if no file was uploaded
   if (data.file.size === 0) {
     try {
-      updateBlog(parseInt(data.id), {
+      updateBlog(Number.parseInt(data.id), {
         blogContent: blog,
         title,
         description,
