@@ -1,7 +1,7 @@
 import z from "zod";
 import { uploadImageFile } from "../s3";
 import { createBlog } from "../db/blog/queries";
-import { createSlug } from "../utils";
+import { createSlug, deployVercel } from "../utils";
 const FormDataSchema = z.object({
   file: z.instanceof(File, {
     message: "Expected a File instance",
@@ -74,6 +74,11 @@ export async function postBlog({
       success: false,
       error: "Failed to create blog.",
     };
+  }
+  try {
+    await deployVercel();
+  } catch (e) {
+    console.error(e);
   }
   return { success: true };
 }
