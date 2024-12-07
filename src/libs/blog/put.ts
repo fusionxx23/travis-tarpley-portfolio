@@ -7,9 +7,11 @@ import { deleteBlogFiles, uploadImageFile } from "../s3";
 import { deployVercel } from "../utils";
 import z from "zod";
 const FormDataSchema = z.object({
-  file: z.instanceof(File, {
-    message: "Expected a File instance",
-  }),
+  file: z
+    .instanceof(File, {
+      message: "Expected a File instance",
+    })
+    .optional(),
   blog: z.string(),
   title: z.string(),
   description: z.string(),
@@ -30,6 +32,7 @@ export async function putBlog({
   const blogData = FormDataSchema.safeParse(data);
 
   if (!blogData.success) {
+    console.log(blogData.error);
     return {
       success: false,
       error: "Incorrect form data.",
