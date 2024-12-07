@@ -42,14 +42,14 @@ export const prerender = false;
   </div>
 
   <script>
-    const { signIn, signOut } = await import(
-      "auth-astro/client"
-    );
+    const actions = import("auth-astro/client");
     (
       document.querySelector("#login") as HTMLElement
-    ).onclick = () => signIn("github");
+    ).onclick = async () => {
+      actions.then((a) => a.signIn());
+    };
     (
       document.querySelector("#logout") as HTMLButtonElement
-    ).onclick = () => signOut();
+    ).onclick = () => actions.then((a) => a.signOut());
   </script>
 </RootLayout>
