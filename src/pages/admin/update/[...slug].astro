@@ -8,22 +8,27 @@ const { slug } = Astro.params;
 if (!slug) {
   return Astro.redirect("/");
 }
-export const prerender = false;
 let status = "";
+
+console.log("MADE IT HERE4");
 if (Astro.request.method === "POST") {
+  console.log("MADE IT HERE");
   const formData = await Astro.request.formData();
   const { success, error } = await putBlog({ formData });
+  console.log("MADE IT HERE2");
   if (success) {
     status = "Successfully updated blog.";
   } else {
     status = "Error" + error;
   }
+  console.log("MADE IT HERE3");
 }
 if (Astro.request.method === "GET") {
   status = "";
 }
 
 const blog = await getBlogFromSlug({ slug });
+export const prerender = false;
 ---
 
 <RootLayout>
