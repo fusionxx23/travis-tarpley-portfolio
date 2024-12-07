@@ -40,21 +40,21 @@ export const prerender = false;
       }
     </Auth>
   </div>
+
+  <script>
+    const { signIn, signOut } = await import(
+      "auth-astro/client"
+    );
+    document
+      .querySelector("#login")
+      ?.addEventListener("click", () => {
+        signIn();
+      });
+
+    document
+      .querySelector("#logout")
+      ?.addEventListener("click", () => {
+        signOut();
+      });
+  </script>
 </RootLayout>
-
-<script>
-  const { signIn, signOut } = await import(
-    "auth-astro/client"
-  );
-  document
-    .querySelector("#login")
-    ?.addEventListener("click", () => {
-      signIn();
-    });
-
-  document
-    .querySelector("#logout")
-    ?.addEventListener("click", () => {
-      signOut();
-    });
-</script>
