@@ -36,7 +36,7 @@
         method="POST"
         on:submit={handleSubmit}
       >
-        <div class="flex justify-center">
+        <div class="">
           <div class="space-y-6 max-w-[500px] mx-auto">
             <!-- Title Input -->
             <div>
