@@ -19,9 +19,7 @@
     <h1 class="text-xl">Editing: Blog {blog.title}</h1>
     <div class="w-[400px] h-[300px]">
       <img
-        src={CLOUDFRONT_URL +
-          "/" +
-          `${imageId}_800x.${ext}`}
+        src={CLOUDFRONT_URL + "/" + `${imageId}_800x.webp`}
         alt="Thumbnail"
       />
     </div>
