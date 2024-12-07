@@ -1,3 +1,4 @@
+import { error } from "node_modules/astro/dist/core/logger/core";
 import {
   getBlogFromId,
   updateBlog,
@@ -19,7 +20,6 @@ export async function putBlog({
 }: {
   formData: FormData;
 }): Promise<{ error?: string; success: boolean }> {
-  // ZOD THIS
   const data = {
     file: formData.get("file") as File,
     blog: formData.get("blog") as string,
@@ -53,37 +53,57 @@ export async function putBlog({
         error: "Failed to update blog.",
       };
     }
-    await deployVercel();
+    try {
+      await deployVercel();
+    } catch (e) {
+      console.error(e);
+    }
     return { success: true };
-  } else {
-    const res = await uploadImageFile({ file: data.file });
+  }
+  let key: string | undefined = "";
+  try {
+    const res = await uploadImageFile({
+      file: data.file,
+    });
+    key = res?.key;
     const blogResp = await getBlogFromId({
-      id: parseInt(data.id),
+      id: Number.parseInt(data.id),
     });
     await deleteBlogFiles({ key: blogResp.imageKey });
-    if (res?.key) {
-      try {
-        updateBlog(parseInt(data.id), {
-          blogContent: blog,
-          title,
-          description,
-          imageKey: res.key,
-          updatedAt: Date.now().toString(),
-        });
-      } catch (e) {
-        console.log(e);
-        return {
-          success: false,
-          error: "Failed to update blog.",
-        };
-      }
-      await deployVercel();
-      return { success: true };
-    } else {
+  } catch (e) {
+    console.error(e);
+    return {
+      success: false,
+      error: "Failed to delete blog files.",
+    };
+  }
+
+  if (key) {
+    try {
+      updateBlog(Number.parseInt(data.id), {
+        blogContent: blog,
+        title,
+        description,
+        imageKey: key,
+        updatedAt: Date.now().toString(),
+      });
+    } catch (e) {
+      console.error(e);
       return {
         success: false,
-        error: "Failed to upload image.",
+        error: "Failed to update blog.",
       };
     }
+    try {
+      await deployVercel();
+    } catch (e) {
+      console.error(e);
+    }
+    return { success: true };
   }
+
+  return {
+    success: false,
+    error: "Failed to upload image.",
+  };
 }
