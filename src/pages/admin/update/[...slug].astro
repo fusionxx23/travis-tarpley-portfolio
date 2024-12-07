@@ -10,7 +10,6 @@ if (!slug) {
 }
 let status = "";
 
-console.log("MADE IT HERE4");
 if (Astro.request.method === "POST") {
   const formData = await Astro.request.formData();
   console.log(formData, "Form Data");
@@ -20,7 +19,6 @@ if (Astro.request.method === "POST") {
   } else {
     status = "Error" + error;
   }
-  console.log("MADE IT HERE3");
 }
 if (Astro.request.method === "GET") {
   status = "";
