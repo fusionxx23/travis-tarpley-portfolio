@@ -42,7 +42,9 @@ export async function uploadImageFile({
     if (!width || !height) {
       throw Error("Wrong aspect ratio.");
     }
-    if (width / height !== 1.5) {
+    // Round the aspect ratio -- image can be a few pixels off
+    // * Floats are very inaccurate
+    if (Math.floor((width / height) * 10) / 10 !== 1.5) {
       throw Error("Wrong aspect ratio.");
     }
     if (width < 800) {
