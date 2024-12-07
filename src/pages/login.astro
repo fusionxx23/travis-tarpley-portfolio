@@ -45,16 +45,11 @@ export const prerender = false;
     const { signIn, signOut } = await import(
       "auth-astro/client"
     );
-    document
-      .querySelector("#login")
-      ?.addEventListener("click", () => {
-        signIn();
-      });
-
-    document
-      .querySelector("#logout")
-      ?.addEventListener("click", () => {
-        signOut();
-      });
+    (
+      document.querySelector("#login") as HTMLElement
+    ).onclick = () => signIn("github");
+    (
+      document.querySelector("#logout") as HTMLButtonElement
+    ).onclick = () => signOut();
   </script>
 </RootLayout>
