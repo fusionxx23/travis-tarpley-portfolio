@@ -5,7 +5,9 @@ import remarkHtml from "remark-html";
 import remarkGfm from "remark-gfm";
 import DOMPurify from "isomorphic-dompurify";
 
-export default async function highlight(content: string) {
+export default async function convertMarkdownToHtml(
+  content: string,
+) {
   let blogHtml = await remark()
     .use(remarkGfm)
     .use(remarkHtml)
