@@ -13,5 +13,5 @@ export default defineConfig({
   site: "https://travis-tarpley-portfolio-4aov.vercel.app",
   integrations: [sitemap(), tailwind(), svelte(), auth()],
   output: "server",
-  adapter: vercel(),
+  adapter: vercel({ imageService: true }),
 });
