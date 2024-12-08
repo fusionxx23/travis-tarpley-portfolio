@@ -6,7 +6,7 @@ import ProjectLink from "./ProjectLink.astro";
 import Substack from "@/components/UI/icons/substack.astro";
 import LinkIcon from "@/components/UI/icons/link.astro";
 import GithubIcon from "@/components/UI/icons/github.astro";
-import { Picture } from "astro:assets";
+import { Image } from "astro:assets";
 interface Props {
   id: string;
   description: string;
@@ -64,7 +64,7 @@ const {
           class="absolute transition-all z-10 ease-in h-full w-full group hover:bg-transparent bg-gradient-to-tr bg-purple-300 bg-opacity-20 rounded-md"
         >
         </div>
-        <Picture
+        <Image
           class="rounded-md z-0 transition-all grayscale group-hover:grayscale-0 ease-in"
           src={projectImage ?? defaultImg}
           alt={"Project Image"}
