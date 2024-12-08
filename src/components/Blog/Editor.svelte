@@ -1,17 +1,17 @@
 <script lang="ts">
-  import { remark } from "remark";
-  import remarkGfm from "remark-gfm";
-  import remarkHtml from "remark-html";
+  import "highlight.js/styles/agate.css";
+  import highlight from "@/libs/highlight";
   export let content = "";
   let blog = "";
   let markdown = "";
 
   $: createMD(blog).then((r) => r);
   async function createMD(s: string) {
-    const blogHtml = await remark()
-      .use(remarkGfm)
-      .use(remarkHtml)
-      .process(s);
+    // const blogHtml = await remark()
+    //   .use(remarkGfm)
+    //   .use(remarkHtml)
+    //   .process(s);
+    const blogHtml = await highlight(s);
     markdown = blogHtml.toString();
   }
 </script>
