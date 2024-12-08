@@ -25,7 +25,7 @@ type Props = SelectBlog;
 
 const blog = Astro.props;
 
-const blogHtml = markdownConvert(blog.blogContent);
+const blogHtml = await markdownConvert(blog.blogContent);
 const blogContent = DOMPurify.sanitize(blogHtml.toString());
 
 export const prerender = true;
