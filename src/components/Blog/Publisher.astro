@@ -1,0 +1,25 @@
+---
+interface Props {
+  id: string;
+}
+const { id } = Astro.props;
+---
+
+<form method="POST">
+  <input
+    value={id.toString()}
+    name="id"
+    id="id"
+    type="hidden"
+  />
+  <input type="hidden" name="action" value="publish" />
+  <button
+    type="submit"
+    class="border border-blue-400 hover:bg-blue-400 p-2 hover:text-black
+      text-blue-400"
+  >
+    Publish
+  </button>
+</form>
+
+<!-- on:submit|preventDefault={handleSubmit} -->

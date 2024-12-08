@@ -5,3 +5,18 @@ export function createSlug(title: string) {
     .replace(/[\s\W-]+/g, "-") // Replace spaces and non-word characters with hyphen
     .replace(/^-+|-+$/g, ""); // Remove leading or trailing hyphens
 }
+
+export async function deployVercel() {
+  try {
+    const resp = await fetch(
+      import.meta.env.VERCEL_DEPLOY_HOOK,
+      {
+        method: "POST",
+      },
+    ).then((r) => r.json());
+    return resp;
+  } catch (e) {
+    console.log(e);
+    throw new Error("Failed to fetch deploy webhook");
+  }
+}

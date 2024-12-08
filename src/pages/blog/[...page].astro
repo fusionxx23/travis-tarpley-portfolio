@@ -2,13 +2,12 @@
 import RootLayout from "../../layouts/RootLayout.astro";
 import Header from "../../components/Header.astro";
 import Pagination from "@/components/UI/Pagination.astro";
-import { CLOUDFRONT_URL } from "@/data/constants";
-import { Image } from "astro:assets";
+import BlogList from "@/components/Blog/BlogList.astro";
 import {
-  getBlogs,
+  getPublishedBlogs,
   getTotalAmountOfBlogs,
-} from "../../libs/blogs/index";
-import { type SelectBlog } from "../../libs/models";
+} from "../../libs/db/blog/queries";
+import { type SelectBlog } from "../../libs/db/blog/table";
 interface Props {
   blogs: SelectBlog[];
   pages: number;
@@ -19,7 +18,7 @@ export async function getStaticPaths() {
   console.log(total.data);
   let offset = 0;
   while (true) {
-    const blogs = await getBlogs(offset);
+    const blogs = await getPublishedBlogs(offset);
     blogPage.push(blogs);
     offset += 10;
     if (blogs.length < 10) {
@@ -58,61 +57,8 @@ export const prerender = true;
       <h1 class="text-3xl py-4 text-gray-100 font-semibold">
         My Latest Posts
       </h1>
-      <ul class="space-y-8">
-        {
-          blogs?.map((post) => {
-            const arr = post.imageKey.split(".");
-            const imageId = arr[0];
-            const ext = arr[1];
-            return (
-              <li
-                class="bg-black/30 lg:w-[600px] border-2 border-gray-800
-                rounded-lg p-4"
-              >
-                <a
-                  class=""
-                  href={`/blog/post/${post.slug}/`}
-                >
-                  <div class="flex gap-x-4">
-                    <div class="w-[150px] h-[100px] flex-shrink-0">
-                      <Image
-                        width={150}
-                        height={100}
-                        class="object-cover w-full h-full"
-                        src={`${CLOUDFRONT_URL}/${imageId}_150x.${ext}`}
-                        alt=""
-                      />
-                    </div>
-                    <div class="flex flex-col justify-between gap-y-4">
-                      <div>
-                        <h4 class="text-2xl font-bold pb-1">
-                          {post.title}
-                        </h4>
-                        <p class="text-gray-400 text-[14px]">
-                          {post.description}
-                        </p>
-                      </div>
-                      <div class="text-gray-300 w-full font-medium text-right text-sm">
-                        <p>
-                          {Intl.DateTimeFormat("en-US", {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                          }).format(
-                            new Date(
-                              parseInt(post.createdAt),
-                            ),
-                          )}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </li>
-            );
-          })
-        }
-      </ul>
+
+      <BlogList blogs={blogs} />
       <Pagination
         currentPage={parseInt(page)}
         totalPage={pages}

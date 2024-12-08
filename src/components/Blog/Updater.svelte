@@ -1,34 +1,18 @@
 <script lang="ts">
-  import { type SelectBlog } from "@/libs/models/index";
+  import { type SelectBlog } from "@/libs/db/blog/table";
   import Editor from "./Editor.svelte";
   import { CLOUDFRONT_URL } from "@/data/constants";
   export let blog: SelectBlog;
-  let status: string = "";
+  export let status = "";
   let isLoading = false;
   async function handleSubmit(event: Event) {
-    event.preventDefault();
-    const form = event.target as HTMLFormElement;
-    const formData = new FormData(form);
     isLoading = true;
-    try {
-      const response = await fetch(form.action, {
-        method: "PUT",
-        body: formData,
-      }).then((r) => r.json());
-      if (response.success) {
-        status = "Success!";
-      } else {
-        status = "Failed!";
-      }
-    } catch (error) {
-      console.error("An error occurred:", error);
-    }
-    isLoading = false;
   }
 
   const arr = blog.imageKey.split(".");
   const imageId = arr[0];
-  const ext = arr[1];
+  let title = blog.title;
+  let description = blog.description;
 </script>
 
 <div class=" flex justify-center">
@@ -36,9 +20,7 @@
     <h1 class="text-xl">Editing: Blog {blog.title}</h1>
     <div class="w-[400px] h-[300px]">
       <img
-        src={CLOUDFRONT_URL +
-          "/" +
-          `${imageId}_800x.${ext}`}
+        src={CLOUDFRONT_URL + "/" + `${imageId}_800x.webp`}
         alt="Thumbnail"
       />
     </div>
@@ -49,76 +31,85 @@
   <div class="">
     <div>
       <form
-        action="/actions/admin/blog"
         enctype="multipart/form-data"
         class="space-y-2"
-        on:submit|preventDefault={handleSubmit}
+        method="POST"
+        on:submit={handleSubmit}
       >
-        <div class="flex justify-center">
-          <div class="space-y-4">
-            <input
-              type="text"
-              hidden
-              name="id"
-              value={blog.id}
-            />
+        <div class="">
+          <input type="hidden" name="id" value={blog.id} />
+          <div class="space-y-6 max-w-[500px] mx-auto">
+            <!-- Title Input -->
             <div>
-              <div>
-                <label for="title">Title</label>
-              </div>
+              <label
+                class="block text-sm font-medium text-gray-200"
+                for="title"
+              >
+                Title
+              </label>
               <input
                 type="text"
-                class="text-black p-2"
                 name="title"
                 id="title"
+                class="mt-1 block text-black w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2"
+                bind:value={title}
                 required
-                value={blog.title}
-              />
-            </div>
-            <div>
-              <div>
-                <label for="description">Description</label>
-              </div>
-              <input
-                type="text"
-                class="text-black p-2"
-                name="description"
-                id="description"
-                required
-                value={blog.description}
               />
             </div>
 
-            <div class="text-white">
-              <label for="file">Thumbnail</label>
+            <!-- Description Input -->
+            <div>
+              <label
+                for="description"
+                class="block text-sm font-medium text-gray-200"
+              >
+                Description
+              </label>
               <input
-                class="text-white"
+                bind:value={description}
+                type="text"
+                name="description"
+                id="description"
+                class="mt-1 block text-black w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2"
+                required
+              />
+            </div>
+
+            <!-- Thumbnail File Input -->
+            <div>
+              <label
+                for="file"
+                class="block text-sm font-medium text-gray-200"
+              >
+                Thumbnail
+              </label>
+              <input
                 type="file"
                 name="file"
                 id="file"
                 accept="image/png, image/jpeg"
+                class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border file:border-gray-300 file:text-sm file:font-medium file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100"
               />
             </div>
           </div>
-        </div>
-
-        <Editor content={blog.blogContent} />
-        <div class="flex justify-center pt-6">
-          <div>
-            <button
-              type="submit"
-              class="border group p-2 hover:bg-purple-500 hover:border-black
+          <Editor content={blog.blogContent} />
+          <div class="flex justify-center pt-6">
+            <div>
+              <button
+                type="submit"
+                class="border group p-2 hover:bg-purple-500 disabled:hover:bg-none hover:border-black
           hover:text-black"
-              disabled={isLoading}
-            >
-              <div class="group-disabled:hidden">
-                Update Blog Post
-              </div>
-              <div class="group-disabled:block hidden">
-                Loading...
-              </div>
-            </button>
-            <p>{status}</p>
+                disabled={isLoading}
+              >
+                <div class="group-disabled:hidden">
+                  Update Blog Post
+                </div>
+                <div class="group-disabled:block hidden">
+                  Loading...
+                </div>
+              </button>
+              <p>{status}</p>
+            </div>
           </div>
         </div>
       </form>

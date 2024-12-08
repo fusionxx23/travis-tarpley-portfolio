@@ -6,8 +6,8 @@ import RootLayout from "../../../layouts/RootLayout.astro";
 import { Image } from "astro:assets";
 import { CLOUDFRONT_URL } from "@/data/constants";
 import BackArrow from "@/components/UI/icons/backArrow.astro";
-import { getBlogs } from "@/libs/blogs/index";
-import { type SelectBlog } from "@/libs/models/index.ts";
+import { getBlogs } from "@/libs/db/blog/queries";
+import { type SelectBlog } from "@/libs/db/blog/table";
 export async function getStaticPaths() {
   const blogs = await getBlogs();
   if (blogs) {
@@ -24,21 +24,24 @@ type Props = SelectBlog;
 
 const blog = Astro.props;
 
-const blogContent = await highlight(blog.blogContent);
-const blogDate = new Date(parseInt(blog.createdAt));
+const blogHtml = await remark()
+  .use(remarkGfm)
+  .use(remarkHtml)
+  .process(blog.blogContent);
+const blogContent = DOMPurify.sanitize(blogHtml.toString());
+
 export const prerender = true;
 const arr = blog.imageKey.split(".");
 const imageId = arr[0];
-const ext = arr[1];
 ---
 
 <RootLayout
-  imageUrl={`${CLOUDFRONT_URL}/${imageId}_800x.${ext}`}
+  imageUrl={`${CLOUDFRONT_URL}/${imageId}_800x.webp`}
   title={blog.title}
   description={blog.description}
 >
   <div class="w-full pt-10">
-    <div class="mx-auto px-4 lg:w-[800px]">
+    <div class="mx-auto px-4 lg:w-[840px]">
       <div class="flex">
         <a href="/blog" class="">
           <div
@@ -49,9 +52,13 @@ const ext = arr[1];
         </a>
       </div>
 
-      <h1 class="text-center font-bold text-4xl py-6 e">
+      <h1 class="text-center font-bold text-4xl py-2 e">
         {blog.title}
       </h1>
+
+      <p class="text-center pb-2 text-lg text-gray-300">
+        {blog.description}
+      </p>
       <div class="py-2 flex justify-center">
         <div
           class="flex w-[300px] lg:w-full justify-center"
@@ -60,18 +67,20 @@ const ext = arr[1];
             loading={"eager"}
             width={800}
             height={400}
-            class="object-contain"
-            src={`${CLOUDFRONT_URL}/${imageId}_800x.${ext}`}
+            class="object-contain border border-gray-400 rounded-md"
+            src={`${CLOUDFRONT_URL}/${imageId}_800x.webp`}
             alt={blog.title}
           />
         </div>
       </div>
-      <p class="text-center text-xl text-gray-300 pt-2">
-        {blog.description}
-      </p>
-      <h2>
-        {blogDate.getMonth() + 1} - {blogDate.getDay()}
-        - {blogDate.getFullYear()}
+      <h2 class="text-gray-400 text-sm text-right">
+        {
+          Intl.DateTimeFormat("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          }).format(new Date(parseInt(blog.createdAt)))
+        }
       </h2>
       <div class="py-2 markdown-body p-2">
         <div set:html={blogContent} />

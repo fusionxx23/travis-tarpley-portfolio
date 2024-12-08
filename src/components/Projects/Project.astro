@@ -1,11 +1,33 @@
 ---
-import projectImage from '../../images/isekai-money.webp'
-import YoutubeModal from '@/components/UI/youtubeModal.astro'
-import {Image} from 'astro:assets'
+import defaultImg from "../../images/isekai-money.webp";
+import YoutubeModal from "@/components/UI/youtubeModal.astro";
+import ProjectLink from "./ProjectLink.astro";
+
+import Substack from "@/components/UI/icons/substack.astro";
+import LinkIcon from "@/components/UI/icons/link.astro";
+import GithubIcon from "@/components/UI/icons/github.astro";
+import { Image } from "astro:assets";
 interface Props {
-  id:string
+  id: string;
+  description: string;
+  projectImage: ImageMetadata;
+  liveDemoUrl?: string;
+  blogPostSlug?: string;
+  youtubeModal?: string;
+  githubUrl?: string;
+  title: string;
 }
-const {id} = Astro.props
+
+const {
+  title,
+  id,
+  githubUrl,
+  description,
+  projectImage,
+  liveDemoUrl,
+  blogPostSlug,
+  youtubeModal,
+} = Astro.props;
 ---
 
 <div
@@ -18,17 +40,12 @@ const {id} = Astro.props
       <div class="flex justify-between">
         <div class="text-light-200 flex">
           {
-             (
+            (
               <a
                 rel="noopener noreferrer"
                 target="_blank"
-                href={'/git'}
-              >
-                <!-- <FiGithub -->
-                <!--   class="cursor-pointer ml-1 hover:text-light-100" -->
-                <!--   size={20} -->
-                <!-- /> -->
-              </a>
+                href={"/git"}
+              />
             )
           }
         </div>
@@ -36,42 +53,71 @@ const {id} = Astro.props
       <h1
         class="text-light-200 mt-4 text-2xl font-medium hover:text-light-100"
       >
-        Title
+        {title}
       </h1>
     </div>
 
     <div class="flex justify-center">
-      <div class="mt-4 relative cursor-pointer group">
+      <div class="mt-4 relative group">
         {/* Purple BG */}
         <div
-          class="absolute transition-all z-10 ease-in h-full w-full group  hover:bg-transparent bg-gradient-to-tr bg-purple-300 bg-opacity-20 rounded-md"
+          class="absolute transition-all z-10 ease-in h-full w-full group hover:bg-transparent bg-gradient-to-tr bg-purple-300 bg-opacity-20 rounded-md"
         >
         </div>
         <Image
           class="rounded-md z-0 transition-all grayscale group-hover:grayscale-0 ease-in"
-          src={projectImage}
-          alt={'Project Image'}
+          src={projectImage ?? defaultImg}
+          alt={"Project Image"}
         />
       </div>
     </div>
 
     <div class="flex flex-col pt-2">
-      <div class=" text-gray-300 h-[100px] text-sm mt-1">
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ea deserunt laudantium at molestias libero non magni magnam. </p>
+      <div class="text-gray-300 h-[100px] text-sm mt-1">
+        <p>
+          {description}
+        </p>
       </div>
       <div class="flex"></div>
     </div>
 
     <div class="pt-4">
-      <div class="flex gap-x-2">
-        <a class="border hover:bg-purple-300/20 hover:text-white border-purple-300 text-purple-300  rounded-sm p-2" href='/'>Live Demo</a>
-        <YoutubeModal id={id}/>
-        <a class="border hover:bg-purple-300/20 hover:text-white border-purple-300 text-purple-300  rounded-sm p-2" href='/'>Blog Post</a>
+      <div class="flex flex-wrap gap-x-2">
+        {
+          liveDemoUrl && (
+            <ProjectLink href={liveDemoUrl}>
+              Live Demo <LinkIcon />
+            </ProjectLink>
+          )
+        }
+        {
+          youtubeModal && (
+            <YoutubeModal youtubeSrc="" id={id} />
+          )
+        }
+        {
+          blogPostSlug && (
+            <ProjectLink
+              href={`/blog/post/${blogPostSlug}`}
+            >
+              Blog Post
+              <Substack />
+            </ProjectLink>
+          )
+        }
+        {
+          githubUrl && (
+            <ProjectLink href={githubUrl}>
+              Git
+              <GithubIcon />
+            </ProjectLink>
+          )
+        }
       </div>
     </div>
   </section>
 </div>
 
-          <!-- style={{ -->
-          <!--   filter: `${imageHover ? "" : "grayscale(100%)"}`, -->
-          <!-- }} -->
+<!-- style={{ -->
+<!--   filter: `${imageHover ? "" : "grayscale(100%)"}`, -->
+<!-- }} -->

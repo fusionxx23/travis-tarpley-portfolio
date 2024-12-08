@@ -1,60 +1,16 @@
 ---
 import RootLayout from "../layouts/RootLayout.astro";
-import { Auth } from "auth-astro/components";
-import type { Session } from "@auth/core/types";
 export const prerender = false;
 ---
 
 <RootLayout>
-  <div class="mx-auto w-[800px]">
-    <Auth>
-      {
-        (session: Session) => {
-          if (session) {
-            return (
-              <div class="">
-                <h1 class="text-3xl text-center">
-                  Logged In
-                </h1>
-                <div class="flex pt-10 justify-between">
-                  <h4>User</h4>
-                  <p>{session.user?.name}</p>
-                </div>
-                <div class="pt-4" />
-                <button
-                  class="p-2 rounded-md border"
-                  id="logout"
-                >
-                  Log out
-                </button>
-              </div>
-            );
-          } else {
-            return (
-              <button class="p-3 border" id="login">
-                Login in
-              </button>
-            );
-          }
-        }
-      }
-    </Auth>
+  <div class="mx-auto lg:w-[800px]">
+    <button id="login">Login</button>
   </div>
+  <script>
+    const { signIn } = await import("auth-astro/client");
+    (
+      document.querySelector("#login") as HTMLButtonElement
+    ).onclick = () => signIn("github");
+  </script>
 </RootLayout>
-
-<script>
-  const { signIn, signOut } = await import(
-    "auth-astro/client"
-  );
-  document
-    .querySelector("#login")
-    ?.addEventListener("click", () => {
-      signIn();
-    });
-
-  document
-    .querySelector("#logout")
-    ?.addEventListener("click", () => {
-      signIn();
-    });
-</script>

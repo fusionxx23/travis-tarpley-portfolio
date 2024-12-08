@@ -2,29 +2,32 @@
 import "@/styles/markdown-styles.css";
 import RootLayout from "@/layouts/RootLayout.astro";
 import Updater from "@/components/Blog/Updater.svelte";
-import { getBlogFromSlug } from "@/libs/blogs/index";
-import { type SelectBlog } from "@/libs/models/index.ts";
-// export async function getStaticPaths() {
-//   const blogs = await getBlogs();
-//   if (blogs) {
-//     return blogs.map((blog) => ({
-//       params: { slug: blog.slug },
-//       props: blog,
-//     }));
-//   } else {
-//     console.error("FAILED TO PARSE BLOGS");
-//     return [];
-//   }
-// }
-
+import { putBlog } from "@/libs/blog/put";
+import { getBlogFromSlug } from "@/libs/db/blog/queries";
 const { slug } = Astro.params;
 if (!slug) {
   return Astro.redirect("/");
 }
+let status = "";
+
+if (Astro.request.method === "POST") {
+  const formData = await Astro.request.formData();
+  console.log(formData, "Form Data");
+  const { success, error } = await putBlog({ formData });
+  if (success) {
+    status = "Successfully updated blog.";
+  } else {
+    status = "Error" + error;
+  }
+}
+if (Astro.request.method === "GET") {
+  status = "";
+}
+
 const blog = await getBlogFromSlug({ slug });
 export const prerender = false;
 ---
 
 <RootLayout>
-  <Updater blog={blog[0]} client:load />
+  <Updater status={status} blog={blog[0]} client:load />
 </RootLayout>

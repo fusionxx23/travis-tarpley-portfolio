@@ -14,25 +14,19 @@ export async function deleteBlogFiles({
 }: {
   key: string;
 }) {
-  const [keyId, ext] = key.split(".");
-  const del: DeleteObjectsCommandInput = {
-    Bucket: import.meta.env.S3_BUCKET_NAME,
-    Delete: { Objects: [{ Key: `${keyId}.${ext}` }] },
-  };
+  const [keyId] = key.split(".");
 
   const delTwo: DeleteObjectsCommandInput = {
     Bucket: import.meta.env.S3_BUCKET_DEST,
     Delete: {
       Objects: [
-        { Key: `${keyId}_800x.${ext}` },
-        { Key: `${keyId}_150x.${ext}` },
+        { Key: `${keyId}_800x.webp` },
+        { Key: `${keyId}_150x.webp` },
       ],
     },
   };
-  const command = new DeleteObjectsCommand(del);
-  const commandTwo = new DeleteObjectsCommand(delTwo);
+  const command = new DeleteObjectsCommand(delTwo);
   await client.send(command);
-  await client.send(commandTwo);
 }
 export async function uploadImageFile({
   file,
@@ -48,7 +42,9 @@ export async function uploadImageFile({
     if (!width || !height) {
       throw Error("Wrong aspect ratio.");
     }
-    if (width / height !== 1.5) {
+    // Round the aspect ratio -- image can be a few pixels off
+    // * Floats are very inaccurate
+    if (Math.floor((width / height) * 10) / 10 !== 1.5) {
       throw Error("Wrong aspect ratio.");
     }
     if (width < 800) {

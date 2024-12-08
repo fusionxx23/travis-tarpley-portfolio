@@ -1,19 +1,21 @@
 ---
 import Close from "@/components/UI/icons/close.astro";
+import Play from "@/components/UI/icons/play.astro";
 interface Props {
   id: string;
+  youtubeSrc: string;
 }
-const { id } = Astro.props;
+const { id, youtubeSrc } = Astro.props;
 ---
 
 <button
-  class="border hover:bg-purple-300/20 hover:text-white border-purple-300 text-purple-300 rounded-sm p-2"
-  id={"open-modal" + id}>Video Demo</button
+  class="border flex gap-x-1 items-center hover:bg-purple-300/20 hover:text-white border-purple-300 text-purple-300 rounded-sm p-2"
+  id={"open-modal" + id}>Video Demo <Play /></button
 >
 
 <dialog
   id={"modal" + id}
-  class="backdrop:bg-black/50 rounded-sm"
+  class="backdrop:bg-black/50 bg-transparent rounded-sm"
 >
   <div
     class="bg-background-100 px-2 py-10 md:p-12 relative"
@@ -27,7 +29,8 @@ const { id } = Astro.props;
     <iframe
       id="youtube-video"
       class="w-[300px] lg:w-[500px] lg:h-[315px]"
-      src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+      src={youtubeSrc ??
+        "https://www.youtube.com/embed/dQw4w9WgXcQ"}
       title="YouTube video player"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowfullscreen
