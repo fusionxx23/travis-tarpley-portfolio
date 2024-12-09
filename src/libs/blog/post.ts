@@ -54,7 +54,7 @@ export async function postBlog({
     return { success: false, error: "No image provided." };
   }
   try {
-    const response = await createBlog({
+    await createBlog({
       title: safeData.title,
       description: safeData.description,
       imageKey,
@@ -63,9 +63,6 @@ export async function postBlog({
       updatedAt: Date.now().toString(),
       slug: createSlug(safeData.title),
     });
-    if (response.rows) {
-      await deployVercel();
-    }
   } catch (e) {
     console.error(e);
     return {
