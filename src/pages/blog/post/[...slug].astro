@@ -2,12 +2,10 @@
 import "@/components/../styles/markdown-styles.css";
 import "highlight.js/styles/agate.css";
 import RootLayout from "../../../layouts/RootLayout.astro";
-import { Image } from "astro:assets";
-import { remark } from "remark";
-import remarkHtml from "remark-html";
-import { CLOUDFRONT_URL } from "@/data/constants";
-import remarkGfm from "remark-gfm";
 import DOMPurify from "isomorphic-dompurify";
+import markdownConvert from "@/libs/markdown";
+import { Image } from "astro:assets";
+import { CLOUDFRONT_URL } from "@/data/constants";
 import BackArrow from "@/components/UI/icons/backArrow.astro";
 import { getBlogs } from "@/libs/db/blog/queries";
 import { type SelectBlog } from "@/libs/db/blog/table";
@@ -27,10 +25,7 @@ type Props = SelectBlog;
 
 const blog = Astro.props;
 
-const blogHtml = await remark()
-  .use(remarkGfm)
-  .use(remarkHtml)
-  .process(blog.blogContent);
+const blogHtml = await markdownConvert(blog.blogContent);
 const blogContent = DOMPurify.sanitize(blogHtml.toString());
 
 export const prerender = true;
@@ -93,7 +88,3 @@ const imageId = arr[0];
   <!-- <BlogPost {...blog}> -->
   <!-- </BlogPost> -->
 </RootLayout>
-<script>
-  import high from "highlight.js";
-  high.highlightAll();
-</script>

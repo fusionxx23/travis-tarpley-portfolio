@@ -15,7 +15,7 @@ export const onRequest: MiddlewareHandler = async (
     }
     return new Response(null, {
       status: 307,
-      headers: { Location: "/" },
+      headers: { Location: "/login" },
     });
   }
   if (rootPath.toLowerCase() === "login") {
