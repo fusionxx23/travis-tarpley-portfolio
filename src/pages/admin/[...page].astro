@@ -3,8 +3,10 @@ import {
   deleteBlog,
   getBlogFromId,
   getBlogs,
+  getTotalAmountOfBlogs,
   publishBlogFromId,
 } from "@/libs/db/blog/queries";
+import Pagination from "@/components/UI/Pagination.astro";
 import { CLOUDFRONT_URL } from "@/data/constants";
 import { deployVercel } from "@/libs/utils";
 import Deleter from "@/components/Blog/Deleter.astro";
@@ -55,9 +57,18 @@ if (Astro.request.method === "POST") {
 if (Astro.request.method === "GET") {
   actionStatus = undefined;
 }
-
-const safeBlogs = await getBlogs();
-export const prerender = false;
+const { page } = Astro.params;
+let safeBlogs;
+const resp = await getTotalAmountOfBlogs();
+let totalPages = resp.data?.["COUNT(*)"];
+totalPages = totalPages ? Math.floor(totalPages / 10) : 1;
+const LIMIT = 10;
+if (!page) {
+  safeBlogs = await getBlogs(0, LIMIT);
+} else {
+  const offset = Number.parseInt(page) * LIMIT;
+  safeBlogs = await getBlogs(offset, LIMIT);
+}
 ---
 
 <RootLayout>
@@ -122,6 +133,10 @@ export const prerender = false;
           })
         }
       </ul>
+      <Pagination
+        currentPage={parseInt(page ?? "1")}
+        totalPage={totalPages ?? 1}
+      />
     </section>
   </main>
 </RootLayout>
