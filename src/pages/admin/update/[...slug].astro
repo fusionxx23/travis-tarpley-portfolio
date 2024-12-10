@@ -25,7 +25,6 @@ if (Astro.request.method === "GET") {
 }
 
 const blog = await getBlogFromSlug({ slug });
-export const prerender = false;
 ---
 
 <RootLayout>
