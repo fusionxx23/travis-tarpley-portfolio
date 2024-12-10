@@ -3,7 +3,6 @@ import rehypeHighlight from "rehype-highlight";
 import { remark } from "remark";
 import remarkHtml from "remark-html";
 import remarkGfm from "remark-gfm";
-import DOMPurify from "isomorphic-dompurify";
 
 export default async function convertMarkdownToHtml(
   content: string,
@@ -12,7 +11,7 @@ export default async function convertMarkdownToHtml(
     .use(remarkGfm)
     .use(remarkHtml)
     .process(content);
-  let blogContent = DOMPurify.sanitize(blogHtml.toString());
+  let blogContent = blogHtml.toString();
   const result = await rehype()
     .data("settings", { fragment: false })
     .use(rehypeHighlight)
