@@ -1,10 +1,9 @@
-import { error } from "node_modules/astro/dist/core/logger/core";
 import {
   getBlogFromId,
   updateBlog,
 } from "../db/blog/queries";
 import { deleteBlogFiles, uploadImageFile } from "../s3";
-import { deployVercel } from "../utils";
+import { createSlug, deployVercel } from "../utils";
 import z from "zod";
 const FormDataSchema = z.object({
   file: z
@@ -47,6 +46,7 @@ export async function putBlog({
         blogContent: blog,
         title,
         description,
+        slug: createSlug(title),
         updatedAt: Date.now().toString(),
       });
     } catch (e) {
@@ -87,6 +87,7 @@ export async function putBlog({
         blogContent: blog,
         title,
         description,
+        slug: createSlug(title),
         imageKey: key,
         updatedAt: Date.now().toString(),
       });
