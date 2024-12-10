@@ -16,7 +16,6 @@ interface Props {
 export async function getStaticPaths() {
   let blogPage: SelectBlog[][] = [];
   const total = await getTotalAmountOfBlogs();
-  console.log(total.data);
   let offset = 0;
   while (true) {
     const blogs = await getPublishedBlogs(offset);
@@ -60,7 +59,7 @@ export async function getStaticPaths() {
 const { blogs, pages } = Astro.props;
 let { page } = Astro.params;
 if (page === undefined) {
-  page = 1;
+  page = "1";
 }
 ---
 
