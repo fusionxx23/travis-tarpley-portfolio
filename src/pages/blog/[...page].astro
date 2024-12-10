@@ -16,7 +16,6 @@ interface Props {
 export async function getStaticPaths() {
   let blogPage: SelectBlog[][] = [];
   const total = await getTotalAmountOfBlogs();
-  console.log(total.data);
   let offset = 0;
   while (true) {
     const blogs = await getPublishedBlogs(offset);
@@ -37,17 +36,31 @@ export async function getStaticPaths() {
   if (count > 10) {
     pages = Math.floor(count / 10);
   }
-  return blogPage.map((blogs, ind) => {
-    return {
-      params: {
-        page: (ind + 1).toString(),
-      },
-      props: { blogs, pages },
-    };
-  });
+  const firstPage = {
+    params: { page: undefined },
+    props: {
+      blogs: await getPublishedBlogs(),
+      pages,
+    },
+  };
+
+  return [
+    firstPage,
+    ...blogPage.map((blogs, ind) => {
+      return {
+        params: {
+          page: (ind + 1).toString(),
+        },
+        props: { blogs, pages },
+      };
+    }),
+  ];
 }
 const { blogs, pages } = Astro.props;
-const { page } = Astro.params;
+let { page } = Astro.params;
+if (page === undefined) {
+  page = "1";
+}
 ---
 
 <RootLayout title="Travis Tarpley | Blog">

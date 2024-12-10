@@ -2,7 +2,6 @@
 import "@/components/../styles/markdown-styles.css";
 import "highlight.js/styles/agate.css";
 import RootLayout from "../../../layouts/RootLayout.astro";
-import DOMPurify from "isomorphic-dompurify";
 import markdownConvert from "@/libs/markdown";
 import { Image } from "astro:assets";
 import { CLOUDFRONT_URL } from "@/data/constants";
@@ -26,7 +25,7 @@ type Props = SelectBlog;
 const blog = Astro.props;
 
 const blogHtml = await markdownConvert(blog.blogContent);
-const blogContent = DOMPurify.sanitize(blogHtml.toString());
+const blogContent = blogHtml.toString();
 
 export const prerender = true;
 const arr = blog.imageKey.split(".");
@@ -39,7 +38,7 @@ const imageId = arr[0];
   description={blog.description}
 >
   <div class="w-full pt-10">
-    <div class="mx-auto px-4 lg:px-0 lg:w-[840px]">
+    <div class="mx-auto px-4 lg:px-0 lg:w-[1000px]">
       <div class="flex pb-2">
         <a href="/blog" class="">
           <div
@@ -57,9 +56,10 @@ const imageId = arr[0];
       <p class="text-center pb-2 text-lg text-gray-300">
         {blog.description}
       </p>
+
       <div class="py-2 flex justify-center">
         <div
-          class="flex w-[300px] lg:w-full justify-center"
+          class="flex w-[300px] lg:w-full justify-center lg:h-[533px]"
         >
           <Image
             loading={"eager"}
