@@ -40,6 +40,7 @@ export async function putBlog({
 
   const { blog, title, description } = blogData.data;
   // Use same image if no file was uploaded
+  // Optimize this
   if (data.file.size === 0) {
     try {
       updateBlog(Number.parseInt(data.id), {
