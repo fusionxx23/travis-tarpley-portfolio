@@ -86,7 +86,10 @@ const {
       <div class="flex flex-wrap gap-x-2">
         {
           liveDemoUrl && (
-            <ProjectLink href={liveDemoUrl}>
+            <ProjectLink
+              ariaLabel="Projects live demo"
+              href={liveDemoUrl}
+            >
               Live Demo <LinkIcon />
             </ProjectLink>
           )
@@ -99,6 +102,7 @@ const {
         {
           blogPostSlug && (
             <ProjectLink
+              ariaLabel={`Projects blog post`}
               href={`/blog/post/${blogPostSlug}`}
             >
               Blog Post
@@ -108,7 +112,10 @@ const {
         }
         {
           githubUrl && (
-            <ProjectLink href={githubUrl}>
+            <ProjectLink
+              ariaLabel="Projects github"
+              href={githubUrl}
+            >
               Git
               <GithubIcon />
             </ProjectLink>
