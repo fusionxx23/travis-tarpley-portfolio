@@ -14,7 +14,7 @@ export const onRequest: MiddlewareHandler = async (
       return next();
     }
     return new Response(null, {
-      status: 307,
+      status: 303,
       headers: { Location: "/login" },
     });
   }
@@ -22,7 +22,7 @@ export const onRequest: MiddlewareHandler = async (
     const session = await getSession(context.request);
     if (session?.user?.email === import.meta.env.EMAIL) {
       return new Response(null, {
-        status: 307,
+        status: 303,
         headers: { Location: "/admin" },
       });
     }
