@@ -31,7 +31,7 @@ const {
 ---
 
 <div
-  class={` border-purple-300/30 border-2  flex justify-center transition-all duration-150  rounded-sm`}
+  class={` border-purple-300/30 border-2 max-w-[468px] flex justify-center transition-all duration-150  rounded-sm`}
 >
   <section
     class="w-full flex flex-col justify-start h-full p-4 sm:p-6"
@@ -65,6 +65,7 @@ const {
         >
         </div>
         <Image
+          width={450}
           class="rounded-md z-0 transition-all grayscale group-hover:grayscale-0 ease-in"
           src={projectImage ?? defaultImg}
           alt={"Project Image"}
