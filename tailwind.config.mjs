@@ -14,7 +14,7 @@ export default {
         fadeIn: {
           "0%": {
             opacity: "0",
-            transform: "translate(0px,12px)",
+            transform: "translate(0px,9px)",
           },
           "100%": {
             opacity: "1",
@@ -50,7 +50,7 @@ export default {
       animation: {
         "border-beam":
           "border-beam calc(var(--duration)*1s) infinite linear",
-        "fade-in": "fadeIn 0.8s ease-in-out forwards",
+        "fade-in": "fadeIn 0.6s ease-in-out forwards",
         "fade-down": "fadeDown 0.7s ease-out forwards",
         orbit:
           "orbit calc(var(--duration)*1s) linear infinite",
