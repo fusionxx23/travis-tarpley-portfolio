@@ -72,12 +72,14 @@ export async function getBlogFromSlug({
 }
 export async function publishBlogFromId({
   id,
+  unpublish,
 }: {
   id: SelectBlog["id"];
+  unpublish: boolean;
 }) {
   const resp = await db
     .update(blogTable)
-    .set({ published: true })
+    .set({ published: !unpublish })
     .where(eq(blogTable.id, id));
   return resp;
 }
