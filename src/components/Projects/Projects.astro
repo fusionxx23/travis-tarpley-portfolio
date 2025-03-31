@@ -4,6 +4,7 @@ import Project from "./Project.astro";
 
 // import defaultImg from "../../images/isekai-money.webp";
 import sirImg from "../../images/sir-project.png";
+import reactorFi from "../../images/reactor-fi.png";
 import buterinImg from "../../images/buterin-project.png";
 import sunnyRevivalImg from "../../images/sunny-revival.png";
 import blogImg from "../../images/blog-project.png";
@@ -11,21 +12,29 @@ import { type TProjectProps } from "@/libs/types";
 const projects: TProjectProps[] = [
   {
     id: "1",
+    title: "Reactor Fi",
+    description: `MetaDex defi project.`,
+    projectImage: reactorFi,
+    liveDemoUrl: "https://www.reactorfi.xyz/",
+  },
+  {
+    id: "2",
     title: "Sir Trading",
     description:
       "Collateral-less leveraging protocol built on ethereum.",
     projectImage: sirImg,
-    liveDemoUrl: "https://prototype.sir.trading",
+    liveDemoUrl: "https://sir.trading",
   },
+
   {
-    id: "2",
+    id: "3",
     title: "Buterin Cards",
     description: `NFT Project with over 536 ETH in trading Volume. "Introducing the Buterin Cards, a unique on-chain collection of 2,015 cards celebrating Ethereum's co-founder, Vitalik Buterin."`,
     projectImage: buterinImg,
     liveDemoUrl: "https://buterin.cards",
   },
   {
-    id: "3",
+    id: "4",
     title: "Sunny-Revival",
     description:
       "An Ecommerce site built with shopify and hydrogen(Remix).",
@@ -33,7 +42,7 @@ const projects: TProjectProps[] = [
     liveDemoUrl: "https://sunny-revival.com",
   },
   {
-    id: "3",
+    id: "5",
     title: "Tarp's Blog",
     blogPostSlug:
       "create-a-markdown-blog-with-astrojs-turso-and-aws",
