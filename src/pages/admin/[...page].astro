@@ -22,8 +22,11 @@ if (Astro.request.method === "POST") {
   const action = data.get("action");
   const id = data.get("id");
   if (action === "publish" && id) {
+    // unpublished if already published
+    const unpublish = data.get("published");
     try {
       await publishBlogFromId({
+        unpublish: Boolean(unpublish),
         id: Number.parseInt(id.toString()),
       });
       actionStatus = "Successfully published post!";
@@ -98,9 +101,12 @@ if (!page) {
                     >
                       Edit
                     </a>
-                    {!post.published && (
-                      <Publisher id={post.id.toString()} />
-                    )}
+                    {
+                      <Publisher
+                        published={post.published ?? false}
+                        id={post.id.toString()}
+                      />
+                    }
                   </div>
                   <div class="w-[150px]">
                     <Image

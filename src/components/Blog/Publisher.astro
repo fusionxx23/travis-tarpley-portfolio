@@ -1,8 +1,9 @@
 ---
 interface Props {
   id: string;
+  published: boolean;
 }
-const { id } = Astro.props;
+const { id, published } = Astro.props;
 ---
 
 <form method="POST">
@@ -12,13 +13,22 @@ const { id } = Astro.props;
     id="id"
     type="hidden"
   />
+  {
+    published && (
+      <input
+        type="hidden"
+        name="published"
+        value="published"
+      />
+    )
+  }
   <input type="hidden" name="action" value="publish" />
   <button
     type="submit"
     class="border border-blue-400 hover:bg-blue-400 p-2 hover:text-black
       text-blue-400"
   >
-    Publish
+    {published ? "Unpublish" : "Publish"}
   </button>
 </form>
 
