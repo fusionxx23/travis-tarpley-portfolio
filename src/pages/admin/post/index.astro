@@ -1,7 +1,7 @@
 ---
 import RootLayout from "@/layouts/RootLayout.astro";
 import Uploader from "@/components/Blog/Uploader.svelte";
-import { postBlog } from "@/libs/blog/post";
+import { postBlog } from "@/libs/blog/create";
 export const prerender = false;
 let status: string | undefined = "";
 if (Astro.request.method === "POST") {

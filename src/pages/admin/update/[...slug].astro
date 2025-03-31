@@ -2,8 +2,8 @@
 import "@/styles/markdown-styles.css";
 import RootLayout from "@/layouts/RootLayout.astro";
 import Updater from "@/components/Blog/Updater.svelte";
-import { putBlog } from "@/libs/blog/put";
 import { getBlogFromSlug } from "@/libs/db/blog/queries";
+import { putBlog } from "@/libs/blog/edit";
 const { slug } = Astro.params;
 if (!slug) {
   return Astro.redirect("/");
