@@ -40,12 +40,13 @@ export async function uploadImageFile({
     const width = metaData.width;
     const height = metaData.height;
     if (!width || !height) {
-      throw Error("Wrong aspect ratio.");
+      throw Error("Wrong aspect ratio. 1");
     }
     // Round the aspect ratio -- image can be a few pixels off
     // * Floats are very inaccurate
     if (Math.floor((width / height) * 10) / 10 !== 1.5) {
-      throw Error("Wrong aspect ratio.");
+      console.log(width, height);
+      throw Error("Wrong aspect ratio. 2");
     }
     if (width < 800) {
       throw Error("Image too small.");
