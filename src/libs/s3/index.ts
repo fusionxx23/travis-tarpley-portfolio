@@ -44,7 +44,9 @@ export async function uploadImageFile({
     }
     // Round the aspect ratio -- image can be a few pixels off
     // * Floats are very inaccurate
-    if (Math.floor((width / height) * 10) / 10 !== 1.5) {
+    const aspectRatio =
+      Math.floor((width / height) * 10) / 10;
+    if (aspectRatio > 1.49 && aspectRatio < 1.51) {
       console.log(width, height);
       throw Error("Wrong aspect ratio. 2");
     }
